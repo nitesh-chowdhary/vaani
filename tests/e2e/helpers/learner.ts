@@ -205,6 +205,7 @@ export async function answer(
   info: TestInfo,
   session: Session,
   wrong = false,
+  oralText?: string,
 ): Promise<Session> {
   const activity = session.activity!;
   const intent = activity.intent ?? intentFor(activity.type);
@@ -238,8 +239,9 @@ export async function answer(
       .boundingBox();
     const geometries = await cards.evaluateAll((nodes) =>
       nodes.map((node) => {
-        const r = node.getBoundingClientRect();
-        return { width: r.width, height: r.height };
+        // Measure reserved layout, excluding intentional hover/selection scale.
+        const element = node as HTMLElement;
+        return { width: element.offsetWidth, height: element.offsetHeight };
       }),
     );
     expect(
@@ -307,7 +309,18 @@ export async function answer(
     return result.session;
   }
   let result: ActionResult;
-  if (intent.response === 'speak') {
+  if (intent.response === 'speak' && oralText) {
+    await page
+      .getByRole('button', { name: 'Type instead', exact: true })
+      .click();
+    await page.getByLabel('Your response').fill(oralText);
+    result = await eventAction(page, () =>
+      page.getByRole('button', { name: 'Check', exact: true }).click(),
+    );
+    expect(result.classification).toBe('correct');
+    expect(result.evidence).toBe('unverified');
+    expect(result.feedback).not.toMatch(/spelling/i);
+  } else if (intent.response === 'speak') {
     await expect(page.getByLabel('Your response')).toHaveCount(0);
     const mic = page.getByRole('button', { name: /^Speak / });
     await mic.click();

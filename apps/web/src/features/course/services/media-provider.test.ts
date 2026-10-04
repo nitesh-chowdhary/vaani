@@ -1,93 +1,50 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, it, expect, vi } from 'vitest';
+import { apiClient } from '../../../lib/api-client';
+import { ApiPhotoProvider } from './media-provider';
 import type { ConceptMedia } from '@vaani/learning-core';
-import { WikimediaCommonsPhotoProvider } from './media-provider';
 const media: ConceptMedia = {
   kind: 'image',
-  key: 'test-apple',
-  alt: 'Apple',
-  fallback: '/fallback.svg',
-  query: 'single red apple clearly visible',
+  key: 'te.lex.bus',
+  alt: 'Bus',
+  query: 'city bus side view',
   source: 'placeholder',
-  intent: {
-    subject: 'apple',
-    category: 'object',
-    framing: 'clearly visible',
-    isolated: true,
-    allowPeople: false,
-    exclude: ['diagram'],
-  },
+  fallback: '/fallback.svg',
 };
-function page(title: string, width = 1200, height = 900) {
-  return {
-    title,
-    imageinfo: [
-      {
-        mime: 'image/jpeg',
-        width,
-        height,
-        thumburl: `https://example.com/${title}.jpg`,
-        descriptionurl: `https://commons.wikimedia.org/wiki/${title}`,
-        extmetadata: {
-          Artist: { value: 'Photographer' },
-          LicenseShortName: { value: 'CC BY 4.0' },
-          LicenseUrl: { value: 'https://creativecommons.org/licenses/by/4.0/' },
-          ImageDescription: { value: title },
-        },
-      },
-    ],
-  };
-}
-afterEach(() => {
-  vi.unstubAllGlobals();
-  sessionStorage.clear();
-});
-describe('ranked photo selection', () => {
-  it('ranks multiple candidates and rejects graphics and inadequate resolution', async () => {
-    const fetchMock = vi.fn().mockResolvedValue({
-      ok: true,
-      json: async () => ({
-        query: {
-          pages: {
-            a: page('Fruit market'),
-            b: page('Apple diagram'),
-            c: page('Apple', 200, 200),
-            d: page('Single apple'),
-          },
-        },
-      }),
+afterEach(() => vi.restoreAllMocks());
+describe('server media adapter', () => {
+  it('does not search over already resolved media', async () => {
+    const request = vi.spyOn(apiClient, 'request');
+    const ready = { ...media, url: '/media/bus.jpg' };
+    expect(await new ApiPhotoProvider().resolve(ready)).toBe(ready);
+    expect(request).not.toHaveBeenCalled();
+  });
+  it('deduplicates concurrent resolution and delegates caching to the API', async () => {
+    const ready = { ...media, url: 'https://images.pexels.com/bus.jpg' };
+    const request = vi
+      .spyOn(apiClient, 'request')
+      .mockResolvedValue({ status: 'ready', media: ready });
+    const provider = new ApiPhotoProvider();
+    expect(
+      await Promise.all([provider.resolve(media), provider.resolve(media)]),
+    ).toEqual([ready, ready]);
+    expect(request).toHaveBeenCalledOnce();
+  });
+  it('reports unusable media to the activity rather than returning a placeholder', async () => {
+    vi.spyOn(apiClient, 'request').mockResolvedValue({ status: 'unavailable' });
+    await expect(new ApiPhotoProvider().resolve(media)).rejects.toThrow(
+      'No usable media',
+    );
+  });
+  it('reports a runtime failure to the server to move through the provider chain', async () => {
+    const request = vi.spyOn(apiClient, 'request').mockResolvedValue({
+      status: 'ready',
+      media: { ...media, url: '/media/other.jpg' },
     });
-    vi.stubGlobal('fetch', fetchMock);
-    const provider = new WikimediaCommonsPhotoProvider();
-    const result = await provider.resolve(media);
-    expect(result.url).toContain('Single apple');
-    expect(result.attribution?.licenseName).toBe('CC BY 4.0');
-    expect(fetchMock.mock.calls[0][0]).toContain('gsrlimit=20');
-    expect((await provider.resolve(media)).url).toBe(result.url);
-    expect(fetchMock).toHaveBeenCalledOnce();
-  });
-  it('never searches over a curated or authored asset', async () => {
-    const fetchMock = vi.fn();
-    vi.stubGlobal('fetch', fetchMock);
-    const curated = {
-      ...media,
-      url: '/media/apple.jpg',
-      source: 'local' as const,
-    };
-    expect(await new WikimediaCommonsPhotoProvider().resolve(curated)).toBe(
-      curated,
+    await new ApiPhotoProvider().resolve(
+      { ...media, url: 'https://images.pexels.com/bad.jpg' },
+      undefined,
+      'https://images.pexels.com/bad.jpg',
     );
-    expect(fetchMock).not.toHaveBeenCalled();
-  });
-  it('rejects a result set with no suitable licensed photograph', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockResolvedValue({
-        ok: true,
-        json: async () => ({ query: { pages: { a: page('Apple logo') } } }),
-      }),
-    );
-    await expect(
-      new WikimediaCommonsPhotoProvider().resolve(media),
-    ).rejects.toThrow('No openly licensed');
+    expect(request.mock.calls[0][0]).toContain('failedUrl=');
   });
 });

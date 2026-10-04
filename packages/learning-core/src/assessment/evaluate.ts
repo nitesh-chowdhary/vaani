@@ -1,3 +1,7 @@
+import {
+  equivalentTeluguPronunciation,
+  type PronunciationIndex,
+} from './telugu-pronunciation.js';
 import { evaluationFeedback } from './feedback.js';
 import type { ContentItem } from '../content/types.js';
 import { intentFor, type ActivityIntent } from '../session-planner/modality.js';
@@ -24,6 +28,7 @@ export interface EvaluationOptions {
   knownAnswers?: ReadonlySet<string>;
   intent?: ActivityIntent;
   interfaceLanguage?: string;
+  pronunciationIndex?: PronunciationIndex;
 }
 
 export function meaningAnswerSpec(
@@ -77,8 +82,18 @@ export function evaluate(
       feedback: answer.selfRating === 'again' ? copy.repeat : copy.continue,
     };
   }
-  const choiceTask = intent.answer === 'choice';
-  const meaningTask = intent.answer === 'meaning';
+  const evaluation =
+    intent.evaluation ??
+    (intent.answer === 'choice'
+      ? 'selection'
+      : intent.spellingMatters
+        ? 'target_orthography'
+        : intent.answer === 'meaning'
+          ? 'semantic'
+          : 'phonetic');
+  const choiceTask = evaluation === 'selection';
+  const meaningTask = evaluation === 'semantic';
+  const spellingMatters = evaluation === 'target_orthography';
   const accepted =
     item.raw.scriptedAnswerRequired === true
       ? [item.telugu, item.romanization]
@@ -89,15 +104,14 @@ export function evaluate(
       ? meaningAnswerSpec(item, options.baseLanguage)
       : {
           canonical: item.telugu,
-          aliases: intent.spellingMatters
+          aliases: spellingMatters
             ? Array.isArray(item.raw.acceptedWrittenAnswers)
               ? item.raw.acceptedWrittenAnswers.filter(
                   (value): value is string => typeof value === 'string',
                 )
               : accepted.filter(
                   (value) =>
-                    value !== item.romanization ||
-                    item.romanization === item.telugu,
+                    /[\p{Script=Telugu}]/u.test(value) && !/[a-z]/i.test(value),
                 )
             : accepted,
         };
@@ -109,12 +123,34 @@ export function evaluate(
     : matchAnswer(answer.response, spec, {
         allowTypos:
           answer.inputMode === 'text' &&
-          (intent.answer === 'meaning' || intent.spellingMatters),
-        orthography: intent.spellingMatters,
+          (intent.answer === 'meaning' || spellingMatters),
+        orthography: spellingMatters,
         knownAnswers: meaningTask ? options.knownAnswers : undefined,
       });
+  if (
+    classification === 'incorrect' &&
+    evaluation === 'phonetic' &&
+    answer.inputMode === 'text'
+  ) {
+    const forms = [
+      { telugu: item.telugu, romanization: item.romanization },
+      ...accepted
+        .filter((value) => /[\p{Script=Telugu}]/u.test(value))
+        .map((telugu) => ({ telugu, romanization: item.romanization })),
+    ];
+    if (
+      forms.some((form) =>
+        equivalentTeluguPronunciation(
+          answer.response,
+          form,
+          options.pronunciationIndex,
+        ),
+      )
+    )
+      classification = 'correct';
+  }
   // A support-language typo is not evidence of weak target-language understanding.
-  if (classification === 'nearly_correct' && !intent.spellingMatters)
+  if (classification === 'nearly_correct' && !spellingMatters)
     classification = 'correct';
   if (classification === 'incorrect')
     return {

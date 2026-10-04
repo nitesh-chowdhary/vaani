@@ -1,3 +1,4 @@
+import { pronunciationIndex } from '@vaani/learning-core';
 import { randomUUID } from 'node:crypto';
 import { Types } from 'mongoose';
 import {
@@ -279,6 +280,7 @@ export function sessionView(
 }
 export function createSessionService(content = loadContent()) {
   const { catalog, hash } = content;
+  const pronunciationForms = pronunciationIndex(Object.values(catalog.items));
   const baseLanguage =
     (catalog.master.baseLanguage as { default?: string } | null)?.default ??
     'en';
@@ -482,7 +484,12 @@ export function createSessionService(content = loadContent()) {
           a.type,
           input,
           hinted || (heard && a.dimension !== 'listening_recognition'),
-          { baseLanguage, knownAnswers, intent: a.intent },
+          {
+            baseLanguage,
+            knownAnswers,
+            intent: a.intent,
+            pronunciationIndex: pronunciationForms,
+          },
         );
         if (a.dimension === 'listening_recognition' && !heard)
           result.evidence = 'unverified';

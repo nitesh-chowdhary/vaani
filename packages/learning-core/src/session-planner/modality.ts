@@ -21,6 +21,8 @@ export interface ActivityIntent {
     | 'reading'
     | 'writing';
   answer: 'target' | 'meaning' | 'choice';
+  evaluation?:
+    'semantic' | 'phonetic' | 'target_orthography' | 'selection' | 'speech';
   spellingMatters: boolean;
   evidenceDimension?: Dimension;
 }
@@ -36,6 +38,14 @@ export function intentFor(type: string): ActivityIntent {
     skill,
     answer,
     spellingMatters: skill === 'writing',
+    evaluation:
+      answer === 'choice'
+        ? 'selection'
+        : skill === 'writing'
+          ? 'target_orthography'
+          : answer === 'meaning'
+            ? 'semantic'
+            : 'phonetic',
   });
   if (
     [

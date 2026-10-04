@@ -179,21 +179,37 @@ describe('continuous session UI', () => {
       screen.getByRole('img', { name: 'Photograph representing water' }),
     ).toHaveStyle({ objectFit: 'contain', objectPosition: '40% 50%' });
   });
-  it('shows a loading state and switches to the neutral SVG fallback when a photograph fails', () => {
-    const view = render(<ConceptMediaView media={target.media!} />);
-    expect(screen.getByText('Loading photo…')).toBeInTheDocument();
-    const image = screen.getByRole('img', {
-      name: 'Photograph representing water',
-    });
-    fireEvent.error(image);
-    expect(image).toHaveAttribute(
-      'src',
-      '/media/learning-image-placeholder.svg',
+  it('notifies the activity and removes failed photography instead of a dead placeholder', async () => {
+    vi.spyOn(mediaProvider, 'resolve').mockRejectedValue(
+      new Error('No usable media'),
     );
-    expect(screen.getByText('Photograph unavailable.')).toBeInTheDocument();
-    fireEvent.load(image);
-    expect(screen.queryByText('Loading photo…')).not.toBeInTheDocument();
-    view.unmount();
+    const onUnavailable = vi.fn();
+    render(
+      <ConceptMediaView media={target.media!} onUnavailable={onUnavailable} />,
+    );
+    fireEvent.error(
+      screen.getByRole('img', { name: 'Photograph representing water' }),
+    );
+    await waitFor(() => expect(onUnavailable).toHaveBeenCalledOnce());
+    expect(screen.queryByRole('img')).not.toBeInTheDocument();
+    expect(screen.queryByText(/unavailable/i)).not.toBeInTheDocument();
+  });
+  it('replaces a failed source with a usable next-provider source', async () => {
+    vi.spyOn(mediaProvider, 'resolve').mockResolvedValue({
+      ...target.media!,
+      url: '/media/secondary.jpg',
+    });
+    render(<ConceptMediaView media={target.media!} />);
+    fireEvent.error(
+      screen.getByRole('img', { name: 'Photograph representing water' }),
+    );
+    await waitFor(() =>
+      expect(screen.getByRole('img')).toHaveAttribute(
+        'src',
+        '/media/secondary.jpg',
+      ),
+    );
+    expect(screen.queryByText(/unavailable/i)).not.toBeInTheDocument();
   });
   it('resolves query metadata through the replaceable photo provider and shows its license credit', async () => {
     const media = {
@@ -216,7 +232,7 @@ describe('continuous session UI', () => {
       },
     });
     render(<ConceptMediaView media={media} />);
-    const image = screen.getByRole('img', {
+    const image = await screen.findByRole('img', {
       name: 'Photograph representing a doctor',
     });
     await waitFor(() =>

@@ -12,6 +12,7 @@ export function ActivityOptions({
   outcome,
   disabled,
   onChoose,
+  onUnavailable,
   romanizationDefault = true,
 }: {
   options: LearningTarget[];
@@ -21,6 +22,7 @@ export function ActivityOptions({
   outcome?: AnswerClassification;
   disabled?: boolean;
   onChoose: (id: string) => void;
+  onUnavailable?: () => void;
   romanizationDefault?: boolean;
 }) {
   return (
@@ -34,6 +36,7 @@ export function ActivityOptions({
           <ConceptMediaView
             key={option.id}
             media={option.media}
+            onUnavailable={onUnavailable}
             eager
             hideMeaning
             fallbackLabel={`${option.targetText}${option.romanization ? ` · ${option.romanization}` : ''}`}

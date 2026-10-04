@@ -92,3 +92,9 @@ The app uses a dark theme. Login and signup include an accessible eye button to 
 - Playwright Chromium runs desktop/mobile learner smoke tests against real frontend/API servers and disposable MongoDB, independent of Browser Use.
 - Test servers use isolated origins and generated test accounts; never reuse production/personal learner data.
 - Speech adapter simulation verifies UI/evaluation plumbing; real microphone accuracy and photographic relevance still require human checks.
+
+## Reliability boundaries
+
+- Media resolution uses a backend provider chain (curation, optional Pexels/Unsplash, Commons), shared expiring MongoDB metadata cache, validation and runtime failure quarantine. Provider secrets never enter client bundles.
+- Unusable photographs adapt the same activity to audio/context/target choices; no dead unavailable-image exercise. This does not change dependencies, SRS timing, or learner progression.
+- Oral Latin support uses a Telugu-anchored phonetic evaluator with short-word/contrast protection. Semantic answers and explicit orthographic writing remain separate; typed support is not independent speech evidence.

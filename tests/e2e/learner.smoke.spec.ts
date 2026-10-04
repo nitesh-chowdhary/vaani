@@ -22,6 +22,7 @@ test('fresh learner completes 30 adaptive activities with stable photographic fe
   let session = await start(page);
   await screenshot(page, info, 'session-entry');
   let wrongAnswered = false;
+  let romanizedAccepted = false;
   const modalities: Record<string, number> = {};
   const visited: { index: number; type: string; concept: string }[] = [];
   for (let attempts = 0; session.cursor < 30 && attempts < 60; attempts++) {
@@ -52,7 +53,14 @@ test('fresh learner completes 30 adaptive activities with stable photographic fe
       activity!.choiceMode === 'media' &&
       (activity!.choices?.length ?? 0) > 1;
     const priorCursor = session.cursor;
-    session = await answer(page, info, session, shouldMiss);
+    const oralText =
+      !romanizedAccepted &&
+      activity!.conceptId === 'te.lex.coffee' &&
+      activity!.intent?.response === 'speak'
+        ? 'kafe'
+        : undefined;
+    session = await answer(page, info, session, shouldMiss, oralText);
+    if (oralText) romanizedAccepted = true;
     if (shouldMiss) wrongAnswered = true;
     else expect(session.cursor).toBeGreaterThan(priorCursor);
     await expect(page.getByRole('progressbar')).toHaveAttribute(
@@ -70,6 +78,7 @@ test('fresh learner completes 30 adaptive activities with stable photographic fe
   }
   expect(session.cursor).toBeGreaterThanOrEqual(30);
   expect(wrongAnswered).toBe(true);
+  expect(romanizedAccepted).toBe(true);
   expect(modalities.speak ?? 0).toBeGreaterThan(0);
   expect(
     (modalities.choose_media ?? 0) + (modalities.choose_target ?? 0),
@@ -79,6 +88,7 @@ test('fresh learner completes 30 adaptive activities with stable photographic fe
     body: JSON.stringify({ visited, modalities }, null, 2),
     contentType: 'application/json',
   });
+  await audit(page);
   await screenshot(page, info, 'session-after-30');
   await page.getByRole('button', { name: 'Finish session' }).click();
   await expect(
@@ -141,5 +151,41 @@ test('unavailable microphone offers oral self-check instead of default typing', 
   expect(result.evidence).not.toBe('independent');
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await audit(page);
+  expect(diagnostics.issues).toEqual([]);
+});
+
+test('image delivery failure keeps a real 30-activity session usable', async ({
+  page,
+}, info) => {
+  const diagnostics = monitor(page);
+  await syntheticSpeech(page);
+  // Fault injection only at the image delivery boundary: real API, auth,
+  // session planning, evaluation and persistence remain untouched.
+  await page.route(/\.(jpg|jpeg|webp|png)(\?|$)/i, (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'image/jpeg',
+      body: 'deliberately invalid image bytes',
+    }),
+  );
+  await signup(page);
+  diagnostics.signedIn();
+  let session = await start(page);
+  for (let attempts = 0; session.cursor < 30 && attempts < 50; attempts++) {
+    await expect
+      .poll(() => page.locator('.learning-photo img').count(), {
+        timeout: 25000,
+      })
+      .toBe(0);
+    await expect(
+      page.getByText(/image unavailable|photograph unavailable/i),
+    ).toHaveCount(0);
+    await audit(page);
+    if (session.activity?.choices?.length)
+      await expect(page.locator('.word-choice').first()).toBeVisible();
+    session = await answer(page, info, session);
+  }
+  expect(session.cursor).toBeGreaterThanOrEqual(30);
+  await screenshot(page, info, 'session-after-image-outage');
   expect(diagnostics.issues).toEqual([]);
 });

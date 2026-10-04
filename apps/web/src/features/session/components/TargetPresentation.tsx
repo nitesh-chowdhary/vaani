@@ -46,6 +46,7 @@ export function TargetPresentation({
   compact = false,
   answerMeaning = false,
   showMedia = true,
+  onMediaUnavailable,
 }: {
   target: LearningTarget;
   languages: CoursePresentation;
@@ -55,6 +56,7 @@ export function TargetPresentation({
   compact?: boolean;
   answerMeaning?: boolean;
   showMedia?: boolean;
+  onMediaUnavailable?: () => void;
 }) {
   const [romanizationRevealed, setRomanizationRevealed] =
     useState(romanizationDefault);
@@ -129,7 +131,11 @@ export function TargetPresentation({
       className={`concept-layout ${target.media && showMedia ? '' : 'no-photo'}`}
     >
       {target.media && showMedia && (
-        <ConceptMediaView media={target.media} eager />
+        <ConceptMediaView
+          media={target.media}
+          onUnavailable={onMediaUnavailable}
+          eager
+        />
       )}
       {content}
     </div>

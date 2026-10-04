@@ -29,6 +29,12 @@ export interface Gloss {
 }
 export interface ConceptMedia {
   kind: 'image';
+  provider?: string;
+  assetId?: string;
+  width?: number;
+  height?: number;
+  resolutionStatus?: 'ready' | 'unavailable';
+  resolvedAt?: number;
   key: string;
   alt: string;
   url?: string;

@@ -29,6 +29,18 @@ const curated: Record<
   string,
   Pick<ConceptMedia, 'url' | 'query' | 'attribution'>
 > = {
+  'te.lex.milk': {
+    url: '/media/telugu/beginner/milk.jpg',
+    query: 'single clear glass of milk on a table',
+    attribution: {
+      creator: 'Santeri Viinamäki',
+      creatorUrl: 'https://commons.wikimedia.org/wiki/User:Zunter',
+      sourceName: 'Wikimedia Commons',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Glass_of_milk.jpg',
+      licenseName: 'CC BY-SA 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    },
+  },
   'te.lex.food': {
     url: '/media/telugu/beginner/food.jpg',
     query: 'clear bowl of prepared food',

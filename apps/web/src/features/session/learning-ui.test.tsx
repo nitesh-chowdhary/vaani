@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import type {
@@ -248,6 +254,9 @@ describe('consumer learning interactions', () => {
       'src',
       '/media/telugu/beginner/water.jpg',
     );
+    expect(option).toBeDisabled();
+    fireEvent.load(option.querySelector('img')!);
+    expect(option).not.toBeDisabled();
     expect(option.querySelector('img')).toHaveAttribute('alt', '');
     expect(screen.queryByText(water.telugu)).not.toBeInTheDocument();
     expect(screen.queryByText('water')).not.toBeInTheDocument();
@@ -303,6 +312,7 @@ describe('consumer learning interactions', () => {
     const option = await screen.findByRole('button', {
       name: 'Image option 2',
     });
+    fireEvent.load(option.querySelector('img')!);
     const region = screen.getByRole('region', { name: 'Answer and continue' });
     const frameClass = option.className;
     await userEvent.click(option);
@@ -376,9 +386,11 @@ describe('consumer learning interactions', () => {
       target: want,
     });
     mount();
-    await userEvent.click(
-      await screen.findByRole('button', { name: 'Image option 2' }),
-    );
+    const option = await screen.findByRole('button', {
+      name: 'Image option 2',
+    });
+    fireEvent.load(option.querySelector('img')!);
+    await userEvent.click(option);
     expect(
       await screen.findByText('Try again', {
         selector: '.learning-feedback span',

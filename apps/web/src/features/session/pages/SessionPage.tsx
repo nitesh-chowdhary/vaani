@@ -83,6 +83,23 @@ export function SessionPage() {
     !!tiles.length && !useTyping && (!view?.speaking || useTiles);
   const response = showTiles ? tileAnswer : answer;
 
+  function mediaUnavailable() {
+    if (!activity) return;
+    const failedActivity = activity.id;
+    setPreferWordChoices(true);
+    void courseService
+      .session(id, true)
+      .then((updated) => {
+        setSession((current) =>
+          current?.activity?.id === failedActivity &&
+          updated.activity?.id === failedActivity &&
+          current.version === updated.version
+            ? updated
+            : current,
+        );
+      })
+      .catch(() => setError('Please try again.'));
+  }
   function resetInteraction(clearAnswer = true) {
     stopSpeech.current?.(true);
     browserAudio.stop();
@@ -341,6 +358,7 @@ export function SessionPage() {
                 key={target.id}
                 target={target}
                 languages={languages}
+                onMediaUnavailable={mediaUnavailable}
                 teaching={activity.phase === 'exposure'}
                 romanizationDefault={romanizationDefault}
                 audio={
@@ -355,7 +373,12 @@ export function SessionPage() {
             activity.choiceMode !== 'media' &&
             (!target || !!choices.length) && (
               <div className="recall-layout">
-                <ConceptMediaView media={activity.mediaCue} hideMeaning eager />
+                <ConceptMediaView
+                  media={activity.mediaCue}
+                  hideMeaning
+                  eager
+                  onUnavailable={mediaUnavailable}
+                />
               </div>
             )}
           {!target &&
@@ -410,6 +433,7 @@ export function SessionPage() {
           {!!choices.length && (
             <ActivityOptions
               options={choices}
+              onUnavailable={mediaUnavailable}
               images={activity.choiceMode === 'media' && !preferWordChoices}
               languages={languages}
               selected={selectedChoice}

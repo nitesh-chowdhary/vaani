@@ -12,3 +12,7 @@ export * from './assessment/answer-matcher.js';
 export * from './progression/progression.js';
 
 export * from './session-planner/modality.js';
+
+export * from './assessment/telugu-pronunciation.js';
+
+export * from './content/media.js';

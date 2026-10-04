@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ConceptMedia } from '@vaani/learning-core';
 import { mediaProvider } from '../services/media-provider';
 import { LearningIcon } from './LearningIcon';
@@ -8,12 +8,13 @@ export function ConceptMediaView({
   hideMeaning = false,
   eager = false,
   selection,
-  fallbackLabel,
+  onUnavailable,
 }: {
   media: ConceptMedia;
   hideMeaning?: boolean;
   eager?: boolean;
   fallbackLabel?: string;
+  onUnavailable?: () => void;
   selection?: {
     label: string;
     onSelect: () => void;
@@ -35,10 +36,15 @@ export function ConceptMediaView({
   const [resolving, setResolving] = useState(false);
   const loading = loadedSrc !== src || resolving;
   const [failed, setFailed] = useState(false);
-  const [retry, setRetry] = useState(0);
+  const generation = useRef(0);
+  const unavailable = useRef(onUnavailable);
+  unavailable.current = onUnavailable;
+  const attempted = useRef(new Set<string>());
 
   useEffect(() => {
     const controller = new AbortController();
+    const effectGeneration = ++generation.current;
+    attempted.current.clear();
     setSelected(stableMedia);
     setSrc(stableMedia.url ?? stableMedia.fallback);
     setFailed(false);
@@ -50,6 +56,7 @@ export function ConceptMediaView({
         controller.abort();
         setResolving(false);
         setFailed(true);
+        unavailable.current?.();
       }, 10000);
       void mediaProvider
         .resolve(stableMedia, controller.signal)
@@ -64,54 +71,81 @@ export function ConceptMediaView({
         .catch(() => {
           if (controller.signal.aborted) return;
           setFailed(true);
+          unavailable.current?.();
           setResolving(false);
           clearTimeout(timeout);
         });
     }
     return () => {
+      generation.current = effectGeneration + 1;
       clearTimeout(timeout);
       controller.abort();
     };
-  }, [stableMedia, retry]);
+  }, [stableMedia]);
 
   useEffect(() => {
     const image = imageRef.current;
     if (image?.complete && image.naturalWidth > 0) setLoadedSrc(src);
   }, [src]);
 
+  const failImage = useCallback(() => {
+    if (attempted.current.has(src)) {
+      setFailed(true);
+      unavailable.current?.();
+      return;
+    }
+    attempted.current.add(src);
+    const requestGeneration = generation.current;
+    setResolving(true);
+    void mediaProvider
+      .resolve(stableMedia, undefined, src)
+      .then((resolved) => {
+        if (requestGeneration !== generation.current) return;
+        setSelected(resolved);
+        setSrc(resolved.url!);
+        setResolving(false);
+      })
+      .catch(() => {
+        if (requestGeneration !== generation.current) return;
+        setFailed(true);
+        setResolving(false);
+        unavailable.current?.();
+      });
+  }, [src, stableMedia]);
+  useEffect(() => {
+    if (!selected.url || loadedSrc === src || failed) return;
+    const timer = setTimeout(failImage, 8000);
+    return () => clearTimeout(timer);
+  }, [selected.url, loadedSrc, src, failed, failImage]);
+
+  if (failed) return null;
+
   const frame = (
     <>
-      <img
-        key={retry}
-        ref={imageRef}
-        src={src}
-        alt={
-          selection
-            ? ''
-            : hideMeaning
-              ? 'Learning photograph for this prompt'
-              : media.alt
-        }
-        loading={eager ? 'eager' : 'lazy'}
-        decoding="async"
-        width={1200}
-        height={800}
-        className="h-full w-full"
-        style={{
-          objectFit: selected.presentation?.fit ?? 'contain',
-          objectPosition: selected.presentation?.position ?? 'center',
-        }}
-        onLoad={() => setLoadedSrc(src)}
-        onError={() => {
-          if (src !== media.fallback) {
-            setSrc(media.fallback);
-            setFailed(true);
-          } else {
-            setLoadedSrc(src);
-            setFailed(true);
+      {selected.url && (
+        <img
+          ref={imageRef}
+          src={src}
+          alt={
+            selection
+              ? ''
+              : hideMeaning
+                ? 'Learning photograph for this prompt'
+                : media.alt
           }
-        }}
-      />
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+          width={1200}
+          height={800}
+          className="h-full w-full"
+          style={{
+            objectFit: selected.presentation?.fit ?? 'contain',
+            objectPosition: selected.presentation?.position ?? 'center',
+          }}
+          onLoad={() => setLoadedSrc(src)}
+          onError={failImage}
+        />
+      )}
       {selection?.selected &&
         (selection.outcome === 'correct' ||
           selection.outcome === 'incorrect' ||
@@ -145,7 +179,7 @@ export function ConceptMediaView({
           data-state={
             selection.selected ? (selection.outcome ?? 'selected') : 'idle'
           }
-          disabled={selection.disabled}
+          disabled={selection.disabled || loading}
           data-feedback={selection.selected ? selection.outcome : undefined}
           onClick={selection.onSelect}
         >
@@ -159,22 +193,7 @@ export function ConceptMediaView({
           Loading photo…
         </p>
       )}
-      {failed ? (
-        <p role="status" className="photo-status">
-          {fallbackLabel ?? 'Photograph unavailable.'}
-          <button
-            type="button"
-            className="photo-retry"
-            aria-label="Retry photograph"
-            onClick={() => {
-              setLoadedSrc(undefined);
-              setRetry((value) => value + 1);
-            }}
-          >
-            Try again
-          </button>
-        </p>
-      ) : selected.attribution ? (
+      {selected.attribution ? (
         <details className="photo-credit">
           <summary aria-label="Photo information">
             <LearningIcon name="help" />

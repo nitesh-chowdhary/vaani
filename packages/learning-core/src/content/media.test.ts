@@ -3,7 +3,7 @@ import { mediaForConcept } from './media.js';
 
 describe('instructional media intent', () => {
   it('prefers stable curated beginner assets and retains licensing', () => {
-    for (const id of ['water', 'tea', 'coffee', 'rice-food']) {
+    for (const id of ['water', 'tea', 'coffee', 'rice-food', 'milk']) {
       const media = mediaForConcept({
         id: `te.lex.${id}`,
         english: id,
