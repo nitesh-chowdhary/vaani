@@ -10,7 +10,6 @@ import type {
   LearningEvent,
 } from '../events/types.js';
 import {
-  dependencyIntroductions,
   instructionalState,
   mayInfer,
   readyToCombine,
@@ -44,29 +43,6 @@ export interface Plan {
   level: Level;
   nominalMinutes: number;
 }
-
-const BEGINNER_PRIORITY = [
-  'te.lex.water',
-  'te.lex.tea',
-  'te.lex.want-need',
-  'te.lex.coffee',
-  'te.lex.rice-food',
-  'te.lex.food',
-  'te.lex.milk',
-  'te.lex.house',
-  'te.lex.phone',
-  'te.lex.bus',
-  'te.lex.train',
-  'te.lex.auto',
-  'te.lex.car',
-  'te.lex.ticket',
-  'te.lex.station',
-  'te.lex.doctor',
-  'te.lex.hospital',
-  'te.lex.medicine',
-  'te.lex.mother',
-  'te.lex.father',
-];
 
 export function allowance(
   state: LearnerState,
@@ -155,28 +131,6 @@ function addFactory(activities: Activity[]) {
   };
 }
 
-function orderedBeginnerLexical(
-  catalog: Catalog,
-  state: LearnerState,
-): ContentItem[] {
-  const rank = new Map(BEGINNER_PRIORITY.map((id, index) => [id, index]));
-  return Object.values(catalog.items)
-    .filter(
-      (item) =>
-        item.family === 'lexicalConcepts' &&
-        item.level === 'A0' &&
-        item.telugu &&
-        item.romanization &&
-        item.meaning.en &&
-        !state.concepts[item.id],
-    )
-    .sort(
-      (a, b) =>
-        (rank.get(a.id) ?? 1000) - (rank.get(b.id) ?? 1000) ||
-        catalog.order.indexOf(a.id) - catalog.order.indexOf(b.id),
-    );
-}
-
 function addReviews(
   catalog: Catalog,
   state: LearnerState,
@@ -210,199 +164,65 @@ function addReviews(
     }
 }
 
-function buildBeginnerPlan(
-  catalog: Catalog,
-  state: LearnerState,
-  now: number,
-  minutes: number,
-): Plan {
-  const budget = allowance(state, now, minutes);
-  const activities: Activity[] = [];
-  const add = addFactory(activities);
-  addReviews(catalog, state, now, minutes, activities);
-  const fresh = orderedBeginnerLexical(catalog, state).slice(0, budget);
-  const introduce = (item: ContentItem) =>
-    add(item, 'concept_introduction', 'exposure');
-  if (Object.keys(state.concepts).length === 0 && fresh.length >= 5) {
-    const [water, tea, want, coffee, rice] = fresh;
-    introduce(water!);
-    introduce(tea!);
-    add(water!, 'image_word_recognition', 'practice', {
-      mediaCueId: water!.id,
-      choiceIds: [water!.id, tea!.id],
-      choiceMode: 'telugu',
-    });
-    introduce(want!);
-    add(tea!, 'image_word_recognition', 'practice', {
-      mediaCueId: tea!.id,
-      choiceIds: [water!.id, tea!.id],
-      choiceMode: 'telugu',
-    });
-    add(water!, 'audio_image_recognition', 'practice', {
-      choiceIds: [water!.id, tea!.id],
-      choiceMode: 'media',
-    });
-    introduce(coffee!);
-    add(water!, 'image_recall', 'practice', { mediaCueId: water!.id });
-    add(tea!, 'audio_image_recognition', 'practice', {
-      choiceIds: [water!.id, tea!.id, coffee!.id],
-      choiceMode: 'media',
-    });
-    add(water!, 'spoken_recall', 'practice', { mediaCueId: water!.id });
-    add(want!, 'context_recognition', 'practice', {
-      choiceIds: [want!.id, water!.id, tea!.id],
-      choiceMode: 'telugu',
-    });
-    add(coffee!, 'image_word_recognition', 'practice', {
-      mediaCueId: coffee!.id,
-      choiceIds: [water!.id, tea!.id, coffee!.id],
-      choiceMode: 'telugu',
-    });
-    add(tea!, 'image_recall', 'practice', { mediaCueId: tea!.id });
-    add(want!, 'contextual_recall', 'practice');
-    introduce(rice!);
-    add(coffee!, 'image_recall', 'practice', { mediaCueId: coffee!.id });
-    const known = new Set([water!.id, tea!.id, want!.id, coffee!.id, rice!.id]);
-    const sentence = Object.values(catalog.items).find(
-      (item) =>
-        item.family === 'sentenceBank' &&
-        item.level === 'A0' &&
-        item.dependencyComplete &&
-        item.dependencies
-          .filter((id) => catalog.items[id]?.family !== 'grammarInUse')
-          .every((id) => known.has(id)),
-    );
-    const pattern = sentence?.dependencies
-      .map((id) => catalog.items[id])
-      .find((item) => item?.family === 'grammarInUse');
-    if (sentence && pattern) {
-      introduce(pattern);
-      add(water!, 'image_recall', 'practice', { mediaCueId: water!.id });
-      add(pattern, 'context_recognition', 'practice', {
-        choiceIds: [pattern.id, want!.id, water!.id],
-        choiceMode: 'telugu',
-      });
-      add(sentence, 'combination_introduction', 'exposure');
-      add(sentence, 'audio_target_recognition', 'practice', {
-        choiceIds: [sentence.id, water!.id, tea!.id],
-        choiceMode: 'telugu',
-      });
-      add(sentence, 'combination_recall', 'practice');
-      add(water!, 'spoken_recall', 'review', {
-        mediaCueId: water!.id,
-        reviewPurpose: 'reinforcement',
-      });
-      add(sentence, 'sentence_construction', 'practice');
-      const variation = Object.values(catalog.items).find(
-        (item) =>
-          item.family === 'sentenceBank' &&
-          item.id !== sentence.id &&
-          item.level === 'A0' &&
-          item.dependencyComplete &&
-          item.dependencies.every((id) => known.has(id) || id === pattern.id),
-      );
-      if (variation) {
-        add(variation, 'combination_introduction', 'exposure');
-        add(variation, 'audio_target_recognition', 'practice', {
-          choiceIds: [variation.id, sentence.id],
-          choiceMode: 'telugu',
-        });
-        add(variation, 'combination_recall', 'practice');
-      }
-    }
-    for (const item of fresh.slice(5)) {
-      introduce(item);
-      known.add(item.id);
-      const selected = selectRetrievalActivity(
-        catalog,
-        item,
-        state,
-        'listen',
-        known,
-      );
-      add(item, selected.type, 'practice', selected);
-      const prior = fresh[Math.max(0, fresh.indexOf(item) - 3)]!;
-      const recall = selectRetrievalActivity(
-        catalog,
-        prior,
-        state,
-        'recall',
-        known,
-      );
-      add(prior, recall.type, 'review', {
-        ...recall,
-        reviewPurpose: 'reinforcement',
-      });
-      const speaking = selectRetrievalActivity(
-        catalog,
-        item,
-        state,
-        'recall',
-        known,
-      );
-      add(item, speaking.type, 'practice', speaking);
-    }
-  } else {
-    const known = new Set(Object.keys(state.concepts));
-    for (let index = 0; index < fresh.length; index += 3) {
-      const group = fresh.slice(index, index + 3);
-      for (const item of group) {
-        introduce(item);
-        known.add(item.id);
-      }
-      for (const item of group) {
-        const selected = selectRetrievalActivity(
-          catalog,
-          item,
-          state,
-          'listen',
-          known,
-        );
-        add(item, selected.type, 'practice', selected);
-      }
-      for (const item of group) {
-        const selected = selectRetrievalActivity(
-          catalog,
-          item,
-          state,
-          'recall',
-          known,
-        );
-        add(item, selected.type, 'practice', selected);
-      }
-    }
-  }
-
-  if (Object.keys(state.concepts).length) {
-    const practiced = new Set(
-      state.events
-        .filter((e) => e.type === 'activity_answered')
-        .map((e) => e.conceptId),
-    );
-    const combinations = Object.values(catalog.items)
-      .filter(
-        (item) =>
-          item.family === 'sentenceBank' &&
-          item.level === 'A0' &&
-          !practiced.has(item.id) &&
-          readyToCombine(item, state, now, catalog),
-      )
-      .slice(0, 2);
-    for (const item of combinations) {
-      add(item, 'combination_introduction', 'exposure');
-      add(item, 'shadow', 'practice');
-      add(item, 'contextual_recall', 'practice');
-    }
-  }
-  return {
-    allowance: budget,
-    activities,
-    level: state.level,
-    nominalMinutes: minutes,
-  };
+/** Authored communication units, never generated target-language morphology. */
+export interface CommunicationCluster {
+  target: ContentItem;
+  dependencies: ContentItem[];
+  patternIds: string[];
+  variations: ContentItem[];
 }
-
-function buildEstablishedPlan(
+export function communicationClusters(
+  catalog: Catalog,
+  state: LearnerState,
+): CommunicationCluster[] {
+  const eligible = catalog.order
+    .map((id) => catalog.items[id]!)
+    .filter(
+      (item) =>
+        item &&
+        ['sentenceBank', 'dialogues', 'listeningScripts'].includes(
+          item.family,
+        ) &&
+        item.productionReady &&
+        item.dependencyComplete &&
+        !item.unseen &&
+        levels.indexOf(item.level) <= levels.indexOf(state.level),
+    );
+  return eligible.map((target) => {
+    const visited = new Set<string>();
+    const dependencies: ContentItem[] = [];
+    const visit = (id: string) => {
+      if (visited.has(id)) return;
+      visited.add(id);
+      const item = catalog.items[id];
+      if (!item) return;
+      item.dependencies.forEach(visit);
+      dependencies.push(item);
+    };
+    target.dependencies
+      .slice()
+      .sort(
+        (a, b) =>
+          Number(!!catalog.items[b]?.media) - Number(!!catalog.items[a]?.media),
+      )
+      .forEach(visit);
+    const patternIds = dependencies
+      .filter((i) => i.family === 'grammarInUse')
+      .map((i) => i.id);
+    return {
+      target,
+      dependencies,
+      patternIds,
+      variations: eligible.filter(
+        (other) =>
+          other.id !== target.id &&
+          other.family === 'sentenceBank' &&
+          patternIds.some((id) => other.dependencies.includes(id)),
+      ),
+    };
+  });
+}
+function buildCommunicationPlan(
   catalog: Catalog,
   state: LearnerState,
   now: number,
@@ -411,144 +231,113 @@ function buildEstablishedPlan(
   const budget = allowance(state, now, minutes);
   const activities: Activity[] = [];
   const add = addFactory(activities);
-  const introduced = new Set(Object.keys(state.concepts));
   addReviews(catalog, state, now, minutes, activities);
-  const eligible = Object.values(catalog.items).filter(
-    (item) =>
-      (item.productionReady || item.family === 'lexicalConcepts') &&
-      levels.indexOf(item.level) <= levels.indexOf(state.level) &&
-      !item.unseen,
-  );
-  const fresh = eligible
-    .filter(
-      (item) => item.family === 'lexicalConcepts' && !introduced.has(item.id),
-    )
-    .slice(0, budget);
-  for (let offset = 0; offset < fresh.length; offset += 3) {
-    const group = fresh.slice(offset, offset + 3);
-    for (const item of group) {
-      add(item, 'concept_introduction', 'exposure');
-      introduced.add(item.id);
-    }
-    for (const purpose of ['listen', 'recall'] as const)
-      for (const item of group) {
-        const selected = selectRetrievalActivity(
-          catalog,
-          item,
-          state,
-          purpose,
-          introduced,
-        );
-        add(item, selected.type, 'practice', selected);
+  const known = new Set(Object.keys(state.concepts));
+  const rehearsed = new Set<string>();
+  let spent = 0;
+  const clusters = communicationClusters(catalog, state);
+  const remaining = new Set(clusters);
+  while (remaining.size) {
+    const cost = (c: CommunicationCluster) =>
+      c.dependencies.filter(
+        (i) => i.family === 'lexicalConcepts' && !known.has(i.id),
+      ).length;
+    const next = [...remaining]
+      .filter((c) => spent + cost(c) <= budget)
+      .sort(
+        (a, b) =>
+          Number(known.has(a.target.id)) - Number(known.has(b.target.id)) ||
+          cost(a) - cost(b) ||
+          catalog.order.indexOf(a.target.id) -
+            catalog.order.indexOf(b.target.id),
+      )[0];
+    if (!next) break;
+    remaining.delete(next);
+    const { target, dependencies } = next;
+    // Review carries already learned targets; reserve fresh clusters for communication.
+    if (known.has(target.id)) continue;
+    for (const dependency of dependencies) {
+      if (!known.has(dependency.id)) {
+        add(dependency, 'concept_introduction', 'exposure');
+        known.add(dependency.id);
+        if (dependency.family === 'lexicalConcepts') spent++;
       }
-  }
-
-  const practiced = new Set(
-    state.events
-      .filter((event) => event.type === 'activity_answered')
-      .map((event) => event.conceptId),
-  );
-  const sources = [
-    'sentenceBank',
-    'dialogues',
-    'listeningScripts',
-    'grammarInUse',
-  ]
-    .map(
-      (family) =>
-        eligible
-          .filter(
-            (item) =>
-              item.family === family &&
-              !practiced.has(item.id) &&
-              item.dependencyComplete,
-          )
-          .sort(
-            (a, b) =>
-              a.dependencies.filter((id) => !introduced.has(id)).length -
-              b.dependencies.filter((id) => !introduced.has(id)).length,
-          )[0],
-    )
-    .filter((item): item is ContentItem => !!item);
-  for (const source of sources) {
-    // Introduced is not the same as heard/speakable: repair skill prerequisites
-    // before reusing known vocabulary in a sentence or conversation.
-    for (const id of source.dependencies) {
-      const dependency = catalog.items[id];
-      const dimensions = state.concepts[id]?.dimensions;
-      if (
-        dependency?.family === 'lexicalConcepts' &&
-        introduced.has(id) &&
-        ((dimensions?.listening_recognition ?? 0) < 0.25 ||
-          (dimensions?.spoken_production ?? 0) < 0.2)
-      ) {
-        for (const purpose of ['listen', 'recall'] as const) {
+      if (rehearsed.has(dependency.id)) continue;
+      const dimensions = state.concepts[dependency.id]?.dimensions;
+      if (dependency.family === 'lexicalConcepts') {
+        if ((dimensions?.listening_recognition ?? 0) < 0.25) {
           const selected = selectRetrievalActivity(
             catalog,
             dependency,
             state,
-            purpose,
-            introduced,
+            'listen',
+            known,
           );
           add(dependency, selected.type, 'practice', selected);
         }
+        if ((dimensions?.spoken_production ?? 0) < 0.2) {
+          const selected = selectRetrievalActivity(
+            catalog,
+            dependency,
+            state,
+            'recall',
+            known,
+          );
+          add(dependency, selected.type, 'practice', selected);
+        }
+      } else {
+        // Pattern recognition establishes a reusable frame; never pronounce blanks.
+        const selected = selectRetrievalActivity(
+          catalog,
+          dependency,
+          state,
+          'recognize',
+          known,
+        );
+        add(dependency, selected.type, 'practice', selected);
       }
+      rehearsed.add(dependency.id);
     }
-    const virtual = {
-      ...state,
-      concepts: Object.fromEntries(
-        [...introduced].map((id) => [
-          id,
-          state.concepts[id] ?? {
-            introducedAt: now,
-            lastAt: now,
-            dueAt: now + 86400000,
-            milestone: 0,
-            reinforcement: 0,
-            failures: 0,
-            attempts: 0,
-            dimensions: {},
-            contexts: [],
-          },
-        ]),
-      ),
-    };
-    for (const dependency of dependencyIntroductions(
+    add(target, 'combination_introduction', 'exposure');
+    known.add(target.id);
+    const listening = selectRetrievalActivity(
       catalog,
-      source,
-      virtual,
-    )) {
-      add(dependency, 'concept_introduction', 'exposure');
-      introduced.add(dependency.id);
-      const selected = selectRetrievalActivity(
+      target,
+      state,
+      'listen',
+      known,
+    );
+    add(target, listening.type, 'practice', listening);
+    add(target, 'shadow', 'practice');
+    if (target.family === 'sentenceBank')
+      add(target, 'sentence_construction', 'practice');
+    const oral = selectRetrievalActivity(
+      catalog,
+      target,
+      state,
+      'recall',
+      known,
+    );
+    add(target, oral.type, 'practice', oral);
+    // Interleave an earlier dependency before retrieving the complete utterance again.
+    const lexical = dependencies.find((i) => i.family === 'lexicalConcepts');
+    if (lexical) {
+      const retrieval = selectRetrievalActivity(
         catalog,
-        dependency,
-        state,
-        'listen',
-        introduced,
-      );
-      add(dependency, selected.type, 'practice', selected);
-      const speaking = selectRetrievalActivity(
-        catalog,
-        dependency,
+        lexical,
         state,
         'recall',
-        introduced,
+        known,
       );
-      add(dependency, speaking.type, 'practice', speaking);
+      add(lexical, retrieval.type, 'review', {
+        ...retrieval,
+        reviewPurpose: 'reinforcement',
+      });
     }
-    if (source.dependencies.every((id) => introduced.has(id))) {
-      add(source, 'combination_introduction', 'exposure');
-      add(
-        source,
-        source.family === 'dialogues'
-          ? 'roleplay_a'
-          : source.family === 'listeningScripts'
-            ? 'shadow'
-            : 'contextual_recall',
-        'practice',
-      );
-    }
+    add(target, oral.type, 'review', {
+      ...oral,
+      reviewPurpose: 'reinforcement',
+    });
   }
   return {
     allowance: budget,
@@ -564,9 +353,7 @@ export function buildPlan(
   now: number,
   minutes = 60,
 ): Plan {
-  return state.level === 'A0'
-    ? buildBeginnerPlan(catalog, state, now, minutes)
-    : buildEstablishedPlan(catalog, state, now, minutes);
+  return buildCommunicationPlan(catalog, state, now, minutes);
 }
 
 export function nextReinforcement(
@@ -588,17 +375,23 @@ export function nextReinforcement(
     .sort((a, b) => a[1].dueAt - b[1].dueAt);
   for (const [id, concept] of due) {
     const activityId = `reinforce-${sessionId}-${id}-${concept.reinforcement}-${concept.dueAt}`;
-    if (!completed.has(activityId))
+    if (!completed.has(activityId)) {
+      const selected = selectRetrievalActivity(
+        catalog,
+        catalog.items[id]!,
+        state,
+        'reinforce',
+      );
       return {
         id: activityId,
         conceptId: id,
-        type: 'spoken_recall',
+        ...selected,
         phase: 'review',
-        dimension: 'spoken_production',
+        dimension: dimensionForIntent(selected.intent),
         prompt: '',
-        intent: intentFor('spoken_recall'),
         reviewPurpose: 'reinforcement',
       };
+    }
   }
   return undefined;
 }
@@ -634,6 +427,9 @@ export function allowedActivity(
   return (
     !!state.concepts[item.id] &&
     item.dependencies.every((id) => !!state.concepts[id]) &&
+    (item.family === 'lexicalConcepts' ||
+      item.family === 'grammarInUse' ||
+      readyToCombine(item, state, now, catalog)) &&
     (activity.choiceIds ?? []).every(
       (id) =>
         !!state.concepts[id] &&

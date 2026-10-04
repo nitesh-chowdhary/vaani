@@ -1,7 +1,4 @@
-import {
-  prepareSessionMedia,
-  prepareTargetMedia,
-} from '../content/media.presentation.js';
+import { prepareSessionMedia } from '../content/media.presentation.js';
 import { Router } from 'express';
 import { createSessionService } from './sessions.service.js';
 import {
@@ -37,11 +34,7 @@ export function sessionRoutes() {
       req.params.id as string,
       payload(actionSchema, req.body),
     );
-    res.json({
-      ...result,
-      session: await prepareSessionMedia(result.session),
-      target: await prepareTargetMedia(result.target),
-    });
+    res.json({ ...result, session: await prepareSessionMedia(result.session) });
   });
   router.post('/:id/finish', async (req, res) => {
     const input = payload(finishSchema, req.body);

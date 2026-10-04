@@ -291,6 +291,33 @@ export function buildCatalog(raw: unknown): Catalog {
     }
     item.dependencies = unique(item.dependencies);
   }
+  // A dialogue can reuse fully explained authored sentences and exact lexical
+  // turns. Loose substring coverage is not enough to certify a conversation.
+  const utterances = Object.values(items).filter(
+    (i) =>
+      i.family === 'lexicalConcepts' ||
+      (i.family === 'sentenceBank' && i.dependencyComplete),
+  );
+  for (const dialogue of Object.values(items).filter(
+    (i) => i.family === 'dialogues',
+  )) {
+    const turns = Array.isArray(dialogue.raw.turns)
+      ? dialogue.raw.turns.map(obj)
+      : [];
+    const resolved = turns.map((turn) =>
+      utterances.find(
+        (i) => normalizeAnswer(i.telugu) === normalizeAnswer(str(turn.telugu)),
+      ),
+    );
+    if (turns.length && resolved.every(Boolean)) {
+      dialogue.dependencies = unique(
+        resolved.flatMap((i) =>
+          i!.family === 'lexicalConcepts' ? [i!.id] : i!.dependencies,
+        ),
+      );
+      dialogue.dependencyComplete = true;
+    }
+  }
   return {
     master,
     items,

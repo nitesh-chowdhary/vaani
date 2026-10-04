@@ -195,7 +195,9 @@ describe('dependencies and session sequencing', () => {
     expect(
       first.every(
         (activity, index) =>
-          index === 0 || activity.conceptId !== first[index - 1]?.conceptId,
+          index === 0 ||
+          activity.conceptId !== first[index - 1]?.conceptId ||
+          activity.type !== first[index - 1]?.type,
       ),
     ).toBe(true);
   });

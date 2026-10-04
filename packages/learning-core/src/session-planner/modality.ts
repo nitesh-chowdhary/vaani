@@ -170,6 +170,12 @@ export function selectRetrievalActivity(
   const last = recent.at(-1)?.dimension;
   const d = state.concepts[item.id]?.dimensions ?? {};
   let type: string;
+  if (['dialogues', 'listeningScripts'].includes(item.family)) {
+    const type = item.family === 'dialogues' ? 'roleplay_a' : 'shadow';
+    const intent = intentFor(type);
+    return { type, intent, dimension: dimensionForIntent(intent) };
+  }
+
   // Reusable patterns are not utterances: never ask learners to pronounce blanks.
   if (
     item.family === 'grammarInUse' &&
@@ -217,7 +223,10 @@ export function selectRetrievalActivity(
       purpose === 'recognize'
         ? 'context_recognition'
         : 'audio_target_recognition';
-  else type = 'shadow';
+  else
+    type = ['listen', 'recognize'].includes(purpose)
+      ? 'audio_target_recognition'
+      : 'shadow';
   const intent = intentFor(type);
   const result: Partial<Activity> & { type: string; intent: ActivityIntent } = {
     type,

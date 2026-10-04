@@ -54,7 +54,16 @@ export function readyToCombine(
   return item.dependencies.every((id) => {
     const concept = state.concepts[id];
     if (!concept) return false;
-    const sourceState = instructionalState(concept, now);
+    const latest = state.events
+      .filter((e) => e.conceptId === id && e.type === 'activity_answered')
+      .at(-1);
+    const repaired = ['independent', 'hesitant', 'hinted'].includes(
+      latest?.evidence ?? '',
+    );
+    const sourceState = instructionalState(
+      repaired ? { ...concept, failures: 0 } : concept,
+      now,
+    );
     const lexical = catalog?.items[id]?.family === 'lexicalConcepts';
     if (lexical)
       return (

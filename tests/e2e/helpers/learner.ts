@@ -290,7 +290,10 @@ export async function answer(
     expect(
       await card.evaluate((node) => getComputedStyle(node).boxShadow),
     ).not.toBe('none');
-    await expect(grid.locator('[data-receded="true"]').first()).toBeAttached();
+    if (activity.choices.length > 1)
+      await expect(
+        grid.locator('[data-receded="true"]').first(),
+      ).toBeAttached();
     const after = await card.boundingBox();
     expect(Math.abs(after!.width - before!.width)).toBeLessThan(8);
     expect(Math.abs(after!.height - before!.height)).toBeLessThan(8);

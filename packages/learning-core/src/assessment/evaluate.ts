@@ -53,6 +53,43 @@ export function evaluate(
 ): Evaluation {
   const intent = options.intent ?? intentFor(type);
   const copy = evaluationFeedback(options.interfaceLanguage);
+  if (type === 'roleplay_a' || type === 'roleplay_b') {
+    const role = type === 'roleplay_a' ? 'A' : 'B';
+    const turn = Array.isArray(item.raw.turns)
+      ? item.raw.turns.find(
+          (t) =>
+            t &&
+            typeof t === 'object' &&
+            !Array.isArray(t) &&
+            t.speaker === role,
+        )
+      : undefined;
+    if (
+      turn &&
+      typeof turn === 'object' &&
+      !Array.isArray(turn) &&
+      typeof turn.telugu === 'string' &&
+      typeof turn.romanization === 'string'
+    ) {
+      const result = evaluate(
+        {
+          ...item,
+          openResponse: false,
+          telugu: turn.telugu,
+          romanization: turn.romanization,
+          acceptedAnswers: [turn.telugu, turn.romanization],
+        },
+        'contextual_recall',
+        answer,
+        hinted,
+        { ...options, intent: intentFor('contextual_recall') },
+      );
+      if (result.classification === 'correct') return result;
+    }
+    // Other natural responses remain unverified rather than falsely rejected.
+    return { evidence: 'unverified', feedback: copy.saved };
+  }
+
   if (
     item.openResponse ||
     [

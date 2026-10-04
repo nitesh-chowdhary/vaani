@@ -98,3 +98,10 @@ The app uses a dark theme. Login and signup include an accessible eye button to 
 - Media resolution uses a backend provider chain (curation, optional Pexels/Unsplash, Commons), shared expiring MongoDB metadata cache, validation and runtime failure quarantine. Provider secrets never enter client bundles.
 - Unusable photographs adapt the same activity to audio/context/target choices; no dead unavailable-image exercise. This does not change dependencies, SRS timing, or learner progression.
 - Oral Latin support uses a Telugu-anchored phonetic evaluator with short-word/contrast protection. Semantic answers and explicit orthographic writing remain separate; typed support is not independent speech evidence.
+
+## Communication-first curriculum orchestration
+
+- Select validated authored communication targets before lexical acquisition; the adaptive allowance constrains missing lexical dependencies within clusters, never a daily quota.
+- Teach and rehearse prerequisites, then introduce/listen/shadow/build/retrieve the complete utterance. Substitutions reuse authored sentences sharing patterns; never synthesize Telugu morphology.
+- Sentence, pattern and dialogue state uses the existing event/mastery/SRS system and unchanged timing. Dialogue review targets a productive role; typed/self-reported attempts remain distinct from independent speech.
+- Dialogue dependency completeness can be derived only when every turn exactly matches a validated sentence or lexical item. Unsupported authored content stays blocked; do not silently certify incomplete vocabulary coverage.

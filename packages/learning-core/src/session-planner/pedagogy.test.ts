@@ -11,6 +11,9 @@ import {
   selectRetrievalActivity,
   allowance,
   conversationallyReady,
+  communicationClusters,
+  nextReinforcement,
+  schedule,
   DAY,
   type ConceptState,
   type LearningEvent,
@@ -122,7 +125,8 @@ describe('speaking/listening-first pedagogy', () => {
     expect(
       actions.some(
         (a) =>
-          a.intent?.cue === 'context' && a.intent.response === 'choose_target',
+          a.intent?.skill === 'listening' &&
+          a.intent.response === 'choose_target',
       ),
     ).toBe(true);
     expect(actions.some((a) => a.intent?.response === 'speak')).toBe(true);
@@ -411,4 +415,233 @@ describe('speaking/listening-first pedagogy', () => {
     ).toBe(true);
     simulate(plan, established, 30);
   });
+});
+
+describe('communication clusters', () => {
+  it('reaches authored multi-word speech by activity 11 after real prerequisite evidence', () => {
+    const plan = buildPlan(catalog, empty, now);
+    const position = plan.activities.findIndex(
+      (a) =>
+        a.intent?.response === 'speak' &&
+        catalog.items[a.conceptId]?.family === 'sentenceBank',
+    );
+    expect(position + 1).toBeLessThanOrEqual(12);
+    simulate(plan, empty, 60);
+    expect(
+      plan.activities
+        .slice(0, position)
+        .filter(
+          (a) =>
+            a.phase === 'exposure' &&
+            catalog.items[a.conceptId]?.family === 'lexicalConcepts',
+        ),
+    ).toHaveLength(2);
+  });
+  it('prefers mostly-known dependencies and introduces no unrelated vocabulary', () => {
+    const s = {
+      ...empty,
+      concepts: {
+        [want.id]: concept({ listening_recognition: 1, spoken_production: 1 }),
+        [tea.id]: concept({ listening_recognition: 1, spoken_production: 1 }),
+        g01: concept({ listening_recognition: 1 }),
+      },
+    };
+    const plan = buildPlan(catalog, s, now);
+    const first = plan.activities.find(
+      (a) => a.type === 'combination_introduction',
+    )!;
+    expect(first.conceptId).toBe('te.sent.00005');
+    expect(
+      plan.activities
+        .slice(0, plan.activities.indexOf(first))
+        .some(
+          (a) =>
+            a.phase === 'exposure' &&
+            catalog.items[a.conceptId]?.family === 'lexicalConcepts',
+        ),
+    ).toBe(false);
+  });
+  it('substitutes through existing validated sentences sharing an authored pattern', () => {
+    const clusters = communicationClusters(catalog, empty);
+    const request = clusters.find((c) => c.target.id === 'te.sent.00001')!;
+    expect(request.variations.length).toBeGreaterThan(1);
+    const plan = buildPlan(catalog, empty, now);
+    const sentences = plan.activities.filter(
+      (a) => a.type === 'combination_introduction',
+    );
+    expect(sentences.length).toBeGreaterThan(2);
+    for (const a of sentences)
+      expect(catalog.items[a.conceptId]?.raw.id).toBe(a.conceptId);
+    simulate(plan, empty, 100);
+  });
+  it('keeps exact SRS schedules and schedules sentence retrieval beyond a year', () => {
+    const days = catalog.master.srsPolicy
+      .delayedRecallMilestoneDays as number[];
+    const same = catalog.master.srsPolicy
+      .sameSessionReinforcementMinutes as number[];
+    expect(days).toEqual([1, 2, 3, 5, 7, 14, 30, 60, 120, 240, 365]);
+    expect(same).toEqual([0, 4, 12, 25, 45]);
+    const c = concept(
+      {},
+      { introducedAt: now - 400 * DAY, dueAt: now, milestone: 11 },
+    );
+    expect(schedule(c, 'independent', now, days, same).dueAt).toBeGreaterThan(
+      now + DAY,
+    );
+    expect(schedule(c, 'incorrect', now, days, same).dueAt).toBe(
+      now + 4 * 60000,
+    );
+    const sentence = catalog.items['te.sent.00001']!;
+    const state = simulate(buildPlan(catalog, empty, now), empty, 30);
+    expect(state.concepts[sentence.id]?.reinforcement).toBeGreaterThan(0);
+    state.concepts[sentence.id]!.dueAt = now;
+    state.concepts[sentence.id]!.introducedAt = now - 5 * 60000;
+    const activity = nextReinforcement(catalog, state, now, 's', new Set());
+    expect(activity?.intent?.response).not.toBe('type_base');
+  });
+  it('selects dialogue response review rather than reciting the entire dialogue', () => {
+    const d = catalog.items['te.dialogue.0002']!;
+    expect(selectRetrievalActivity(catalog, d, empty, 'due').type).toBe(
+      'roleplay_a',
+    );
+    expect(
+      selectRetrievalActivity(catalog, d, empty, 'reinforce').intent.response,
+    ).toBe('speak');
+    expect(
+      communicationClusters(catalog, empty).some((c) => c.target.id === d.id),
+    ).toBe(true);
+  });
+  it('blocks sentence production if listening or speech prerequisites are missing', () => {
+    const sentence = catalog.items['te.sent.00001']!;
+    const state = {
+      ...empty,
+      concepts: Object.fromEntries(
+        [...sentence.dependencies, sentence.id].map((id) => [
+          id,
+          concept({ meaning_recognition: 2 }),
+        ]),
+      ),
+    };
+    const a = {
+      id: 'blocked',
+      conceptId: sentence.id,
+      type: 'combination_recall',
+      phase: 'practice' as const,
+      dimension: 'contextual_response' as const,
+      prompt: '',
+    };
+    expect(allowedActivity(catalog, state, a, now)).toBe(false);
+  });
+});
+
+it('follows a real authored trajectory through substitutions, a micro-dialogue and delayed review', () => {
+  let state = empty;
+  let dialogueSeen = false;
+  for (let session = 0; session < 4; session++) {
+    const plan = buildPlan(catalog, state, now + session * 60000, 60);
+    dialogueSeen ||= plan.activities.some((a) => a.type === 'roleplay_a');
+    state = simulate(plan, state, plan.activities.length);
+  }
+  expect(dialogueSeen).toBe(true);
+  const due = buildPlan(catalog, state, now + 2 * DAY, 60);
+  expect(
+    due.activities.some(
+      (a) =>
+        a.phase === 'review' &&
+        catalog.items[a.conceptId]?.family === 'sentenceBank',
+    ),
+  ).toBe(true);
+  expect(state.level).toBe('A0');
+});
+it('retains weak-learner communication practice while reducing new dependencies', () => {
+  const events: LearningEvent[] = Array.from({ length: 20 }, (_, i) => ({
+    id: `weak-${i}`,
+    sessionId: 'weak',
+    sequence: i,
+    at: now,
+    type: 'activity_answered',
+    conceptId: water.id,
+    dimension: 'spoken_production',
+    evidence: 'incorrect',
+  }));
+  const state = {
+    ...empty,
+    events,
+    concepts: { [water.id]: concept({}, { failures: 4, attempts: 4 }) },
+  };
+  const plan = buildPlan(catalog, state, now);
+  expect(plan.allowance).toBeLessThan(buildPlan(catalog, empty, now).allowance);
+  expect(
+    plan.activities.some(
+      (a) => a.phase === 'review' && a.conceptId === water.id,
+    ),
+  ).toBe(true);
+  expect(
+    plan.activities.some((a) => a.type === 'combination_introduction'),
+  ).toBe(true);
+});
+it('only matches the authored productive role, never the entire dialogue as an oral target', () => {
+  const d = catalog.items['te.dialogue.0002']!;
+  const turn = (d.raw.turns as { speaker: string; telugu: string }[]).find(
+    (t) => t.speaker === 'A',
+  )!;
+  expect(
+    evaluate(
+      d,
+      'roleplay_a',
+      { response: turn.telugu, inputMode: 'speech', latencyMs: 1000 },
+      false,
+    ).evidence,
+  ).toBe('independent');
+  expect(
+    evaluate(
+      d,
+      'roleplay_a',
+      { response: turn.telugu, inputMode: 'text', latencyMs: 1000 },
+      false,
+    ).evidence,
+  ).toBe('unverified');
+});
+
+it('a successfully repaired pattern does not permanently block its communication target', () => {
+  const sentence = catalog.items['te.sent.00001']!;
+  const state = {
+    ...empty,
+    concepts: Object.fromEntries(
+      sentence.dependencies.map((id) => [
+        id,
+        concept(
+          { listening_recognition: 1, spoken_production: 1 },
+          { failures: 1, attempts: 2 },
+        ),
+      ]),
+    ),
+    events: [
+      {
+        id: 'repair',
+        sessionId: 's',
+        sequence: 1,
+        at: now,
+        type: 'activity_answered' as const,
+        conceptId: 'g01',
+        dimension: 'listening_recognition' as const,
+        evidence: 'independent' as const,
+      },
+    ],
+  };
+  expect(
+    allowedActivity(
+      catalog,
+      state,
+      {
+        id: 'sentence',
+        conceptId: sentence.id,
+        type: 'combination_introduction',
+        phase: 'exposure',
+        dimension: 'meaning_recognition',
+        prompt: '',
+      },
+      now,
+    ),
+  ).toBe(true);
 });
