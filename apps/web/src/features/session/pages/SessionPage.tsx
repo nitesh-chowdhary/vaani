@@ -303,7 +303,7 @@ export function SessionPage() {
           )}
           {view.listening && <div className="listening-audio">{audio}</div>}
           {activity.contextCue &&
-            (activity.phase === 'exposure' || !target) && (
+            (activity.phase === 'exposure' || !target || !!choices.length) && (
               <div className="recall-layout">
                 {activity.contextCue.text ? (
                   <p
@@ -351,26 +351,13 @@ export function SessionPage() {
                 answerMeaning={view.meaning && activity.phase !== 'exposure'}
               />
             ))}
-          {target &&
-            !!choices.length &&
-            (activity.hinted || (feedback && !needsRetry)) && (
+          {activity.mediaCue &&
+            activity.choiceMode !== 'media' &&
+            (!target || !!choices.length) && (
               <div className="recall-layout">
-                <TargetPresentation
-                  key={target.id}
-                  target={target}
-                  languages={languages}
-                  compact
-                  showMedia={false}
-                  romanizationDefault={romanizationDefault}
-                  answerMeaning={view.meaning}
-                />
+                <ConceptMediaView media={activity.mediaCue} hideMeaning eager />
               </div>
             )}
-          {!target && activity.mediaCue && activity.choiceMode !== 'media' && (
-            <div className="recall-layout">
-              <ConceptMediaView media={activity.mediaCue} hideMeaning eager />
-            </div>
-          )}
           {!target &&
             !view.listening &&
             !choices.length &&
@@ -435,201 +422,257 @@ export function SessionPage() {
               }}
             />
           )}
-          {!!choices.length && !feedback && (
-            <div className="learning-actions">
-              {activity.choiceMode === 'media' && (
-                <button
-                  type="button"
-                  className="support-button"
-                  aria-label={
-                    preferWordChoices
-                      ? 'Use photograph choices'
-                      : 'Use word choices'
-                  }
-                  aria-pressed={preferWordChoices}
-                  disabled={busy}
-                  onClick={() => setPreferWordChoices((value) => !value)}
-                >
-                  {preferWordChoices ? 'Use photographs' : 'Use words instead'}
-                </button>
-              )}
-              {activity.canReveal && !activity.hinted && (
-                <LearningButton
-                  tone="quiet"
-                  disabled={busy}
-                  onClick={() => void act('hint')}
-                >
-                  {learningText.help}
-                </LearningButton>
-              )}
-            </div>
-          )}
-          {feedback ? (
-            <>
-              <LearningFeedback
-                message={feedback.feedback}
-                outcome={feedback.classification}
-              />
-              <div className="learning-actions">
-                {needsRetry && activity.canReveal && !activity.hinted && (
-                  <LearningButton
-                    tone="quiet"
-                    disabled={busy}
-                    onClick={() => void act('hint')}
-                  >
-                    {learningText.help}
-                  </LearningButton>
-                )}
-                <LearningButton
-                  disabled={busy}
-                  onClick={() => {
-                    setSession(feedback.session);
-                    resetInteraction(!needsRetry);
-                  }}
-                >
-                  {needsRetry ? learningText.retry : learningText.continue}
-                  <LearningIcon name={needsRetry ? 'refresh' : 'arrow'} />
-                </LearningButton>
-              </div>
-            </>
-          ) : activity.phase === 'exposure' ? (
-            <div className="learning-actions">
-              <LearningButton
-                disabled={busy}
-                aria-label="I understand — continue"
-                onClick={() => void act('expose')}
-              >
-                {learningText.continue}
-                <LearningIcon name="arrow" />
-              </LearningButton>
-            </div>
-          ) : !choices.length ? (
-            <div className="recall-layout">
-              {view.speaking && (
-                <SpeakPrompt
-                  languageName={languages.targetLanguage.name}
-                  state={speakingState}
-                  onSpeak={speak}
-                  disabled={busy}
-                />
-              )}
-              {showTiles ? (
-                <>
-                  <SentenceBuilder
-                    tiles={tiles}
-                    selected={selectedTiles}
-                    onChange={setSelectedTiles}
-                    disabled={busy}
-                    language={languages.targetLanguage.code}
+          {!!choices.length && (
+            <section
+              className="choice-action-region"
+              aria-label="Answer and continue"
+            >
+              <div className="choice-result" aria-live="polite">
+                {feedback ? (
+                  <LearningFeedback
+                    message={feedback.feedback}
+                    outcome={feedback.classification}
                   />
-                  <button
-                    type="button"
-                    className="support-button"
-                    onClick={() => setUseTyping(true)}
-                  >
-                    {learningText.type}
-                  </button>
-                </>
-              ) : !view.speaking || useTyping ? (
-                <RecallInput
-                  value={answer}
-                  onChange={(value) => {
-                    setAnswer(value);
-                    setMode('text');
-                  }}
-                  disabled={busy}
-                  language={
-                    view.meaning
-                      ? languages.baseLanguage.code
-                      : languages.targetLanguage.code
-                  }
-                  onSubmit={() => void act('answer')}
-                />
-              ) : null}
-              <div className="learning-actions">
-                {(!view.speaking || useTyping || showTiles) && (
-                  <LearningButton
-                    disabled={busy || !response.trim()}
-                    onClick={() => void act('answer')}
-                  >
-                    {learningText.check}
-                    <LearningIcon name="arrow" />
-                  </LearningButton>
-                )}
-                {activity.canReveal && (
-                  <LearningButton
-                    tone="quiet"
-                    aria-label="Reveal meaning / romanization"
-                    disabled={busy}
-                    onClick={() => void act('hint')}
-                  >
-                    {learningText.help}
-                  </LearningButton>
+                ) : null}
+                {target && (activity.hinted || (feedback && !needsRetry)) && (
+                  <div className="choice-reinforcement">
+                    <span
+                      className="target-text"
+                      lang={languages.targetLanguage.code}
+                    >
+                      {target.targetText}
+                    </span>
+                    {romanizationDefault && target.romanization && (
+                      <span className="target-romanization">
+                        {target.romanization}
+                      </span>
+                    )}
+                  </div>
                 )}
               </div>
-              {view.intent.skill === 'writing' && (
-                <button
-                  type="button"
-                  className="support-button"
-                  disabled={busy}
-                  onClick={() => void act('answer', 'good')}
-                >
-                  {learningText.later}
-                </button>
-              )}
-              {view.speaking && !useTyping && !showTiles && (
-                <div className="support-controls">
-                  <button
-                    type="button"
-                    className="support-button"
+              <div className="learning-actions">
+                {feedback ? (
+                  <LearningButton
                     disabled={busy}
                     onClick={() => {
-                      setSpeechFallback(true);
-                      if (!activity.hinted) void act('hint');
+                      setSession(feedback.session);
+                      resetInteraction(!needsRetry);
                     }}
                   >
-                    {learningText.repeat}
+                    {needsRetry ? learningText.retry : learningText.continue}
+                    <LearningIcon name={needsRetry ? 'refresh' : 'arrow'} />
+                  </LearningButton>
+                ) : (
+                  <LearningButton
+                    disabled
+                    aria-hidden="true"
+                    tabIndex={-1}
+                    className="choice-action-placeholder"
+                  >
+                    {learningText.continue}
+                  </LearningButton>
+                )}
+              </div>
+              <div className="choice-support">
+                {!feedback && activity.choiceMode === 'media' && (
+                  <button
+                    type="button"
+                    className="support-button"
+                    aria-label={
+                      preferWordChoices
+                        ? 'Use photograph choices'
+                        : 'Use word choices'
+                    }
+                    aria-pressed={preferWordChoices}
+                    disabled={busy}
+                    onClick={() => setPreferWordChoices((value) => !value)}
+                  >
+                    {preferWordChoices
+                      ? 'Use photographs'
+                      : 'Use words instead'}
                   </button>
-                  {!!tiles.length && (
+                )}
+                {activity.canReveal &&
+                  !activity.hinted &&
+                  (!feedback || needsRetry) && (
+                    <LearningButton
+                      tone="quiet"
+                      disabled={busy}
+                      onClick={() => void act('hint')}
+                    >
+                      {learningText.help}
+                    </LearningButton>
+                  )}
+              </div>
+            </section>
+          )}
+          {!choices.length &&
+            (feedback ? (
+              <>
+                <LearningFeedback
+                  message={feedback.feedback}
+                  outcome={feedback.classification}
+                />
+                <div className="learning-actions">
+                  {needsRetry && activity.canReveal && !activity.hinted && (
+                    <LearningButton
+                      tone="quiet"
+                      disabled={busy}
+                      onClick={() => void act('hint')}
+                    >
+                      {learningText.help}
+                    </LearningButton>
+                  )}
+                  <LearningButton
+                    disabled={busy}
+                    onClick={() => {
+                      setSession(feedback.session);
+                      resetInteraction(!needsRetry);
+                    }}
+                  >
+                    {needsRetry ? learningText.retry : learningText.continue}
+                    <LearningIcon name={needsRetry ? 'refresh' : 'arrow'} />
+                  </LearningButton>
+                </div>
+              </>
+            ) : activity.phase === 'exposure' ? (
+              <div className="learning-actions">
+                <LearningButton
+                  disabled={busy}
+                  aria-label="I understand — continue"
+                  onClick={() => void act('expose')}
+                >
+                  {learningText.continue}
+                  <LearningIcon name="arrow" />
+                </LearningButton>
+              </div>
+            ) : !choices.length ? (
+              <div className="recall-layout">
+                {view.speaking && (
+                  <SpeakPrompt
+                    languageName={languages.targetLanguage.name}
+                    state={speakingState}
+                    onSpeak={speak}
+                    disabled={busy}
+                  />
+                )}
+                {showTiles ? (
+                  <>
+                    <SentenceBuilder
+                      tiles={tiles}
+                      selected={selectedTiles}
+                      onChange={setSelectedTiles}
+                      disabled={busy}
+                      language={languages.targetLanguage.code}
+                    />
                     <button
                       type="button"
                       className="support-button"
-                      onClick={() => setUseTiles(true)}
+                      onClick={() => setUseTyping(true)}
                     >
-                      {learningText.words}
+                      {learningText.type}
                     </button>
-                  )}
-                  <button
-                    type="button"
-                    className="support-button"
-                    onClick={() => setUseTyping(true)}
-                  >
-                    {learningText.type}
-                  </button>
-                </div>
-              )}
-              {view.speaking && speechFallback && activity.hinted && (
-                <div className="support-controls">
-                  <button
-                    type="button"
-                    className="support-button"
+                  </>
+                ) : !view.speaking || useTyping ? (
+                  <RecallInput
+                    value={answer}
+                    onChange={(value) => {
+                      setAnswer(value);
+                      setMode('text');
+                    }}
                     disabled={busy}
-                    onClick={() => void act('answer', 'again')}
-                  >
-                    {learningText.retry}
-                  </button>
+                    language={
+                      view.meaning
+                        ? languages.baseLanguage.code
+                        : languages.targetLanguage.code
+                    }
+                    onSubmit={() => void act('answer')}
+                  />
+                ) : null}
+                <div className="learning-actions">
+                  {(!view.speaking || useTyping || showTiles) && (
+                    <LearningButton
+                      disabled={busy || !response.trim()}
+                      onClick={() => void act('answer')}
+                    >
+                      {learningText.check}
+                      <LearningIcon name="arrow" />
+                    </LearningButton>
+                  )}
+                  {activity.canReveal && (
+                    <LearningButton
+                      tone="quiet"
+                      aria-label="Reveal meaning / romanization"
+                      disabled={busy}
+                      onClick={() => void act('hint')}
+                    >
+                      {learningText.help}
+                    </LearningButton>
+                  )}
+                </div>
+                {view.intent.skill === 'writing' && (
                   <button
                     type="button"
                     className="support-button"
                     disabled={busy}
                     onClick={() => void act('answer', 'good')}
                   >
-                    {learningText.said}
+                    {learningText.later}
                   </button>
-                </div>
-              )}
-            </div>
-          ) : null}
+                )}
+                {view.speaking && !useTyping && !showTiles && (
+                  <div className="support-controls">
+                    <button
+                      type="button"
+                      className="support-button"
+                      disabled={busy}
+                      onClick={() => {
+                        setSpeechFallback(true);
+                        if (!activity.hinted) void act('hint');
+                      }}
+                    >
+                      {learningText.repeat}
+                    </button>
+                    {!!tiles.length && (
+                      <button
+                        type="button"
+                        className="support-button"
+                        onClick={() => setUseTiles(true)}
+                      >
+                        {learningText.words}
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      className="support-button"
+                      onClick={() => setUseTyping(true)}
+                    >
+                      {learningText.type}
+                    </button>
+                  </div>
+                )}
+                {view.speaking && speechFallback && activity.hinted && (
+                  <div className="support-controls">
+                    <button
+                      type="button"
+                      className="support-button"
+                      disabled={busy}
+                      onClick={() => void act('answer', 'again')}
+                    >
+                      {learningText.retry}
+                    </button>
+                    <button
+                      type="button"
+                      className="support-button"
+                      disabled={busy}
+                      onClick={() => void act('answer', 'good')}
+                    >
+                      {learningText.said}
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : null)}
           {audioMessage && (
             <p role="status" className="learning-notice">
               {audioMessage}

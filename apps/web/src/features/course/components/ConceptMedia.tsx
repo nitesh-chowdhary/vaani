@@ -20,6 +20,7 @@ export function ConceptMediaView({
     disabled?: boolean;
     selected?: boolean;
     outcome?: string;
+    resolved?: boolean;
   };
 }) {
   const mediaSignature = JSON.stringify(media);
@@ -93,7 +94,13 @@ export function ConceptMediaView({
         }
         loading={eager ? 'eager' : 'lazy'}
         decoding="async"
-        className="h-full w-full object-cover"
+        width={1200}
+        height={800}
+        className="h-full w-full"
+        style={{
+          objectFit: selected.presentation?.fit ?? 'contain',
+          objectPosition: selected.presentation?.position ?? 'center',
+        }}
         onLoad={() => setLoadedSrc(src)}
         onError={() => {
           if (src !== media.fallback) {
@@ -105,21 +112,39 @@ export function ConceptMediaView({
           }
         }}
       />
-      {selection?.selected && selection.outcome === 'correct' && (
-        <span className="choice-mark">
-          <LearningIcon name="check" />
-        </span>
-      )}
+      {selection?.selected &&
+        (selection.outcome === 'correct' ||
+          selection.outcome === 'incorrect' ||
+          selection.outcome === 'nearly_correct') && (
+          <span
+            className="choice-mark"
+            aria-label={
+              selection.outcome === 'correct' ? 'Correct' : 'Try again'
+            }
+          >
+            <LearningIcon
+              name={selection.outcome === 'correct' ? 'check' : 'refresh'}
+            />
+          </span>
+        )}
     </>
   );
   return (
-    <figure className="learning-photo">
+    <figure
+      className="learning-photo"
+      data-receded={
+        selection?.resolved && !selection.selected ? 'true' : undefined
+      }
+    >
       {selection ? (
         <button
           type="button"
           className="photo-frame choice-photo"
           aria-label={selection.label}
           aria-pressed={!!selection.selected}
+          data-state={
+            selection.selected ? (selection.outcome ?? 'selected') : 'idle'
+          }
           disabled={selection.disabled}
           data-feedback={selection.selected ? selection.outcome : undefined}
           onClick={selection.onSelect}
@@ -130,7 +155,7 @@ export function ConceptMediaView({
         <div className="photo-frame">{frame}</div>
       )}
       {loading && !failed && (
-        <p role="status" className="photo-status">
+        <p role="status" className={selection ? 'sr-only' : 'photo-status'}>
           Loading photo…
         </p>
       )}
@@ -150,37 +175,43 @@ export function ConceptMediaView({
           </button>
         </p>
       ) : selected.attribution ? (
-        <figcaption className="photo-credit">
-          Photo by{' '}
-          <a
-            className="hover:text-slate-300"
-            href={
-              selected.attribution.creatorUrl ?? selected.attribution.sourceUrl
-            }
-            target="_blank"
-            rel="noreferrer"
-          >
-            {selected.attribution.creator}
-          </a>{' '}
-          on{' '}
-          <a
-            className="hover:text-slate-300"
-            href={selected.attribution.sourceUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {selected.attribution.sourceName}
-          </a>{' '}
-          ·{' '}
-          <a
-            className="hover:text-slate-300"
-            href={selected.attribution.licenseUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {selected.attribution.licenseName ?? 'License'}
-          </a>
-        </figcaption>
+        <details className="photo-credit">
+          <summary aria-label="Photo information">
+            <LearningIcon name="help" />
+          </summary>
+          <div className="photo-credit-content">
+            Photo by{' '}
+            <a
+              className="hover:text-slate-300"
+              href={
+                selected.attribution.creatorUrl ??
+                selected.attribution.sourceUrl
+              }
+              target="_blank"
+              rel="noreferrer"
+            >
+              {selected.attribution.creator}
+            </a>{' '}
+            on{' '}
+            <a
+              className="hover:text-slate-300"
+              href={selected.attribution.sourceUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {selected.attribution.sourceName}
+            </a>{' '}
+            ·{' '}
+            <a
+              className="hover:text-slate-300"
+              href={selected.attribution.licenseUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {selected.attribution.licenseName ?? 'License'}
+            </a>
+          </div>
+        </details>
       ) : null}
     </figure>
   );

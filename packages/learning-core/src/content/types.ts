@@ -35,6 +35,15 @@ export interface ConceptMedia {
   fallback: string;
   query: string;
   source: 'authored' | 'local' | 'remote' | 'placeholder';
+  presentation?: { fit: 'cover' | 'contain'; position?: string };
+  intent?: {
+    subject: string;
+    category: 'object' | 'animal' | 'person' | 'action' | 'place';
+    framing: string;
+    isolated: boolean;
+    allowPeople: boolean;
+    exclude: string[];
+  };
   attribution?: {
     creator: string;
     creatorUrl?: string;

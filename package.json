@@ -13,8 +13,8 @@
     "dev:api": "npm run dev -w @vaani/api",
     "dev:web": "npm run dev -w @vaani/web",
     "test": "npm test --workspaces --if-present",
-    "typecheck": "npm run build -w @vaani/learning-core && npm run typecheck --workspaces --if-present",
-    "lint": "eslint apps packages dev.mjs eslint.config.mjs",
+    "typecheck": "npm run build -w @vaani/learning-core && npm run typecheck --workspaces --if-present && npm run typecheck:e2e",
+    "lint": "eslint apps packages tests/e2e playwright.config.ts dev.mjs eslint.config.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "build": "npm run build -w @vaani/learning-core && npm run build -w @vaani/api && npm run build -w @vaani/web",
@@ -22,16 +22,22 @@
     "dev": "node dev.mjs",
     "content:validate": "npm run build -w @vaani/learning-core && tsx scripts/validate-content.ts",
     "content:import": "npm run build -w @vaani/learning-core && tsx scripts/import-content.ts",
-    "assessment:review": "tsx scripts/review-assessment.ts"
+    "assessment:review": "tsx scripts/review-assessment.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:smoke": "playwright test learner.smoke.spec.ts",
+    "test:e2e:list": "playwright test --list",
+    "typecheck:e2e": "tsc -p tests/e2e/tsconfig.json"
   },
   "devDependencies": {
-    "typescript": "^5.9.3",
-    "vitest": "^3.2.4",
-    "eslint": "^9.39.0",
-    "typescript-eslint": "^8.46.0",
-    "prettier": "^3.6.2",
+    "@playwright/test": "^1.63.0",
     "@types/node": "^22.18.0",
-    "eslint-plugin-react-hooks": "^5.2.0"
+    "eslint": "^9.39.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.0",
+    "vitest": "^3.2.4"
   },
   "type": "module"
 }

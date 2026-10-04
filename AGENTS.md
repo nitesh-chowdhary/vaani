@@ -86,3 +86,9 @@ The app uses a dark theme. Login and signup include an accessible eye button to 
 - Spelling feedback belongs to explicit writing activities. Safe support-language typos do not weaken comprehension evidence.
 - Browser speech defaults to an oral interaction with listen/repeat/self-check fallback; typed fallback and self-reports do not earn independent spoken evidence.
 - Repeated oral failures rebuild explanation/recognition before retry. Generic interface copy is separate from pedagogical logic.
+
+## Repository E2E testing
+
+- Playwright Chromium runs desktop/mobile learner smoke tests against real frontend/API servers and disposable MongoDB, independent of Browser Use.
+- Test servers use isolated origins and generated test accounts; never reuse production/personal learner data.
+- Speech adapter simulation verifies UI/evaluation plumbing; real microphone accuracy and photographic relevance still require human checks.

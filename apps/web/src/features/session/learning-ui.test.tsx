@@ -259,9 +259,76 @@ describe('consumer learning interactions', () => {
     expect(await screen.findByText('Correct')).toBeInTheDocument();
     expect(option).toHaveAttribute('aria-pressed', 'true');
     expect(option).toHaveAttribute('data-feedback', 'correct');
+    expect(option).toHaveAttribute('data-state', 'correct');
+    expect(
+      screen.getByRole('button', { name: 'Image option 2' }).closest('figure'),
+    ).toHaveAttribute('data-receded', 'true');
+    const actionRegion = screen.getByRole('region', {
+      name: 'Answer and continue',
+    });
+    expect(actionRegion).toContainElement(
+      screen.getByRole('button', { name: 'Continue' }),
+    );
+    expect(
+      actionRegion.querySelector('.choice-reinforcement'),
+    ).toHaveTextContent(water.telugu);
+    expect(document.querySelector('.choice-grid')).not.toContainElement(
+      actionRegion,
+    );
+    expect(document.querySelector('.concept-layout')).not.toBeInTheDocument();
     expect(courseService.act).toHaveBeenCalledWith(
       'session',
       expect.objectContaining({ response: water.id }),
+    );
+  });
+  it('acknowledges a choice immediately and keeps retry inside the same action region', async () => {
+    const s = session('audio_image_recognition');
+    s.activity = {
+      ...s.activity!,
+      conceptId: water.id,
+      choiceMode: 'media',
+      choices: [water, tea],
+    };
+    vi.spyOn(courseService, 'session').mockResolvedValue(s);
+    let resolve!: (
+      value: Awaited<ReturnType<typeof courseService.act>>,
+    ) => void;
+    vi.spyOn(courseService, 'act').mockImplementation(
+      () =>
+        new Promise((done) => {
+          resolve = done;
+        }),
+    );
+    mount();
+    const option = await screen.findByRole('button', {
+      name: 'Image option 2',
+    });
+    const region = screen.getByRole('region', { name: 'Answer and continue' });
+    const frameClass = option.className;
+    await userEvent.click(option);
+    expect(option).toHaveAttribute('data-state', 'selected');
+    expect(option).toHaveAttribute('aria-pressed', 'true');
+    expect(option).toBeDisabled();
+    expect(option.querySelector('img')).toHaveAttribute('src', tea.media!.url);
+    await act(async () =>
+      resolve({
+        session: s,
+        target: water,
+        feedback: 'Try again',
+        classification: 'incorrect',
+      }),
+    );
+    expect(option).toHaveAttribute('data-state', 'incorrect');
+    expect(option.className).toBe(frameClass);
+    expect(region).toBe(
+      screen.getByRole('region', { name: 'Answer and continue' }),
+    );
+    expect(region).toContainElement(
+      screen.getByRole('button', { name: 'Try again' }),
+    );
+    expect(option.querySelector('.choice-mark')).toHaveAttribute(
+      'aria-label',
+      'Try again',
     );
   });
   it('offers known word choices as an accessible alternative to photographs', async () => {

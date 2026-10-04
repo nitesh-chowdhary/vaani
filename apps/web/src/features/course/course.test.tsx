@@ -150,6 +150,35 @@ describe('continuous session UI', () => {
     ).toBeGreaterThan(0);
     expect(screen.queryByText('I need water.')).not.toBeInTheDocument();
   });
+  it('keeps photo credits hidden until requested and gives images intrinsic dimensions', async () => {
+    render(<ConceptMediaView media={target.media!} />);
+    const image = screen.getByRole('img', {
+      name: 'Photograph representing water',
+    });
+    expect(image).toHaveAttribute('width', '1200');
+    expect(image).toHaveAttribute('height', '800');
+    const credits = screen
+      .getByLabelText('Photo information')
+      .closest('details');
+    expect(credits).not.toHaveAttribute('open');
+    expect(screen.getByRole('link', { name: 'License' })).not.toBeVisible();
+    await userEvent.click(screen.getByLabelText('Photo information'));
+    expect(credits).toHaveAttribute('open');
+    expect(screen.getByRole('link', { name: 'License' })).toBeVisible();
+  });
+  it('uses authored fit and focal position without cropping every subject', () => {
+    render(
+      <ConceptMediaView
+        media={{
+          ...target.media!,
+          presentation: { fit: 'contain', position: '40% 50%' },
+        }}
+      />,
+    );
+    expect(
+      screen.getByRole('img', { name: 'Photograph representing water' }),
+    ).toHaveStyle({ objectFit: 'contain', objectPosition: '40% 50%' });
+  });
   it('shows a loading state and switches to the neutral SVG fallback when a photograph fails', () => {
     const view = render(<ConceptMediaView media={target.media!} />);
     expect(screen.getByText('Loading photo…')).toBeInTheDocument();
@@ -196,6 +225,7 @@ describe('continuous session UI', () => {
         'https://thumb.wikimedia.org/doctor.jpg',
       ),
     );
+    await userEvent.click(screen.getByLabelText('Photo information'));
     expect(screen.getByRole('link', { name: 'CC BY 4.0' })).toHaveAttribute(
       'href',
       'https://creativecommons.org/licenses/by/4.0',

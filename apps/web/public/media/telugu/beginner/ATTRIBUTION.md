@@ -6,3 +6,5 @@ The local image copies below are used under the [Unsplash License](https://unspl
 - `tea.jpg` — [Sixteen Miles Out](https://unsplash.com/@sixteenmilesout), [source photograph](https://unsplash.com/photos/lzQCA9sWpw0)
 - `coffee.jpg` — [Ante Samarzija](https://unsplash.com/@antesamarzija), [source photograph](https://unsplash.com/photos/lsmu0rUhUOk)
 - `rice.jpg` — [Pille R. Priske](https://unsplash.com/@pillepriske), [source photograph](https://unsplash.com/photos/xmuIgjuQG0M)
+
+- `food.jpg`: Anna Pelzer, [prepared food photograph](https://unsplash.com/photos/IGfIGP5ONV0), [Unsplash License](https://unsplash.com/license).
