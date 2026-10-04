@@ -205,11 +205,20 @@ export async function answer(
   info: TestInfo,
   session: Session,
   wrong = false,
-  oralText?: string,
+  oralText?: string | true,
 ): Promise<Session> {
   const activity = session.activity!;
   const intent = activity.intent ?? intentFor(activity.type);
   const target = loadContent().catalog.items[activity.conceptId];
+  const role = activity.type.startsWith('roleplay')
+    ? (
+        target.raw.turns as {
+          speaker: string;
+          telugu: string;
+          romanization: string;
+        }[]
+      )?.find((t) => t.speaker === (activity.type === 'roleplay_b' ? 'B' : 'A'))
+    : undefined;
   if (activity.phase === 'exposure') {
     return (
       await eventAction(
@@ -316,12 +325,18 @@ export async function answer(
     await page
       .getByRole('button', { name: 'Type instead', exact: true })
       .click();
-    await page.getByLabel('Your response').fill(oralText);
+    await page
+      .getByLabel('Your response')
+      .fill(
+        oralText === true
+          ? (role?.romanization ?? target.romanization)
+          : oralText,
+      );
     result = await eventAction(page, () =>
       page.getByRole('button', { name: 'Check', exact: true }).click(),
     );
     expect(result.classification).toBe('correct');
-    expect(result.evidence).toBe('unverified');
+    expect(['independent', 'hinted', 'hesitant']).toContain(result.evidence);
     expect(result.feedback).not.toMatch(/spelling/i);
   } else if (intent.response === 'speak') {
     await expect(page.getByLabel('Your response')).toHaveCount(0);
@@ -348,7 +363,7 @@ export async function answer(
           results: [{ isFinal: true, 0: { transcript: text } }],
         });
         recognition.onend?.();
-      }, target.telugu),
+      }, role?.telugu ?? target.telugu),
     );
   } else if (intent.response === 'build') {
     const tiles = activity.tiles ?? [];

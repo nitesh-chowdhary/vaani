@@ -14,6 +14,9 @@ import {
   communicationClusters,
   nextReinforcement,
   schedule,
+  shouldSuppressActivity,
+  retrievalForMemory,
+  knowledgeDepth,
   DAY,
   type ConceptState,
   type LearningEvent,
@@ -352,7 +355,7 @@ describe('speaking/listening-first pedagogy', () => {
         { response: 'watre', inputMode: 'text', latencyMs: 1000 },
         false,
       ).evidence,
-    ).toBe('unverified');
+    ).toBe('incorrect');
     expect(
       evaluate(
         water,
@@ -360,7 +363,7 @@ describe('speaking/listening-first pedagogy', () => {
         { response: 'neellu', inputMode: 'text', latencyMs: 1000 },
         false,
       ).evidence,
-    ).toBe('unverified');
+    ).toBe('independent');
     expect(
       evaluate(
         water,
@@ -600,7 +603,7 @@ it('only matches the authored productive role, never the entire dialogue as an o
       { response: turn.telugu, inputMode: 'text', latencyMs: 1000 },
       false,
     ).evidence,
-  ).toBe('unverified');
+  ).toBe('independent');
 });
 
 it('a successfully repaired pattern does not permanently block its communication target', () => {
@@ -644,4 +647,217 @@ it('a successfully repaired pattern does not permanently block its communication
       now,
     ),
   ).toBe(true);
+});
+
+describe('P0 progression and repetition', () => {
+  function journey(mode: 'speech' | 'text', limit = 100) {
+    let state = empty,
+      sequence = 0;
+    const rows: {
+      conceptId: string;
+      type: string;
+      family: string;
+      response?: string;
+    }[] = [];
+    for (let session = 0; session < 4 && rows.length < limit; session++) {
+      for (const a of buildPlan(catalog, state, now + session * 60000)
+        .activities) {
+        if (rows.length === limit) break;
+        if (
+          !allowedActivity(catalog, state, a, now + session * 60000) ||
+          shouldSuppressActivity(catalog, state, a)
+        )
+          continue;
+        const item = catalog.items[a.conceptId]!;
+        const role = a.type.startsWith('roleplay')
+          ? (
+              item.raw.turns as {
+                speaker: string;
+                telugu: string;
+                romanization: string;
+              }[]
+            ).find((t) => t.speaker === (a.type === 'roleplay_b' ? 'B' : 'A'))
+          : undefined;
+        if (a.intent?.response === 'speak' && mode === 'text') {
+          state = replay(catalog, [
+            ...state.events,
+            {
+              id: `asr-${++sequence}`,
+              sessionId: `session-${session}`,
+              sequence,
+              at: now + sequence,
+              type: 'speech_verification_pending',
+              conceptId: item.id,
+              speechVerificationPending: true,
+            },
+          ]);
+        }
+        const result =
+          a.phase === 'exposure'
+            ? undefined
+            : evaluate(
+                item,
+                a.type,
+                {
+                  response: a.choiceIds
+                    ? item.id
+                    : mode === 'text'
+                      ? (role?.romanization ?? item.romanization)
+                      : (role?.telugu ?? item.telugu),
+                  inputMode: a.intent?.response === 'speak' ? mode : 'text',
+                  latencyMs: 1000,
+                },
+                false,
+                { intent: a.intent },
+              );
+        expect(result?.classification).not.toBe('incorrect');
+        rows.push({
+          conceptId: item.id,
+          type: a.type,
+          family: item.family,
+          response: a.intent?.response,
+        });
+        state = replay(catalog, [
+          ...state.events,
+          {
+            id: `answer-${++sequence}`,
+            sessionId: `session-${session}`,
+            sequence,
+            at: now + sequence,
+            type:
+              a.phase === 'exposure' ? 'concept_exposed' : 'activity_answered',
+            conceptId: item.id,
+            activityId: a.id,
+            activityType: a.type,
+            dimension: result?.recallOnly ? 'independent_recall' : a.dimension,
+            evidence: result?.evidence,
+            inputMode: a.intent?.response === 'speak' ? mode : 'text',
+            evaluationSkill: a.intent?.skill,
+            speechVerificationPending: result?.recallOnly ? true : undefined,
+          },
+        ]);
+      }
+    }
+    return { state, rows };
+  }
+  it.each(['speech', 'text'] as const)(
+    '100 correct activities progress through language with %s',
+    (mode) => {
+      const { state, rows } = journey(mode);
+      expect(rows).toHaveLength(100);
+      const lexical = rows.filter((r) => r.family === 'lexicalConcepts');
+      expect(lexical.length).toBeLessThan(60);
+      expect(
+        Math.max(
+          ...lexical.map(
+            (r) => lexical.filter((x) => x.conceptId === r.conceptId).length,
+          ),
+        ),
+      ).toBeLessThan(6);
+      expect(rows.some((r) => r.type === 'roleplay_a')).toBe(true);
+      expect(
+        rows.filter((r) => r.family === 'sentenceBank').length,
+      ).toBeGreaterThan(40);
+      expect(new Set(lexical.map((r) => r.conceptId)).size).toBeGreaterThan(10);
+      if (mode === 'text') {
+        expect(
+          Object.values(state.concepts).every(
+            (c) => !(c.dimensions.spoken_production ?? 0),
+          ),
+        ).toBe(true);
+        expect(
+          Object.values(state.concepts).every((c) => c.failures === 0),
+        ).toBe(true);
+        expect(
+          state.concepts[water.id]?.dimensions.independent_recall,
+        ).toBeGreaterThan(0);
+        expect(state.concepts[water.id]?.speechVerificationPending).toBe(true);
+      }
+    },
+  );
+  it('suppresses isolated practice after recall but a genuine failure re-enables support', () => {
+    const { state } = journey('speech', 30);
+    const a = {
+      id: 'duplicate',
+      conceptId: water.id,
+      type: 'spoken_recall',
+      phase: 'practice' as const,
+      dimension: 'spoken_production' as const,
+      prompt: '',
+    };
+    expect(shouldSuppressActivity(catalog, state, a)).toBe(true);
+    expect(knowledgeDepth(catalog, state, water.id)).toBeGreaterThanOrEqual(4);
+    const failed = replay(catalog, [
+      ...state.events,
+      {
+        id: 'failed',
+        sessionId: 's',
+        sequence: 9999,
+        at: now + 400000,
+        type: 'activity_answered',
+        conceptId: water.id,
+        dimension: 'independent_recall',
+        evidence: 'incorrect',
+        inputMode: 'text',
+      },
+    ]);
+    expect(shouldSuppressActivity(catalog, failed, a)).toBe(false);
+    expect(
+      retrievalForMemory(catalog, water, failed, now + 400000, 'reinforce')
+        .target.id,
+    ).toBe(water.id);
+  });
+  it('a due word returns inside a safe known sentence while preserving the word schedule', () => {
+    const { state } = journey('speech', 30);
+    const review = retrievalForMemory(catalog, water, state, now + DAY, 'due');
+    expect(review.target.family).not.toBe('lexicalConcepts');
+    expect(review.memoryConceptIds).toContain(water.id);
+    const result = replay(catalog, [
+      ...state.events,
+      {
+        id: 'context-review',
+        sessionId: 'later',
+        sequence: 9999,
+        at: now + DAY + 10000,
+        type: 'activity_answered',
+        conceptId: review.target.id,
+        dimension: 'contextual_response',
+        evidence: 'independent',
+        inputMode: 'speech',
+        memoryConceptIds: review.memoryConceptIds,
+        reviewPurpose: 'due',
+      },
+    ]);
+    expect(result.concepts[water.id]?.dueAt).toBeGreaterThan(now + DAY);
+    expect(
+      result.concepts[water.id]?.dimensions.delayed_recall,
+    ).toBeGreaterThan(0);
+  });
+  it('skip and recognition problems never lower mastery or count as failure', () => {
+    const { state } = journey('speech', 3);
+    const before = state.concepts[water.id]!;
+    const updated = replay(catalog, [
+      ...state.events,
+      {
+        id: 'skip',
+        sessionId: 's',
+        sequence: 9999,
+        at: now,
+        type: 'activity_skipped',
+        conceptId: water.id,
+      },
+      {
+        id: 'no-speech',
+        sessionId: 's',
+        sequence: 10000,
+        at: now,
+        type: 'speech_verification_pending',
+        conceptId: water.id,
+        speechVerificationPending: true,
+      },
+    ]);
+    expect(updated.concepts[water.id]?.dimensions).toEqual(before.dimensions);
+    expect(updated.concepts[water.id]?.failures).toBe(before.failures);
+    expect(updated.concepts[water.id]?.dueAt).toBe(before.dueAt);
+  });
 });

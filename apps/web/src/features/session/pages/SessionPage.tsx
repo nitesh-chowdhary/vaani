@@ -74,6 +74,10 @@ export function SessionPage() {
     : null;
   const choices =
     activity?.choices?.map((choice) => presentTarget(choice, languages)) ?? [];
+  // Choices already contain the authored target. Reserve its actual geometry
+  // without revealing it, even when the recall API withholds activity.target.
+  const reinforcementTarget =
+    choices.find((choice) => choice.id === activity?.conceptId) ?? target;
   const romanizationDefault = activity?.support?.romanizationDefault ?? true;
   const tiles = activity?.tiles ?? [];
   const tileAnswer = selectedTiles
@@ -100,6 +104,12 @@ export function SessionPage() {
       })
       .catch(() => setError('Please try again.'));
   }
+  function typeInstead() {
+    stopSpeech.current?.(true);
+    setSpeakingState('ready');
+    setMode('text');
+    setUseTyping(true);
+  }
   function resetInteraction(clearAnswer = true) {
     stopSpeech.current?.(true);
     browserAudio.stop();
@@ -119,7 +129,8 @@ export function SessionPage() {
     began.current = Date.now();
   }
   async function act(
-    action: 'expose' | 'answer' | 'hint' | 'audio',
+    action:
+      'expose' | 'answer' | 'hint' | 'audio' | 'skip' | 'recognition_problem',
     rating?: 'again' | 'good',
     responseOverride?: string,
     inputModeOverride?: 'speech' | 'text',
@@ -137,7 +148,13 @@ export function SessionPage() {
         selfRating: rating,
         latencyMs: Date.now() - began.current,
       });
-      if (action === 'answer') setFeedback(result);
+      if (action === 'answer' && result.recognitionProblem) {
+        setSession(result.session);
+        setFeedback(null);
+        setSpeechFallback(true);
+        setAudioMessage("Couldn't quite catch that.");
+        began.current = Date.now();
+      } else if (action === 'answer') setFeedback(result);
       else {
         setSession(result.session);
         if (action === 'hint') setFeedback(null);
@@ -145,7 +162,7 @@ export function SessionPage() {
           setFeedback((previous) =>
             previous ? { ...previous, session: result.session } : null,
           );
-        if (action === 'expose') resetInteraction();
+        if (action === 'expose' || action === 'skip') resetInteraction();
       }
     } catch {
       setError('We could not save that yet. Please try again.');
@@ -198,7 +215,9 @@ export function SessionPage() {
         },
         (message) => {
           setSpeechFallback(true);
+          began.current = Date.now();
           setAudioMessage(message);
+          void act('recognition_problem');
           setSpeakingState('ready');
         },
         () => setSpeakingState('ready'),
@@ -206,7 +225,8 @@ export function SessionPage() {
       );
     } catch {
       setSpeechFallback(true);
-      setAudioMessage('Try again, or listen and repeat.');
+      setAudioMessage("Couldn't quite catch that.");
+      void act('recognition_problem');
       setSpeakingState('ready');
     }
   }
@@ -452,25 +472,38 @@ export function SessionPage() {
               aria-label="Answer and continue"
             >
               <div className="choice-result" aria-live="polite">
-                {feedback ? (
+                <div
+                  className="choice-feedback-slot"
+                  data-revealed={!!feedback}
+                  aria-hidden={!feedback}
+                >
                   <LearningFeedback
-                    message={feedback.feedback}
-                    outcome={feedback.classification}
+                    message={feedback?.feedback ?? '\u00a0'}
+                    outcome={feedback?.classification}
                   />
-                ) : null}
-                {target && (activity.hinted || (feedback && !needsRetry)) && (
-                  <div className="choice-reinforcement">
+                </div>
+                {reinforcementTarget && (
+                  <div
+                    className="choice-reinforcement"
+                    data-revealed={
+                      !!(activity.hinted || (feedback && !needsRetry))
+                    }
+                    aria-hidden={
+                      !(activity.hinted || (feedback && !needsRetry))
+                    }
+                  >
                     <span
                       className="target-text"
                       lang={languages.targetLanguage.code}
                     >
-                      {target.targetText}
+                      {reinforcementTarget.targetText}
                     </span>
-                    {romanizationDefault && target.romanization && (
-                      <span className="target-romanization">
-                        {target.romanization}
-                      </span>
-                    )}
+                    {romanizationDefault &&
+                      reinforcementTarget.romanization && (
+                        <span className="target-romanization">
+                          {reinforcementTarget.romanization}
+                        </span>
+                      )}
                   </div>
                 )}
               </div>
@@ -592,7 +625,7 @@ export function SessionPage() {
                     <button
                       type="button"
                       className="support-button"
-                      onClick={() => setUseTyping(true)}
+                      onClick={typeInstead}
                     >
                       {learningText.type}
                     </button>
@@ -669,7 +702,7 @@ export function SessionPage() {
                     <button
                       type="button"
                       className="support-button"
-                      onClick={() => setUseTyping(true)}
+                      onClick={typeInstead}
                     >
                       {learningText.type}
                     </button>
@@ -697,6 +730,44 @@ export function SessionPage() {
                 )}
               </div>
             ) : null)}
+          {activity.phase !== 'assessment' && (
+            <div className="support-controls">
+              {speechFallback &&
+                view.speaking &&
+                !feedback &&
+                !activity.hinted && (
+                  <button
+                    type="button"
+                    className="support-button"
+                    disabled={busy}
+                    onClick={speak}
+                  >
+                    Try again
+                  </button>
+                )}
+              {speechFallback &&
+                view.speaking &&
+                !feedback &&
+                !activity.hinted && (
+                  <button
+                    type="button"
+                    className="support-button"
+                    disabled={busy}
+                    onClick={() => void play()}
+                  >
+                    Hear again
+                  </button>
+                )}
+              <button
+                type="button"
+                className="support-button"
+                disabled={busy}
+                onClick={() => void act('skip')}
+              >
+                Skip for now
+              </button>
+            </div>
+          )}
           {audioMessage && (
             <p role="status" className="learning-notice">
               {audioMessage}

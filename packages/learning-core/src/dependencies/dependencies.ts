@@ -68,7 +68,8 @@ export function readyToCombine(
     if (lexical)
       return (
         (concept.dimensions.listening_recognition ?? 0) >= 0.25 &&
-        (concept.dimensions.spoken_production ?? 0) >= 0.2
+        ((concept.dimensions.spoken_production ?? 0) >= 0.2 ||
+          (concept.dimensions.independent_recall ?? 0) >= 0.25)
       );
     return (
       sourceState === 'recognized' ||

@@ -10,7 +10,7 @@ import {
   eventAction,
 } from './helpers/learner';
 
-test('fresh learner completes 30 adaptive activities with stable photographic feedback', async ({
+test('fresh learner completes 50 adaptive activities with stable photographic feedback', async ({
   page,
 }, info) => {
   const diagnostics = monitor(page);
@@ -25,9 +25,9 @@ test('fresh learner completes 30 adaptive activities with stable photographic fe
   let romanizedAccepted = false;
   const modalities: Record<string, number> = {};
   const visited: { index: number; type: string; concept: string }[] = [];
-  for (let attempts = 0; session.cursor < 30 && attempts < 60; attempts++) {
+  for (let attempts = 0; session.cursor < 50 && attempts < 100; attempts++) {
     const activity = session.activity;
-    expect(activity, 'Session ended before 30 activities').toBeTruthy();
+    expect(activity, 'Session ended before 50 activities').toBeTruthy();
     await audit(page);
     const modality = activity!.intent?.response ?? activity!.type;
     modalities[modality] = (modalities[modality] ?? 0) + 1;
@@ -48,16 +48,11 @@ test('fresh learner completes 30 adaptive activities with stable photographic fe
         await expect(audio).toBeEnabled();
       }
     }
-    const shouldMiss =
-      !wrongAnswered &&
-      activity!.choiceMode === 'media' &&
-      (activity!.choices?.length ?? 0) > 1;
+    const shouldMiss = !wrongAnswered && (activity!.choices?.length ?? 0) > 1;
     const priorCursor = session.cursor;
     const oralText =
-      !romanizedAccepted &&
-      activity!.conceptId === 'te.lex.coffee' &&
-      activity!.intent?.response === 'speak'
-        ? 'kafe'
+      !romanizedAccepted && activity!.intent?.response === 'speak'
+        ? true
         : undefined;
     session = await answer(page, info, session, shouldMiss, oralText);
     if (oralText) romanizedAccepted = true;
@@ -76,7 +71,7 @@ test('fresh learner completes 30 adaptive activities with stable photographic fe
       await screenshot(page, info, 'session-after-reload');
     }
   }
-  expect(session.cursor).toBeGreaterThanOrEqual(30);
+  expect(session.cursor).toBeGreaterThanOrEqual(50);
   expect(wrongAnswered).toBe(true);
   expect(romanizedAccepted).toBe(true);
   expect(modalities.speak ?? 0).toBeGreaterThan(0);
@@ -89,7 +84,7 @@ test('fresh learner completes 30 adaptive activities with stable photographic fe
     contentType: 'application/json',
   });
   await audit(page);
-  await screenshot(page, info, 'session-after-30');
+  await screenshot(page, info, 'session-after-50');
   await page.getByRole('button', { name: 'Finish session' }).click();
   await expect(
     page.getByRole('heading', { name: 'Session summary' }),
@@ -188,4 +183,61 @@ test('image delivery failure keeps a real 30-activity session usable', async ({
   expect(session.cursor).toBeGreaterThanOrEqual(30);
   await screenshot(page, info, 'session-after-image-outage');
   expect(diagnostics.issues).toEqual([]);
+});
+
+test('P0 ASR errors never block 30 activities completed with typed oral recall', async ({
+  page,
+}, info) => {
+  const diagnostics = monitor(page);
+  await page.addInitScript(() => {
+    Object.defineProperty(window, 'SpeechRecognition', {
+      configurable: true,
+      value: undefined,
+    });
+    Object.defineProperty(window, 'webkitSpeechRecognition', {
+      configurable: true,
+      value: undefined,
+    });
+  });
+  await signup(page);
+  diagnostics.signedIn();
+  let session = await start(page);
+  let fallbackCount = 0;
+  for (let i = 0; i < 40 && session.cursor < 30; i++) {
+    const a = session.activity!;
+    await audit(page);
+    if (a.intent?.response === 'speak') {
+      const result = await eventAction(
+        page,
+        () => page.getByRole('button', { name: /^Speak / }).click(),
+        'recognition_problem',
+      );
+      expect(result.session.activity?.id).toBe(a.id);
+      await expect(
+        page.getByRole('button', { name: 'Type instead', exact: true }),
+      ).toBeEnabled();
+      session = await answer(page, info, session, false, true);
+      fallbackCount++;
+    } else session = await answer(page, info, session);
+  }
+  expect(session.cursor).toBeGreaterThanOrEqual(30);
+  expect(fallbackCount).toBeGreaterThan(3);
+  await screenshot(page, info, 'p0-after-30-typed');
+  expect(diagnostics.issues).toEqual([]);
+});
+test('P0 a stalled microphone always has Skip for now', async ({ page }) => {
+  await syntheticSpeech(page);
+  await signup(page);
+  let session = await start(page);
+  for (let i = 0; i < 12 && session.activity?.intent?.response !== 'speak'; i++)
+    session = await answer(page, test.info(), session);
+  const current = session.activity!.id;
+  await page.getByRole('button', { name: /^Speak / }).click();
+  const result = await eventAction(
+    page,
+    () => page.getByRole('button', { name: 'Skip for now' }).click(),
+    'skip',
+  );
+  expect(result.session.activity?.id).not.toBe(current);
+  expect(result.evidence).toBeUndefined();
 });

@@ -22,6 +22,8 @@ export interface Evaluation {
   evidence: Evidence;
   feedback: string;
   classification?: AnswerClassification;
+  recallOnly?: boolean;
+  recognitionProblem?: boolean;
 }
 export interface EvaluationOptions {
   baseLanguage?: string;
@@ -193,10 +195,15 @@ export function evaluate(
     return {
       classification,
       evidence:
-        intent.response === 'speak' && answer.inputMode === 'text'
+        intent.response === 'speak' && answer.inputMode === 'speech'
           ? 'unverified'
           : 'incorrect',
-      feedback: copy.incorrect,
+      recognitionProblem:
+        intent.response === 'speak' && answer.inputMode === 'speech',
+      feedback:
+        intent.response === 'speak' && answer.inputMode === 'speech'
+          ? "Couldn't quite catch that."
+          : copy.incorrect,
     };
   if (classification === 'nearly_correct')
     return {
@@ -208,8 +215,13 @@ export function evaluate(
   if (speaking && answer.inputMode !== 'speech')
     return {
       classification,
-      evidence: 'unverified',
-      feedback: copy.say,
+      evidence: hinted
+        ? 'hinted'
+        : answer.latencyMs > 15000
+          ? 'hesitant'
+          : 'independent',
+      recallOnly: true,
+      feedback: copy.correct,
     };
   return {
     classification,

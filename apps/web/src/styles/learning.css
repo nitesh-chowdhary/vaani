@@ -620,6 +620,10 @@ body {
   flex-wrap: wrap;
   gap: var(--space-3);
 }
+.choice-reinforcement[data-revealed='false'],
+.choice-feedback-slot[data-revealed='false'] {
+  visibility: hidden;
+}
 .choice-reinforcement .target-text {
   font-size: clamp(24px, 4vw, 32px);
 }

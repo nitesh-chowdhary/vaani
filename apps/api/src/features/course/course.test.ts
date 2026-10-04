@@ -204,8 +204,8 @@ describe('persisted learning journey', () => {
     }
     expect(s.activity.intent.response).toBe('speak');
     const failedId = s.activity.id;
-    await act('answer', 'unrelated');
-    await act('answer', 'unrelated');
+    await act('answer', 'unrelated', 'text');
+    await act('answer', 'unrelated', 'text');
     expect(s.activity.phase).toBe('exposure');
     expect(s.activity.target.telugu).toBe('నీళ్లు');
     await act('expose');
@@ -390,4 +390,90 @@ describe('persisted learning journey', () => {
       }),
     ).rejects.toMatchObject({ code: 'already_reviewed' });
   });
+});
+
+it('an entire ASR-broken session finishes with typed recall but no verified speech', async () => {
+  let { body: s } = await post('/sessions', { minutes: 5 });
+  let spoken = 0;
+  for (let i = 0; i < 100 && s.activity; i++) {
+    const a = s.activity;
+    const item = loadContent().catalog.items[a.conceptId];
+    const action = async (kind: string, response = '') => {
+      const r = await post(`/sessions/${s.id}/events`, {
+        eventId: randomUUID(),
+        activityId: a.id,
+        action: kind,
+        response,
+        inputMode: 'text',
+        latencyMs: 1000,
+      });
+      expect(r.status).toBe(200);
+      s = r.body.session;
+      return r.body;
+    };
+    if (a.phase === 'exposure') {
+      await action('expose');
+      continue;
+    }
+    if (a.intent.skill === 'listening') await action('audio');
+    if (a.intent.response === 'speak') {
+      await action('recognition_problem');
+      spoken++;
+    }
+    const role =
+      a.type === 'roleplay_a' || a.type === 'roleplay_b'
+        ? (item.raw.turns as { speaker: string; romanization: string }[]).find(
+            (t) => t.speaker === (a.type === 'roleplay_b' ? 'B' : 'A'),
+          )
+        : undefined;
+    const response = a.choices?.length
+      ? item.id
+      : a.intent.response === 'build'
+        ? item.telugu
+        : (role?.romanization ?? item.romanization);
+    const r = await action('answer', response);
+    expect(r.classification).not.toBe('incorrect');
+    expect(s.cursor).toBeGreaterThanOrEqual(i + 1);
+  }
+  expect(s.activity).toBeNull();
+  const finished = await post(`/sessions/${s.id}/finish`, {
+    eventId: randomUUID(),
+  });
+  expect(finished.status).toBe(200);
+  expect(finished.body.status).toBe('completed');
+  expect(spoken).toBeGreaterThan(3);
+  const state = replay(loadContent().catalog, await learnerEvents(userId));
+  expect(
+    Object.values(state.concepts).every(
+      (c) => !(c.dimensions.spoken_production ?? 0),
+    ),
+  ).toBe(true);
+  expect(Object.values(state.concepts).every((c) => c.failures === 0)).toBe(
+    true,
+  );
+  expect(
+    state.concepts['te.lex.water']?.dimensions.independent_recall,
+  ).toBeGreaterThan(0);
+  expect(state.concepts['te.lex.water']?.speechVerificationPending).toBe(true);
+}, 60000);
+it('skip advances without mastery, weakness or a recall scheduling penalty', async () => {
+  let { body: s } = await post('/sessions', { minutes: 5 });
+  const send = async (action: string) => {
+    const r = await post(`/sessions/${s.id}/events`, {
+      eventId: randomUUID(),
+      activityId: s.activity.id,
+      action,
+    });
+    expect(r.status).toBe(200);
+    s = r.body.session;
+  };
+  await send('expose');
+  const before = replay(loadContent().catalog, await learnerEvents(userId))
+    .concepts['te.lex.water'];
+  const old = s.activity.id;
+  await send('skip');
+  expect(s.activity.id).not.toBe(old);
+  const after = replay(loadContent().catalog, await learnerEvents(userId))
+    .concepts['te.lex.water'];
+  expect(after).toEqual(before);
 });

@@ -1,3 +1,4 @@
+import { retrievalForMemory, knowledgeDepth } from './practice.js';
 import {
   levels,
   type Catalog,
@@ -31,6 +32,7 @@ export interface Activity {
   prompt: string;
   intent?: ActivityIntent;
   reviewPurpose?: 'due' | 'reinforcement';
+  memoryConceptIds?: string[];
   sourceExerciseId?: string;
   contextId?: string;
   mediaCueId?: string;
@@ -64,7 +66,8 @@ export function allowance(
       ? events.filter((event) => event.evidence === 'independent').length /
         events.length
       : recent.length
-        ? 0.65
+        ? recent.filter((event) => event.evidence === 'independent').length /
+          recent.length
         : 0.85;
   const recall = recent.filter((event) =>
     [
@@ -94,6 +97,7 @@ export function allowance(
           : score >= 0.7
             ? 35
             : 15;
+  if (recent.length && !recall.length) target = Math.min(target, 35);
   const hinted = recent.filter(
     (event) => event.evidence === 'hinted' || (event.latencyMs ?? 0) > 20000,
   ).length;
@@ -144,8 +148,29 @@ function addReviews(
     .sort((a, b) => a[1].dueAt - b[1].dueAt);
   for (const [id] of due.slice(0, Math.max(6, Math.round(minutes / 2)))) {
     const item = catalog.items[id]!;
-    const selected = selectRetrievalActivity(catalog, item, state, 'due');
-    add(item, selected.type, 'review', { ...selected, reviewPurpose: 'due' });
+    const { target, selected, memoryConceptIds } = retrievalForMemory(
+      catalog,
+      item,
+      state,
+      now,
+      'due',
+    );
+    const existing = activities.find(
+      (a) =>
+        a.phase === 'review' &&
+        a.conceptId === target.id &&
+        a.type === selected.type,
+    );
+    if (existing)
+      existing.memoryConceptIds = [
+        ...new Set([...(existing.memoryConceptIds ?? []), ...memoryConceptIds]),
+      ];
+    else
+      add(target, selected.type, 'review', {
+        ...selected,
+        memoryConceptIds,
+        reviewPurpose: 'due',
+      });
   }
   const weak = Object.entries(state.concepts)
     .filter(
@@ -237,17 +262,42 @@ function buildCommunicationPlan(
   let spent = 0;
   const clusters = communicationClusters(catalog, state);
   const remaining = new Set(clusters);
+  const usedFunctions = new Set(
+    Object.keys(state.concepts)
+      .map((id) => catalog.items[id]?.raw.function)
+      .filter((f) => typeof f === 'string'),
+  );
   while (remaining.size) {
     const cost = (c: CommunicationCluster) =>
       c.dependencies.filter(
         (i) => i.family === 'lexicalConcepts' && !known.has(i.id),
       ).length;
+    const lastFunction = [...activities]
+      .reverse()
+      .find((a) => a.type === 'combination_introduction')?.conceptId;
+    const previousFunction = lastFunction
+      ? catalog.items[lastFunction]?.raw.function
+      : undefined;
+    const score = (c: CommunicationCluster) => {
+      const fn = c.target.raw.function;
+      return (
+        cost(c) -
+        (c.target.family === 'dialogues' &&
+        c.dependencies.some((i) => known.has(i.id))
+          ? 3
+          : 0) -
+        (typeof fn === 'string' && !usedFunctions.has(fn) && known.size
+          ? 1.5
+          : 0) +
+        (fn && fn === previousFunction ? 0.75 : 0)
+      );
+    };
     const next = [...remaining]
       .filter((c) => spent + cost(c) <= budget)
       .sort(
         (a, b) =>
           Number(known.has(a.target.id)) - Number(known.has(b.target.id)) ||
-          cost(a) - cost(b) ||
+          score(a) - score(b) ||
           catalog.order.indexOf(a.target.id) -
             catalog.order.indexOf(b.target.id),
       )[0];
@@ -300,6 +350,8 @@ function buildCommunicationPlan(
     }
     add(target, 'combination_introduction', 'exposure');
     known.add(target.id);
+    if (typeof target.raw.function === 'string')
+      usedFunctions.add(target.raw.function);
     const listening = selectRetrievalActivity(
       catalog,
       target,
@@ -308,7 +360,7 @@ function buildCommunicationPlan(
       known,
     );
     add(target, listening.type, 'practice', listening);
-    add(target, 'shadow', 'practice');
+    if (target.family !== 'dialogues') add(target, 'shadow', 'practice');
     if (target.family === 'sentenceBank')
       add(target, 'sentence_construction', 'practice');
     const oral = selectRetrievalActivity(
@@ -318,26 +370,8 @@ function buildCommunicationPlan(
       'recall',
       known,
     );
-    add(target, oral.type, 'practice', oral);
-    // Interleave an earlier dependency before retrieving the complete utterance again.
-    const lexical = dependencies.find((i) => i.family === 'lexicalConcepts');
-    if (lexical) {
-      const retrieval = selectRetrievalActivity(
-        catalog,
-        lexical,
-        state,
-        'recall',
-        known,
-      );
-      add(lexical, retrieval.type, 'review', {
-        ...retrieval,
-        reviewPurpose: 'reinforcement',
-      });
-    }
-    add(target, oral.type, 'review', {
-      ...oral,
-      reviewPurpose: 'reinforcement',
-    });
+    if (target.family === 'dialogues') add(target, 'roleplay_b', 'practice');
+    else add(target, oral.type, 'practice', oral);
   }
   return {
     allowance: budget,
@@ -376,15 +410,27 @@ export function nextReinforcement(
   for (const [id, concept] of due) {
     const activityId = `reinforce-${sessionId}-${id}-${concept.reinforcement}-${concept.dueAt}`;
     if (!completed.has(activityId)) {
-      const selected = selectRetrievalActivity(
+      const { target, selected, memoryConceptIds } = retrievalForMemory(
         catalog,
         catalog.items[id]!,
         state,
+        now,
         'reinforce',
       );
+      const latest = state.events
+        .filter((e) => e.conceptId === id && e.type === 'activity_answered')
+        .at(-1);
+      if (
+        target.id === id &&
+        catalog.items[id]?.family === 'lexicalConcepts' &&
+        knowledgeDepth(catalog, state, id) >= 3 &&
+        ['independent', 'hesitant', 'hinted'].includes(latest?.evidence ?? '')
+      )
+        continue;
       return {
         id: activityId,
-        conceptId: id,
+        conceptId: target.id,
+        memoryConceptIds,
         ...selected,
         phase: 'review',
         dimension: dimensionForIntent(selected.intent),

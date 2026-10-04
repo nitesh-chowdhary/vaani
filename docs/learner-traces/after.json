@@ -1,0 +1,840 @@
+{
+  "first100": {
+    "activities": 100,
+    "isolatedVocabulary": 43,
+    "uniqueVocabulary": 15,
+    "sentences": 50,
+    "uniqueSentences": 10,
+    "spokenWords": 14,
+    "spokenSentences": 20,
+    "contextualOrDialogue": 16,
+    "dialogueTurns": 2,
+    "highestIsolatedRepeat": 3,
+    "averageIsolatedRepeats": 2.8666666666666667,
+    "identicalAdjacent": 0,
+    "firstSpokenWord": 3,
+    "firstSpokenSentence": 11,
+    "firstQuestionResponse": null,
+    "firstDialogue": 21
+  },
+  "first50": {
+    "activities": 50,
+    "isolatedVocabulary": 24,
+    "uniqueVocabulary": 8,
+    "sentences": 19,
+    "uniqueSentences": 4,
+    "spokenWords": 8,
+    "spokenSentences": 7,
+    "contextualOrDialogue": 9,
+    "dialogueTurns": 2,
+    "highestIsolatedRepeat": 3,
+    "averageIsolatedRepeats": 3,
+    "identicalAdjacent": 0,
+    "firstSpokenWord": 3,
+    "firstSpokenSentence": 11,
+    "firstQuestionResponse": null,
+    "firstDialogue": 21
+  },
+  "activities": [
+    {
+      "index": 1,
+      "id": "te.lex.water",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "నీళ్లు"
+    },
+    {
+      "index": 2,
+      "id": "te.lex.water",
+      "family": "lexicalConcepts",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "నీళ్లు"
+    },
+    {
+      "index": 3,
+      "id": "te.lex.water",
+      "family": "lexicalConcepts",
+      "type": "spoken_recall",
+      "response": "speak",
+      "target": "నీళ్లు"
+    },
+    {
+      "index": 4,
+      "id": "te.lex.want-need",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "కావాలి"
+    },
+    {
+      "index": 5,
+      "id": "te.lex.want-need",
+      "family": "lexicalConcepts",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "కావాలి"
+    },
+    {
+      "index": 6,
+      "id": "te.lex.want-need",
+      "family": "lexicalConcepts",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "కావాలి"
+    },
+    {
+      "index": 7,
+      "id": "g01",
+      "family": "grammarInUse",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "నాకు ___ కావాలి."
+    },
+    {
+      "index": 8,
+      "id": "g01",
+      "family": "grammarInUse",
+      "type": "context_recognition",
+      "response": "choose_target",
+      "target": "నాకు ___ కావాలి."
+    },
+    {
+      "index": 9,
+      "id": "te.sent.00001",
+      "family": "sentenceBank",
+      "type": "combination_introduction",
+      "response": "continue",
+      "target": "నాకు నీళ్లు కావాలి."
+    },
+    {
+      "index": 10,
+      "id": "te.sent.00001",
+      "family": "sentenceBank",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "నాకు నీళ్లు కావాలి."
+    },
+    {
+      "index": 11,
+      "id": "te.sent.00001",
+      "family": "sentenceBank",
+      "type": "shadow",
+      "response": "speak",
+      "target": "నాకు నీళ్లు కావాలి."
+    },
+    {
+      "index": 12,
+      "id": "te.sent.00001",
+      "family": "sentenceBank",
+      "type": "sentence_construction",
+      "response": "build",
+      "target": "నాకు నీళ్లు కావాలి."
+    },
+    {
+      "index": 13,
+      "id": "te.sent.00001",
+      "family": "sentenceBank",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "నాకు నీళ్లు కావాలి."
+    },
+    {
+      "index": 14,
+      "id": "te.lex.okay",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "సరే"
+    },
+    {
+      "index": 15,
+      "id": "te.lex.okay",
+      "family": "lexicalConcepts",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "సరే"
+    },
+    {
+      "index": 16,
+      "id": "te.lex.okay",
+      "family": "lexicalConcepts",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "సరే"
+    },
+    {
+      "index": 17,
+      "id": "te.lex.thanks",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "థాంక్స్"
+    },
+    {
+      "index": 18,
+      "id": "te.lex.thanks",
+      "family": "lexicalConcepts",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "థాంక్స్"
+    },
+    {
+      "index": 19,
+      "id": "te.lex.thanks",
+      "family": "lexicalConcepts",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "థాంక్స్"
+    },
+    {
+      "index": 20,
+      "id": "te.dialogue.0002",
+      "family": "dialogues",
+      "type": "combination_introduction",
+      "response": "continue",
+      "target": "నాకు నీళ్లు కావాలి. సరే. థాంక్స్."
+    },
+    {
+      "index": 21,
+      "id": "te.dialogue.0002",
+      "family": "dialogues",
+      "type": "roleplay_a",
+      "response": "speak",
+      "target": "నాకు నీళ్లు కావాలి. సరే. థాంక్స్."
+    },
+    {
+      "index": 22,
+      "id": "te.dialogue.0002",
+      "family": "dialogues",
+      "type": "roleplay_b",
+      "response": "speak",
+      "target": "నాకు నీళ్లు కావాలి. సరే. థాంక్స్."
+    },
+    {
+      "index": 23,
+      "id": "te.lex.office",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "ఆఫీస్"
+    },
+    {
+      "index": 24,
+      "id": "te.lex.office",
+      "family": "lexicalConcepts",
+      "type": "audio_image_recognition",
+      "response": "choose_media",
+      "target": "ఆఫీస్"
+    },
+    {
+      "index": 25,
+      "id": "te.lex.office",
+      "family": "lexicalConcepts",
+      "type": "spoken_recall",
+      "response": "speak",
+      "target": "ఆఫీస్"
+    },
+    {
+      "index": 26,
+      "id": "te.lex.where",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "ఎక్కడ?"
+    },
+    {
+      "index": 27,
+      "id": "te.lex.where",
+      "family": "lexicalConcepts",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "ఎక్కడ?"
+    },
+    {
+      "index": 28,
+      "id": "te.lex.where",
+      "family": "lexicalConcepts",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "ఎక్కడ?"
+    },
+    {
+      "index": 29,
+      "id": "g02",
+      "family": "grammarInUse",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "___ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 30,
+      "id": "g02",
+      "family": "grammarInUse",
+      "type": "context_recognition",
+      "response": "choose_target",
+      "target": "___ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 31,
+      "id": "te.sent.00081",
+      "family": "sentenceBank",
+      "type": "combination_introduction",
+      "response": "continue",
+      "target": "ఆఫీస్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 32,
+      "id": "te.sent.00081",
+      "family": "sentenceBank",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "ఆఫీస్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 33,
+      "id": "te.sent.00081",
+      "family": "sentenceBank",
+      "type": "shadow",
+      "response": "speak",
+      "target": "ఆఫీస్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 34,
+      "id": "te.sent.00081",
+      "family": "sentenceBank",
+      "type": "sentence_construction",
+      "response": "build",
+      "target": "ఆఫీస్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 35,
+      "id": "te.sent.00081",
+      "family": "sentenceBank",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "ఆఫీస్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 36,
+      "id": "te.lex.tea",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "టీ"
+    },
+    {
+      "index": 37,
+      "id": "te.lex.tea",
+      "family": "lexicalConcepts",
+      "type": "audio_image_recognition",
+      "response": "choose_media",
+      "target": "టీ"
+    },
+    {
+      "index": 38,
+      "id": "te.lex.tea",
+      "family": "lexicalConcepts",
+      "type": "spoken_recall",
+      "response": "speak",
+      "target": "టీ"
+    },
+    {
+      "index": 39,
+      "id": "te.sent.00005",
+      "family": "sentenceBank",
+      "type": "combination_introduction",
+      "response": "continue",
+      "target": "నాకు టీ కావాలి."
+    },
+    {
+      "index": 40,
+      "id": "te.sent.00005",
+      "family": "sentenceBank",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "నాకు టీ కావాలి."
+    },
+    {
+      "index": 41,
+      "id": "te.sent.00005",
+      "family": "sentenceBank",
+      "type": "shadow",
+      "response": "speak",
+      "target": "నాకు టీ కావాలి."
+    },
+    {
+      "index": 42,
+      "id": "te.sent.00005",
+      "family": "sentenceBank",
+      "type": "sentence_construction",
+      "response": "build",
+      "target": "నాకు టీ కావాలి."
+    },
+    {
+      "index": 43,
+      "id": "te.sent.00005",
+      "family": "sentenceBank",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "నాకు టీ కావాలి."
+    },
+    {
+      "index": 44,
+      "id": "te.lex.market",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "మార్కెట్"
+    },
+    {
+      "index": 45,
+      "id": "te.lex.market",
+      "family": "lexicalConcepts",
+      "type": "audio_image_recognition",
+      "response": "choose_media",
+      "target": "మార్కెట్"
+    },
+    {
+      "index": 46,
+      "id": "te.lex.market",
+      "family": "lexicalConcepts",
+      "type": "spoken_recall",
+      "response": "speak",
+      "target": "మార్కెట్"
+    },
+    {
+      "index": 47,
+      "id": "te.sent.00086",
+      "family": "sentenceBank",
+      "type": "combination_introduction",
+      "response": "continue",
+      "target": "మార్కెట్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 48,
+      "id": "te.sent.00086",
+      "family": "sentenceBank",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "మార్కెట్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 49,
+      "id": "te.sent.00086",
+      "family": "sentenceBank",
+      "type": "shadow",
+      "response": "speak",
+      "target": "మార్కెట్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 50,
+      "id": "te.sent.00086",
+      "family": "sentenceBank",
+      "type": "sentence_construction",
+      "response": "build",
+      "target": "మార్కెట్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 51,
+      "id": "te.sent.00086",
+      "family": "sentenceBank",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "మార్కెట్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 52,
+      "id": "te.lex.coffee",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "కాఫీ"
+    },
+    {
+      "index": 53,
+      "id": "te.lex.coffee",
+      "family": "lexicalConcepts",
+      "type": "audio_image_recognition",
+      "response": "choose_media",
+      "target": "కాఫీ"
+    },
+    {
+      "index": 54,
+      "id": "te.lex.coffee",
+      "family": "lexicalConcepts",
+      "type": "spoken_recall",
+      "response": "speak",
+      "target": "కాఫీ"
+    },
+    {
+      "index": 55,
+      "id": "te.sent.00009",
+      "family": "sentenceBank",
+      "type": "combination_introduction",
+      "response": "continue",
+      "target": "నాకు కాఫీ కావాలి."
+    },
+    {
+      "index": 56,
+      "id": "te.sent.00009",
+      "family": "sentenceBank",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "నాకు కాఫీ కావాలి."
+    },
+    {
+      "index": 57,
+      "id": "te.sent.00009",
+      "family": "sentenceBank",
+      "type": "shadow",
+      "response": "speak",
+      "target": "నాకు కాఫీ కావాలి."
+    },
+    {
+      "index": 58,
+      "id": "te.sent.00009",
+      "family": "sentenceBank",
+      "type": "sentence_construction",
+      "response": "build",
+      "target": "నాకు కాఫీ కావాలి."
+    },
+    {
+      "index": 59,
+      "id": "te.sent.00009",
+      "family": "sentenceBank",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "నాకు కాఫీ కావాలి."
+    },
+    {
+      "index": 60,
+      "id": "te.lex.station",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "స్టేషన్"
+    },
+    {
+      "index": 61,
+      "id": "te.lex.station",
+      "family": "lexicalConcepts",
+      "type": "audio_image_recognition",
+      "response": "choose_media",
+      "target": "స్టేషన్"
+    },
+    {
+      "index": 62,
+      "id": "te.lex.station",
+      "family": "lexicalConcepts",
+      "type": "spoken_recall",
+      "response": "speak",
+      "target": "స్టేషన్"
+    },
+    {
+      "index": 63,
+      "id": "te.sent.00091",
+      "family": "sentenceBank",
+      "type": "combination_introduction",
+      "response": "continue",
+      "target": "స్టేషన్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 64,
+      "id": "te.sent.00091",
+      "family": "sentenceBank",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "స్టేషన్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 65,
+      "id": "te.sent.00091",
+      "family": "sentenceBank",
+      "type": "shadow",
+      "response": "speak",
+      "target": "స్టేషన్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 66,
+      "id": "te.sent.00091",
+      "family": "sentenceBank",
+      "type": "sentence_construction",
+      "response": "build",
+      "target": "స్టేషన్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 67,
+      "id": "te.sent.00091",
+      "family": "sentenceBank",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "స్టేషన్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 68,
+      "id": "te.lex.food",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "తిండి"
+    },
+    {
+      "index": 69,
+      "id": "te.lex.food",
+      "family": "lexicalConcepts",
+      "type": "audio_image_recognition",
+      "response": "choose_media",
+      "target": "తిండి"
+    },
+    {
+      "index": 70,
+      "id": "te.lex.food",
+      "family": "lexicalConcepts",
+      "type": "spoken_recall",
+      "response": "speak",
+      "target": "తిండి"
+    },
+    {
+      "index": 71,
+      "id": "te.sent.00013",
+      "family": "sentenceBank",
+      "type": "combination_introduction",
+      "response": "continue",
+      "target": "నాకు తిండి కావాలి."
+    },
+    {
+      "index": 72,
+      "id": "te.sent.00013",
+      "family": "sentenceBank",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "నాకు తిండి కావాలి."
+    },
+    {
+      "index": 73,
+      "id": "te.sent.00013",
+      "family": "sentenceBank",
+      "type": "shadow",
+      "response": "speak",
+      "target": "నాకు తిండి కావాలి."
+    },
+    {
+      "index": 74,
+      "id": "te.sent.00013",
+      "family": "sentenceBank",
+      "type": "sentence_construction",
+      "response": "build",
+      "target": "నాకు తిండి కావాలి."
+    },
+    {
+      "index": 75,
+      "id": "te.sent.00013",
+      "family": "sentenceBank",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "నాకు తిండి కావాలి."
+    },
+    {
+      "index": 76,
+      "id": "te.lex.bank",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "బ్యాంక్"
+    },
+    {
+      "index": 77,
+      "id": "te.lex.bank",
+      "family": "lexicalConcepts",
+      "type": "audio_image_recognition",
+      "response": "choose_media",
+      "target": "బ్యాంక్"
+    },
+    {
+      "index": 78,
+      "id": "te.lex.bank",
+      "family": "lexicalConcepts",
+      "type": "spoken_recall",
+      "response": "speak",
+      "target": "బ్యాంక్"
+    },
+    {
+      "index": 79,
+      "id": "te.sent.00101",
+      "family": "sentenceBank",
+      "type": "combination_introduction",
+      "response": "continue",
+      "target": "బ్యాంక్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 80,
+      "id": "te.sent.00101",
+      "family": "sentenceBank",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "బ్యాంక్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 81,
+      "id": "te.sent.00101",
+      "family": "sentenceBank",
+      "type": "shadow",
+      "response": "speak",
+      "target": "బ్యాంక్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 82,
+      "id": "te.sent.00101",
+      "family": "sentenceBank",
+      "type": "sentence_construction",
+      "response": "build",
+      "target": "బ్యాంక్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 83,
+      "id": "te.sent.00101",
+      "family": "sentenceBank",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "బ్యాంక్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 84,
+      "id": "te.lex.rice-food",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "అన్నం"
+    },
+    {
+      "index": 85,
+      "id": "te.lex.rice-food",
+      "family": "lexicalConcepts",
+      "type": "audio_image_recognition",
+      "response": "choose_media",
+      "target": "అన్నం"
+    },
+    {
+      "index": 86,
+      "id": "te.lex.rice-food",
+      "family": "lexicalConcepts",
+      "type": "spoken_recall",
+      "response": "speak",
+      "target": "అన్నం"
+    },
+    {
+      "index": 87,
+      "id": "te.sent.00017",
+      "family": "sentenceBank",
+      "type": "combination_introduction",
+      "response": "continue",
+      "target": "నాకు అన్నం కావాలి."
+    },
+    {
+      "index": 88,
+      "id": "te.sent.00017",
+      "family": "sentenceBank",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "నాకు అన్నం కావాలి."
+    },
+    {
+      "index": 89,
+      "id": "te.sent.00017",
+      "family": "sentenceBank",
+      "type": "shadow",
+      "response": "speak",
+      "target": "నాకు అన్నం కావాలి."
+    },
+    {
+      "index": 90,
+      "id": "te.sent.00017",
+      "family": "sentenceBank",
+      "type": "sentence_construction",
+      "response": "build",
+      "target": "నాకు అన్నం కావాలి."
+    },
+    {
+      "index": 91,
+      "id": "te.sent.00017",
+      "family": "sentenceBank",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "నాకు అన్నం కావాలి."
+    },
+    {
+      "index": 92,
+      "id": "te.lex.airport",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "ఎయిర్‌పోర్ట్"
+    },
+    {
+      "index": 93,
+      "id": "te.lex.airport",
+      "family": "lexicalConcepts",
+      "type": "audio_image_recognition",
+      "response": "choose_media",
+      "target": "ఎయిర్‌పోర్ట్"
+    },
+    {
+      "index": 94,
+      "id": "te.lex.airport",
+      "family": "lexicalConcepts",
+      "type": "spoken_recall",
+      "response": "speak",
+      "target": "ఎయిర్‌పోర్ట్"
+    },
+    {
+      "index": 95,
+      "id": "te.sent.00106",
+      "family": "sentenceBank",
+      "type": "combination_introduction",
+      "response": "continue",
+      "target": "ఎయిర్‌పోర్ట్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 96,
+      "id": "te.sent.00106",
+      "family": "sentenceBank",
+      "type": "audio_target_recognition",
+      "response": "choose_target",
+      "target": "ఎయిర్‌పోర్ట్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 97,
+      "id": "te.sent.00106",
+      "family": "sentenceBank",
+      "type": "shadow",
+      "response": "speak",
+      "target": "ఎయిర్‌పోర్ట్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 98,
+      "id": "te.sent.00106",
+      "family": "sentenceBank",
+      "type": "sentence_construction",
+      "response": "build",
+      "target": "ఎయిర్‌పోర్ట్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 99,
+      "id": "te.sent.00106",
+      "family": "sentenceBank",
+      "type": "contextual_recall",
+      "response": "speak",
+      "target": "ఎయిర్‌పోర్ట్ ఎక్కడ ఉంది?"
+    },
+    {
+      "index": 100,
+      "id": "te.lex.medicine",
+      "family": "lexicalConcepts",
+      "type": "concept_introduction",
+      "response": "continue",
+      "target": "మందు"
+    }
+  ]
+}

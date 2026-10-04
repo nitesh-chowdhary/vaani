@@ -33,7 +33,9 @@ export interface LearningEvent {
     | 'audio_played'
     | 'session_completed'
     | 'assessment_attempted'
-    | 'assessment_reviewed';
+    | 'assessment_reviewed'
+    | 'activity_skipped'
+    | 'speech_verification_pending';
   conceptId?: string;
   activityId?: string;
   dimension?: Dimension;
@@ -49,6 +51,9 @@ export interface LearningEvent {
   unseen?: boolean;
   reviewPurpose?: 'due' | 'reinforcement';
   selfRating?: 'again' | 'good';
+  speechVerificationPending?: boolean;
+  memoryConceptIds?: string[];
+  activityType?: string;
   evaluationSkill?:
     | 'comprehension'
     | 'listening'
@@ -58,6 +63,7 @@ export interface LearningEvent {
     | 'writing';
 }
 export interface ConceptState {
+  speechVerificationPending?: boolean;
   introducedAt: number;
   lastAt: number;
   dueAt: number;

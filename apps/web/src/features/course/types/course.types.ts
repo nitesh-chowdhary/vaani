@@ -115,6 +115,7 @@ export interface Course {
   activeSession: Session | null;
 }
 export interface ActionResult {
+  recognitionProblem?: boolean;
   session: Session;
   feedback: string;
   target: Target | null;

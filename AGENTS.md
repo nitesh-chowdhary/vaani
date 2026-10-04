@@ -105,3 +105,11 @@ The app uses a dark theme. Login and signup include an accessible eye button to 
 - Teach and rehearse prerequisites, then introduce/listen/shadow/build/retrieve the complete utterance. Substitutions reuse authored sentences sharing patterns; never synthesize Telugu morphology.
 - Sentence, pattern and dialogue state uses the existing event/mastery/SRS system and unchanged timing. Dialogue review targets a productive role; typed/self-reported attempts remain distinct from independent speech.
 - Dialogue dependency completeness can be derived only when every turn exactly matches a validated sentence or lexical item. Unsupported authored content stays blocked; do not silently certify incomplete vocabulary coverage.
+
+## Speaking progression and repetition
+
+- Accepted phonetic typed fallback completes oral practice and records recall, allowing safe combinations; it never grants independently verified speech. Pending speech verification remains separate.
+- Missing, low-confidence or failed speech recognition is a technical event, not a learner error; it does not reduce mastery or adaptive allowance. Learners can retry, hear again, type instead or skip.
+- Skip advances without mastery or failure evidence and does not mark unseen dependencies as introduced.
+- Successful recall suppresses redundant isolated practice. Authored sentence/context/dialogue use increases knowledge depth; genuine subsequent failures restore supported practice.
+- Existing SRS times remain unchanged. Reviews can retrieve a memory through an already introduced dependency-safe authored utterance, merge overlapping requests, and update only legitimately exercised memories. Same-session opportunities wait for a safe higher-order cue rather than repeating an already recalled word without purpose.

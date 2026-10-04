@@ -8,7 +8,10 @@ class RecognitionMock {
   continuous = false;
   onresult:
     | ((event: {
-        results: { isFinal: boolean; 0: { transcript: string } }[];
+        results: {
+          isFinal: boolean;
+          0: { transcript: string; confidence?: number };
+        }[];
       }) => void)
     | null = null;
   onerror: ((event: { error: string }) => void) | null = null;
@@ -95,5 +98,16 @@ describe('short spoken targets', () => {
     result.recognition.onerror?.({ error: 'no-speech' });
     result.recognition.onend?.();
     expect(result.onError).toHaveBeenCalledOnce();
+  });
+  it('low-confidence recognition offers fallback rather than submitting a learner error', () => {
+    const result = capture();
+    result.recognition.onresult?.({
+      results: [{ isFinal: true, 0: { transcript: 'టీ', confidence: 0.1 } }],
+    });
+    result.recognition.onend?.();
+    expect(result.onText).not.toHaveBeenCalled();
+    expect(result.onError).toHaveBeenCalledExactlyOnceWith(
+      "Couldn't quite catch that.",
+    );
   });
 });

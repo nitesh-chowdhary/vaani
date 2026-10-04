@@ -53,7 +53,8 @@ describe('anchored Telugu pronunciation matrix', () => {
     );
     expect(result.classification).toBe('correct');
     expect(result.feedback).not.toMatch(/spelling/i);
-    expect(result.evidence).toBe('unverified');
+    expect(result.evidence).toBe('independent');
+    expect(result.recallOnly).toBe(true);
   });
   it.each([
     ['పాలు', 'paalu', 'palu', false],
@@ -63,6 +64,8 @@ describe('anchored Telugu pronunciation matrix', () => {
     ['నీళ్లు', 'neellu', 'niillu', true],
     ['నీళ్లు', 'neellu', 'neelu', false],
     ['కావాలి', 'kaavaali', 'kavali', true],
+    ['కావాలి', 'kaavaali', 'kaavali', true],
+    ['కావాలి', 'kaavaali', 'kavaali', true],
     ['కావాలి', 'kaavaali', 'kaabali', false],
     ['వస్తాను', 'vastaanu', 'wasthanu', false],
     ['వస్తాను', 'vastaanu', 'wastanu', true],

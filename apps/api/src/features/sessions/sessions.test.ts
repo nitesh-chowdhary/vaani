@@ -59,11 +59,14 @@ describe('beginner session presentation', () => {
     expect(view.activity?.type).toBe('audio_image_recognition');
     expect(view.activity?.target).toBeNull();
     expect(view.activity?.choices.map((choice) => choice.id)).toEqual(
-      expect.arrayContaining(['te.lex.water', 'te.lex.tea']),
+      expect.arrayContaining(
+        plan.activities.find((a) => a.type === 'audio_image_recognition')!
+          .choiceIds!,
+      ),
     );
     expect(
-      view.activity?.choices.every((choice) =>
-        choice.media?.url?.endsWith('.jpg'),
+      view.activity?.choices.every(
+        (choice) => choice.media?.kind === 'image' && !!choice.media.query,
       ),
     ).toBe(true);
     expect(view.activity?.audio?.text).toBeTruthy();

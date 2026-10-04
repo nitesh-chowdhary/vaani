@@ -16,3 +16,5 @@ export * from './session-planner/modality.js';
 export * from './assessment/telugu-pronunciation.js';
 
 export * from './content/media.js';
+
+export * from './session-planner/practice.js';

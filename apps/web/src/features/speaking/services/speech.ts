@@ -1,6 +1,6 @@
 interface RecognitionResult {
   isFinal: boolean;
-  0: { transcript: string };
+  0: { transcript: string; confidence?: number };
 }
 interface Recognition {
   lang: string;
@@ -48,9 +48,7 @@ export const browserSpeech: SpeechProvider = {
     const reportMissingSpeech = () => {
       if (cancelled || delivered || failed) return;
       failed = true;
-      onError(
-        'We could not hear you. Try saying it again, or listen and repeat.',
-      );
+      onError("Couldn't quite catch that.");
     };
     recognition.onresult = (event) => {
       if (cancelled || delivered) return;
@@ -60,15 +58,20 @@ export const browserSpeech: SpeechProvider = {
         .filter(Boolean)
         .join(' ');
       if (!text) return;
+      const confidence = Array.from(event.results).find(
+        (result) => result.isFinal,
+      )?.[0].confidence;
+      if (confidence !== undefined && confidence > 0 && confidence < 0.5) {
+        reportMissingSpeech();
+        return;
+      }
       delivered = true;
       onText(text);
     };
     recognition.onerror = () => {
       if (cancelled || delivered || failed) return;
       failed = true;
-      onError(
-        'We could not hear you. Check your microphone and try again, or listen and repeat.',
-      );
+      onError("Couldn't quite catch that.");
     };
     recognition.onend = () => {
       if (cancelled) return;

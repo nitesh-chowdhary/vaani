@@ -258,7 +258,14 @@ describe('consumer learning interactions', () => {
     fireEvent.load(option.querySelector('img')!);
     expect(option).not.toBeDisabled();
     expect(option.querySelector('img')).toHaveAttribute('alt', '');
-    expect(screen.queryByText(water.telugu)).not.toBeInTheDocument();
+    expect(document.querySelector('.choice-reinforcement')).toHaveAttribute(
+      'aria-hidden',
+      'true',
+    );
+    expect(document.querySelector('.choice-reinforcement')).toHaveAttribute(
+      'data-revealed',
+      'false',
+    );
     expect(screen.queryByText('water')).not.toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: 'Play Telugu audio' }),
@@ -281,6 +288,10 @@ describe('consumer learning interactions', () => {
     expect(
       actionRegion.querySelector('.choice-reinforcement'),
     ).toHaveTextContent(water.telugu);
+    expect(actionRegion.querySelector('.choice-reinforcement')).toHaveAttribute(
+      'aria-hidden',
+      'false',
+    );
     expect(document.querySelector('.choice-grid')).not.toContainElement(
       actionRegion,
     );
@@ -472,6 +483,11 @@ describe('consumer learning interactions', () => {
     vi.spyOn(browserAudio, 'play').mockRejectedValue(
       new Error('internal provider detail'),
     );
+    vi.spyOn(courseService, 'act').mockResolvedValue({
+      session: s,
+      feedback: '',
+      target: null,
+    });
     vi.spyOn(browserSpeech, 'start').mockImplementation((_onText, onError) => {
       onError(
         'Voice input is not available here. Say it aloud, or type your answer.',
@@ -492,9 +508,11 @@ describe('consumer learning interactions', () => {
     ).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Speak Telugu' }));
     expect(screen.queryByLabelText('Your response')).not.toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: 'Listen and repeat' }),
-    ).toBeEnabled();
+    await waitFor(() =>
+      expect(
+        screen.getByRole('button', { name: 'Listen and repeat' }),
+      ).toBeEnabled(),
+    );
     expect(document.body.textContent).not.toMatch(technicalLanguage);
   });
   it('keeps oral self-check available without making typing the fallback default', async () => {
@@ -756,5 +774,100 @@ describe('language-independent support and primitives', () => {
       screen.getByRole('button', { name: 'Continue Telugu' }),
     );
     expect(await screen.findByText('Learning starts here')).toBeInTheDocument();
+  });
+});
+
+describe('P0 oral fallback and escape paths', () => {
+  it('recognition failure offers typing and skip without submitting a wrong answer', async () => {
+    const s = session('spoken_recall');
+    vi.spyOn(courseService, 'session').mockResolvedValue(s);
+    const submit = vi
+      .spyOn(courseService, 'act')
+      .mockResolvedValue({ session: s, feedback: '', target: null });
+    vi.spyOn(browserSpeech, 'start').mockImplementation((_text, onError) => {
+      onError("Couldn't quite catch that.");
+      return () => {};
+    });
+    mount();
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Speak Telugu' }),
+    );
+    expect(
+      await screen.findByText("Couldn't quite catch that."),
+    ).toBeInTheDocument();
+    await waitFor(() =>
+      expect(submit).toHaveBeenCalledWith(
+        'session',
+        expect.objectContaining({ action: 'recognition_problem' }),
+      ),
+    );
+    expect(
+      submit.mock.calls.every(
+        ([, payload]) => (payload as { action: string }).action !== 'answer',
+      ),
+    ).toBe(true);
+    await userEvent.click(screen.getByRole('button', { name: 'Type instead' }));
+    expect(screen.getByLabelText('Your response')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Skip for now' })).toBeEnabled();
+  });
+  it('typed oral success has a Continue path without another microphone attempt', async () => {
+    const s = session('spoken_recall');
+    vi.spyOn(courseService, 'session').mockResolvedValue(s);
+    const next = session('concept_introduction');
+    next.activity = {
+      ...next.activity!,
+      id: 'next',
+      conceptId: water.id,
+      target: water,
+      stimulus: null,
+    };
+    const submit = vi.spyOn(courseService, 'act').mockResolvedValue({
+      session: next,
+      feedback: 'Correct',
+      classification: 'correct',
+      target: want,
+      evidence: 'independent',
+    });
+    mount();
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Type instead' }),
+    );
+    await userEvent.type(screen.getByLabelText('Your response'), 'kavali');
+    await userEvent.click(screen.getByRole('button', { name: 'Check' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Continue' }),
+    );
+    expect(await screen.findByText(water.telugu)).toBeInTheDocument();
+    expect(submit).toHaveBeenCalledWith(
+      'session',
+      expect.objectContaining({
+        action: 'answer',
+        response: 'kavali',
+        inputMode: 'text',
+      }),
+    );
+  });
+  it('Skip for now advances even when the microphone never delivers a result', async () => {
+    const s = session('spoken_recall');
+    vi.spyOn(courseService, 'session').mockResolvedValue(s);
+    const next = session('concept_introduction');
+    next.activity = { ...next.activity!, id: 'next', target: water };
+    const submit = vi
+      .spyOn(courseService, 'act')
+      .mockResolvedValue({ session: next, feedback: '', target: null });
+    const cancel = vi.fn();
+    vi.spyOn(browserSpeech, 'start').mockReturnValue(cancel);
+    mount();
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Speak Telugu' }),
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Skip for now' }));
+    await waitFor(() =>
+      expect(submit).toHaveBeenCalledWith(
+        'session',
+        expect.objectContaining({ action: 'skip' }),
+      ),
+    );
+    expect(cancel).toHaveBeenCalledWith(true);
   });
 });

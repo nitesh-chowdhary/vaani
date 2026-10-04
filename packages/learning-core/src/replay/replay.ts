@@ -33,6 +33,10 @@ export function replay(catalog: Catalog, input: LearningEvent[]): LearnerState {
         contexts: [],
       };
     const state = concepts[id];
+    if (state && event.type === 'speech_verification_pending')
+      state.speechVerificationPending = true;
+    if (state && event.speechVerificationPending !== undefined)
+      state.speechVerificationPending = event.speechVerificationPending;
     if (
       !state ||
       event.type !== 'activity_answered' ||
@@ -97,6 +101,53 @@ export function replay(catalog: Catalog, input: LearningEvent[]): LearnerState {
           catalog.master.srsPolicy.sameSessionReinforcementMinutes as number[],
         ),
       );
+    for (const memoryId of event.memoryConceptIds ?? []) {
+      const memory = concepts[memoryId];
+      if (
+        !memory ||
+        memoryId === id ||
+        !catalog.items[id]?.dependencies.includes(memoryId)
+      )
+        continue;
+      memory.lastAt = event.at;
+      if (
+        event.inputMode === 'speech' &&
+        ['independent', 'hesitant', 'hinted'].includes(event.evidence) &&
+        catalog.items[memoryId]?.family === 'lexicalConcepts'
+      ) {
+        memory.speechVerificationPending = false;
+        memory.dimensions = applyEvidence(
+          memory,
+          'spoken_production',
+          event.evidence,
+        );
+      }
+      if (event.evidence === 'incorrect') memory.failures++;
+      memory.dimensions = applyEvidence(
+        memory,
+        'independent_recall',
+        event.evidence,
+      );
+      if (
+        event.at - memory.introducedAt >= DAY &&
+        event.evidence === 'independent'
+      )
+        memory.dimensions = applyEvidence(
+          memory,
+          'delayed_recall',
+          event.evidence,
+        );
+      Object.assign(
+        memory,
+        schedule(
+          memory,
+          event.evidence,
+          event.at,
+          catalog.master.srsPolicy.delayedRecallMilestoneDays as number[],
+          catalog.master.srsPolicy.sameSessionReinforcementMinutes as number[],
+        ),
+      );
+    }
   }
   const p = progression(catalog, events);
   return { concepts, events, level: p.level, completedC2: p.completedC2 };

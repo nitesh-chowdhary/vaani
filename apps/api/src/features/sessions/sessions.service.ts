@@ -10,6 +10,7 @@ import {
   acceptedVariants,
   meaningAnswerSpec,
   allowedActivity,
+  shouldSuppressActivity,
   nextReinforcement,
   type AnswerClassification,
   type LearnerState,
@@ -264,10 +265,13 @@ export function sessionView(
             audio:
               listening || audioPractice || visible
                 ? {
-                    text: targetAudio!,
+                    text:
+                      learnerRole && !visible
+                        ? dialogueCues.map((t) => t.telugu).join(' ')
+                        : targetAudio!,
                     language: presentation.targetLanguage.speechLocale,
                     speed: item.audioSpeed,
-                    url: item.audio ?? null,
+                    url: learnerRole && !visible ? null : (item.audio ?? null),
                   }
                 : null,
             choices,
@@ -299,7 +303,8 @@ export function createSessionService(content = loadContent()) {
     let cursor = start;
     while (
       cursor < plan.activities.length &&
-      !allowedActivity(catalog, state, plan.activities[cursor]!)
+      (!allowedActivity(catalog, state, plan.activities[cursor]!) ||
+        shouldSuppressActivity(catalog, state, plan.activities[cursor]!))
     )
       cursor++;
     return { cursor, current: plan.activities[cursor] ?? null };
@@ -440,6 +445,8 @@ export function createSessionService(content = loadContent()) {
         activityId: a.id,
         dimension: a.dimension,
         evaluationSkill: a.intent?.skill,
+        activityType: a.type,
+        memoryConceptIds: a.memoryConceptIds,
         reviewPurpose:
           a.reviewPurpose ?? (a.phase === 'review' ? 'due' : undefined),
         contextId: item.context?.id ?? item.id,
@@ -447,6 +454,7 @@ export function createSessionService(content = loadContent()) {
       let feedback = '';
       let advance = false;
       let classification: AnswerClassification | undefined;
+      let recognitionProblem = false;
       if (input.action === 'hint') {
         if (a.phase === 'assessment')
           throw new ApiError(
@@ -457,6 +465,24 @@ export function createSessionService(content = loadContent()) {
         event.type = 'hint_used';
       } else if (input.action === 'audio') {
         event.type = 'audio_played';
+      } else if (input.action === 'skip') {
+        if (a.phase === 'assessment')
+          throw new ApiError(
+            400,
+            'support_restricted',
+            'Assessment support is restricted.',
+          );
+        event.type = 'activity_skipped';
+        advance = true;
+      } else if (input.action === 'recognition_problem') {
+        if (a.intent?.response !== 'speak')
+          throw new ApiError(
+            400,
+            'invalid_activity',
+            'Voice input is not used here.',
+          );
+        event.type = 'speech_verification_pending';
+        event.speechVerificationPending = true;
       } else if (input.action === 'expose') {
         if (a.phase !== 'exposure')
           throw new ApiError(
@@ -494,6 +520,19 @@ export function createSessionService(content = loadContent()) {
         if (a.dimension === 'listening_recognition' && !heard)
           result.evidence = 'unverified';
         event.evidence = result.evidence;
+        recognitionProblem = result.recognitionProblem === true;
+        if (result.recallOnly) {
+          event.dimension = 'independent_recall';
+          event.speechVerificationPending = true;
+        } else if (recognitionProblem) {
+          event.type = 'speech_verification_pending';
+          event.speechVerificationPending = true;
+        } else if (
+          input.inputMode === 'speech' &&
+          result.classification === 'correct' &&
+          a.intent?.response === 'speak'
+        )
+          event.speechVerificationPending = false;
         event.response = input.response;
         event.inputMode = input.inputMode;
         event.latencyMs = input.latencyMs;
@@ -521,6 +560,7 @@ export function createSessionService(content = loadContent()) {
           completed,
         );
         if (
+          input.action !== 'skip' &&
           reinforcement &&
           allowedActivity(catalog, updatedState, reinforcement)
         )
@@ -613,6 +653,7 @@ export function createSessionService(content = loadContent()) {
         classification,
         target: input.action === 'audio' ? null : publicItem(item),
         evidence: event.evidence,
+        recognitionProblem,
       };
     },
     async finish(userId: string, id: string, eventId: string) {
