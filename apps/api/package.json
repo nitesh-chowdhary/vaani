@@ -1,0 +1,35 @@
+{
+  "name": "@vaani/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/app/server.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/app/server.js"
+  },
+  "dependencies": {
+    "argon2": "^0.44.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "jose": "^6.1.0",
+    "mongoose": "^8.19.0",
+    "zod": "^4.1.0",
+    "@vaani/learning-core": "0.0.0"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.9",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/supertest": "^6.0.3",
+    "mongodb-memory-server": "^10.2.0",
+    "supertest": "^7.1.4",
+    "tsx": "^4.20.0"
+  }
+}

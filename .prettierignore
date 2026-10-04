@@ -1,0 +1,9 @@
+node_modules
+dist
+coverage
+package-lock.json
+cred.md
+creds.md
+telugu_course_master.json
+
+VAANI_TELUGU_A0_C2_FINAL_MASTER.json

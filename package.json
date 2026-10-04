@@ -1,0 +1,37 @@
+{
+  "name": "vaani",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev:api": "npm run dev -w @vaani/api",
+    "dev:web": "npm run dev -w @vaani/web",
+    "test": "npm test --workspaces --if-present",
+    "typecheck": "npm run build -w @vaani/learning-core && npm run typecheck --workspaces --if-present",
+    "lint": "eslint apps packages dev.mjs eslint.config.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "build": "npm run build -w @vaani/learning-core && npm run build -w @vaani/api && npm run build -w @vaani/web",
+    "check": "npm run content:validate && npm run typecheck && npm run lint && npm run format:check && npm test && npm run build",
+    "dev": "node dev.mjs",
+    "content:validate": "npm run build -w @vaani/learning-core && tsx scripts/validate-content.ts",
+    "content:import": "npm run build -w @vaani/learning-core && tsx scripts/import-content.ts",
+    "assessment:review": "tsx scripts/review-assessment.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4",
+    "eslint": "^9.39.0",
+    "typescript-eslint": "^8.46.0",
+    "prettier": "^3.6.2",
+    "@types/node": "^22.18.0",
+    "eslint-plugin-react-hooks": "^5.2.0"
+  },
+  "type": "module"
+}

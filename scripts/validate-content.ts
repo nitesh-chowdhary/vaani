@@ -1,0 +1,2 @@
+import { loadContent } from '../apps/api/src/features/content/content.service.js';
+try {const {catalog,hash}=loadContent();console.log(JSON.stringify({valid:true,hash,sections:Object.keys(catalog.sections).length,records:Object.keys(catalog.items).length,counts:catalog.counts,contentWarnings:catalog.warnings.length},null,2));}catch(error){console.error(error instanceof Error?error.message:'Content validation failed');process.exitCode=1;}

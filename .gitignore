@@ -1,0 +1,16 @@
+node_modules/
+dist/
+build/
+coverage/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+.vite/
+playwright-report/
+test-results/
+
+# Local connection credentials
+creds.md
+cred.md

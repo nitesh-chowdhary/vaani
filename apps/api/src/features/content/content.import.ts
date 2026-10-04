@@ -1,0 +1,3 @@
+import { ContentSection } from './content.model.js';
+import { loadContent } from './content.service.js';
+export async function importContent(){const {catalog,hash}=loadContent();await ContentSection.createIndexes();await ContentSection.bulkWrite(Object.entries(catalog.sections).map(([section,payload])=>({updateOne:{filter:{courseId:catalog.master.courseId,section},update:{$set:{payload,sourceHash:hash}},upsert:true}})));return {courseId:catalog.master.courseId,hash,sections:Object.keys(catalog.sections).length,records:Object.keys(catalog.items).length,counts:catalog.counts,warnings:catalog.warnings.length};}

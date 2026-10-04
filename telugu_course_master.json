@@ -1,0 +1,6510 @@
+{
+  "schemaVersion": "1.0.0",
+  "courseId": "te-spoken-a0-c2",
+  "title": "Vaani Telugu — Spoken-First A0 to C2",
+  "targetLanguage": {
+    "code": "te",
+    "name": "Telugu",
+    "nativeName": "తెలుగు"
+  },
+  "baseLanguage": {
+    "default": "en",
+    "name": "English",
+    "designRule": "All meanings/glosses are keyed by base-language code so another base language can be added later without changing Telugu concept IDs."
+  },
+  "contentStatus": {
+    "curriculumArchitecture": "complete",
+    "coreSpokenSeedCorpus": "included",
+    "nativeLinguistCertification": "required_before_claiming_final_C1_C2_linguistic_approval",
+    "note": "This file is designed as the stable master course contract and contains a high-confidence spoken-first seed corpus. No finite static file can itself guarantee C2; C2 requires extensive unseen listening/interaction and native-reviewed advanced corpus. The schema is intended not to require restructuring when more reviewed Telugu corpus/audio is added."
+  },
+  "priorities": [
+    {
+      "skill": "speaking",
+      "priority": 1,
+      "weight": 0.45
+    },
+    {
+      "skill": "listening",
+      "priority": 2,
+      "weight": 0.35
+    },
+    {
+      "skill": "reading",
+      "priority": 3,
+      "weight": 0.15
+    },
+    {
+      "skill": "writing",
+      "priority": 4,
+      "weight": 0.05
+    }
+  ],
+  "displayPolicy": {
+    "script": "Always store and display Telugu script.",
+    "romanization": "Always available on demand; shown by default for beginner material.",
+    "meaning": "Every first exposure must display an English meaning. Every learner-facing Telugu token/chunk must support hover/tap gloss resolution.",
+    "audio": "Every production-target item should support audio; human/native-reviewed audio is preferred, TTS may be fallback.",
+    "unknownWordRule": "A0-A2: never require a learner to understand/produce an unexplained lexical concept. B1-C2 inference tasks may contain unfamiliar language only when explicitly marked and hover/tap glosses remain available."
+  },
+  "sessionPolicy": {
+    "nominalSessionMinutes": 60,
+    "earlyTargetNewLexicalConceptsPer60Minutes": 60,
+    "dailyNewItemHardCap": null,
+    "rule": "There is no fixed daily ceiling. Each session independently receives an adaptive new-content allowance. A learner studying 3-4 hours may receive new content in later sessions if retention/review burden remains healthy.",
+    "adaptiveNewContent": {
+      "signals": [
+        "independent recall accuracy",
+        "delayed recall accuracy",
+        "response latency",
+        "hint usage",
+        "repeated errors",
+        "review backlog",
+        "listening comprehension",
+        "spoken production success"
+      ],
+      "guidance": [
+        {
+          "condition": "strong retention and >=90% independent recall with manageable review backlog",
+          "newConceptsPerHour": "55-70"
+        },
+        {
+          "condition": "80-89% independent recall",
+          "newConceptsPerHour": "40-55"
+        },
+        {
+          "condition": "70-79% independent recall",
+          "newConceptsPerHour": "25-40"
+        },
+        {
+          "condition": "<70% recall or heavy review backlog",
+          "newConceptsPerHour": "0-25"
+        }
+      ],
+      "important": "These are planner bands, not a proficiency score and not a daily cap."
+    },
+    "newConceptIntroductionContract": [
+      "show meaning before testing",
+      "show spoken Telugu form",
+      "show Telugu script",
+      "show learner romanization",
+      "play or offer audio",
+      "show at least one natural context",
+      "never grade a word before its first explained exposure"
+    ],
+    "sessionMix": {
+      "principle": "Interleave new material, same-session recall, due reviews, listening and speaking rather than blocking all new words together.",
+      "beginnerExamplePercent": {
+        "new": 45,
+        "sameSessionRecall": 25,
+        "dueReview": 20,
+        "listeningSpeakingTransfer": 10
+      },
+      "advancedRule": "As level and review burden rise, reduce new-word proportion and increase extended listening, spontaneous speaking and transfer."
+    }
+  },
+  "srsPolicy": {
+    "model": "adaptive milestone SRS",
+    "sameSessionReinforcementMinutes": [0, 4, 12, 25, 45],
+    "delayedRecallMilestoneDays": [1, 2, 3, 5, 7, 14, 30, 60, 120, 240, 365],
+    "continuesBeyond365Days": true,
+    "rules": [
+      "Failed recall schedules earlier review and/or re-teaching in a different context.",
+      "Correct-after-hint is weaker evidence than independent recall.",
+      "Very slow correct recall is weaker evidence than fluent recall.",
+      "Fast independent delayed recall expands spacing.",
+      "Repeated contextual success is required before strong mastery.",
+      "Speaking and listening evidence are tracked separately from simple recognition."
+    ]
+  },
+  "masteryDimensions": [
+    "meaning_recognition",
+    "listening_recognition",
+    "independent_recall",
+    "spoken_production",
+    "phrase_recall",
+    "sentence_construction",
+    "contextual_response",
+    "delayed_recall",
+    "transfer_to_unseen_context"
+  ],
+  "contentRules": [
+    "Prefer natural contemporary spoken Telugu over bookish/formal wording for production targets.",
+    "Keep useful formal/written alternatives as register variants rather than deleting them.",
+    "Use stable concept IDs independent of spelling.",
+    "Do not create a new concept merely because spelling/romanization was corrected.",
+    "A concept may have multiple natural accepted responses.",
+    "Do not force literal English-to-Telugu word order.",
+    "Do not use one exact canned sentence as the only valid conversational response.",
+    "Modern natural loanwords may be taught when they are genuinely common in speech.",
+    "Regional variants must be labeled; broad contemporary Telugu is the default productive target."
+  ],
+  "levels": [
+    {
+      "level": "A0",
+      "visibleAs": "course progression milestone",
+      "units": [
+        {
+          "id": "te-a0-01",
+          "title": "Sound before script",
+          "goal": "Understand and reproduce the core sound contrasts used in common speech.",
+          "functions": ["greet", "identify", "repeat", "repair"],
+          "domains": ["pronouns", "yes/no", "question-words", "common nouns"],
+          "languageFocus": [
+            "copular/existential chunks",
+            "polite vs casual address"
+          ]
+        },
+        {
+          "id": "te-a0-02",
+          "title": "First contact",
+          "goal": "Greet, give a name, ask a name, say yes/no, thank and apologise.",
+          "functions": [
+            "greet",
+            "introduce-self",
+            "ask-name",
+            "thank",
+            "apologise"
+          ],
+          "domains": ["greetings", "names", "politeness"],
+          "languageFocus": ["నా పేరు…", "మీ పేరు ఏంటి?"]
+        },
+        {
+          "id": "te-a0-03",
+          "title": "Immediate needs",
+          "goal": "Ask for water, food, help and a bathroom.",
+          "functions": ["ask-for", "need", "help", "directions"],
+          "domains": ["food", "drink", "places", "help"],
+          "languageFocus": ["నాకు ___ కావాలి", "___ ఎక్కడ ఉంది?"]
+        },
+        {
+          "id": "te-a0-04",
+          "title": "Here and there",
+          "goal": "Understand basic location and movement.",
+          "functions": ["where", "go", "come", "stop", "direction"],
+          "domains": ["places", "directions", "transport"],
+          "languageFocus": ["ఇక్కడ/అక్కడ", "ఎక్కడ?", "వెళ్లాలి"]
+        },
+        {
+          "id": "te-a0-05",
+          "title": "People around me",
+          "goal": "Identify close family and common people.",
+          "functions": ["identify-person", "family", "possess"],
+          "domains": ["family", "people"],
+          "languageFocus": ["ఇది నా ___", "ఆయన/ఆమె"]
+        },
+        {
+          "id": "te-a0-06",
+          "title": "Numbers and time basics",
+          "goal": "Use 1-10, simple prices and now/today/tomorrow.",
+          "functions": ["count", "price", "time"],
+          "domains": ["numbers", "time", "money"],
+          "languageFocus": ["ఎంత?", "ఇప్పుడు", "రేపు"]
+        }
+      ]
+    },
+    {
+      "level": "A1",
+      "visibleAs": "course progression milestone",
+      "units": [
+        {
+          "id": "te-a1-01",
+          "title": "Daily routine",
+          "goal": "Talk about waking, eating, going, working and sleeping.",
+          "functions": ["routine", "time", "present"],
+          "domains": ["daily-actions", "time"],
+          "languageFocus": ["habitual present", "simple sequencing"]
+        },
+        {
+          "id": "te-a1-02",
+          "title": "Food and ordering",
+          "goal": "Order common food/drink and change a simple order.",
+          "functions": ["order-food", "preference", "quantity", "repair"],
+          "domains": ["food", "drink", "restaurant"],
+          "languageFocus": ["నాకు ___ కావాలి", "___ వద్దు"]
+        },
+        {
+          "id": "te-a1-03",
+          "title": "Shopping",
+          "goal": "Ask price, quantity, choose and pay.",
+          "functions": ["price", "quantity", "choose", "pay"],
+          "domains": ["shopping", "numbers", "money"],
+          "languageFocus": ["ఇది ఎంత?", "కొంచెం/ఎక్కువ/తక్కువ"]
+        },
+        {
+          "id": "te-a1-04",
+          "title": "Travel",
+          "goal": "Use bus/train/auto, ticket, destination and simple directions.",
+          "functions": ["transport", "destination", "ticket", "directions"],
+          "domains": ["travel", "places"],
+          "languageFocus": ["___కి వెళ్లాలి", "ఎక్కడ దిగాలి?"]
+        },
+        {
+          "id": "te-a1-05",
+          "title": "Home and family",
+          "goal": "Describe home, family and possession.",
+          "functions": ["describe", "family", "possession"],
+          "domains": ["home", "family"],
+          "languageFocus": ["నా/మా/మీ", "ఉంది/ఉన్నారు"]
+        },
+        {
+          "id": "te-a1-06",
+          "title": "Health basics",
+          "goal": "Say pain, fever, medicine and need a doctor.",
+          "functions": ["health", "pain", "help"],
+          "domains": ["body", "health"],
+          "languageFocus": ["నాకు ___ నొప్పిగా ఉంది", "డాక్టర్ కావాలి"]
+        },
+        {
+          "id": "te-a1-07",
+          "title": "Work and study",
+          "goal": "Say where you work/study and basic tasks.",
+          "functions": ["work", "study", "schedule"],
+          "domains": ["work", "school"],
+          "languageFocus": ["నేను ___లో పని చేస్తున్నాను"]
+        },
+        {
+          "id": "te-a1-08",
+          "title": "Social basics",
+          "goal": "Likes, invitations, simple feelings and plans.",
+          "functions": ["likes", "invite", "feelings", "plan"],
+          "domains": ["friends", "feelings"],
+          "languageFocus": ["నాకు ___ ఇష్టం", "వస్తారా?"]
+        }
+      ]
+    },
+    {
+      "level": "A2",
+      "visibleAs": "course progression milestone",
+      "units": [
+        {
+          "id": "te-a2-01",
+          "title": "Past events",
+          "goal": "Explain what happened yesterday or earlier.",
+          "functions": ["past", "sequence", "explain-problem"],
+          "domains": ["events", "travel", "daily-life"],
+          "languageFocus": ["past forms", "ఏమైంది?"]
+        },
+        {
+          "id": "te-a2-02",
+          "title": "Plans and future",
+          "goal": "Talk about tomorrow, weekend and future intentions.",
+          "functions": ["future", "plan", "arrange"],
+          "domains": ["time", "social", "travel"],
+          "languageFocus": ["future/intention forms"]
+        },
+        {
+          "id": "te-a2-03",
+          "title": "Descriptions",
+          "goal": "Describe people, places, objects and differences.",
+          "functions": ["describe", "compare"],
+          "domains": ["appearance", "places", "objects"],
+          "languageFocus": ["comparatives", "degree"]
+        },
+        {
+          "id": "te-a2-04",
+          "title": "Requests and services",
+          "goal": "Handle repairs, deliveries, appointments and service problems.",
+          "functions": ["request", "complaint", "clarify"],
+          "domains": ["services", "home", "health"],
+          "languageFocus": ["polite request patterns"]
+        },
+        {
+          "id": "te-a2-05",
+          "title": "Longer social talk",
+          "goal": "Sustain several turns about interests, family and experiences.",
+          "functions": ["small-talk", "follow-up", "likes", "experience"],
+          "domains": ["social", "hobbies"],
+          "languageFocus": ["question chains"]
+        },
+        {
+          "id": "te-a2-06",
+          "title": "Phone and messaging",
+          "goal": "Handle simple calls, missed calls and messages.",
+          "functions": ["phone", "message", "clarify"],
+          "domains": ["communication"],
+          "languageFocus": ["reported message basics"]
+        },
+        {
+          "id": "te-a2-07",
+          "title": "Reasons and choices",
+          "goal": "Give simple reasons and preferences.",
+          "functions": ["reason", "choice", "agreement"],
+          "domains": ["opinions", "daily-life"],
+          "languageFocus": ["ఎందుకంటే", "కాబట్టి"]
+        },
+        {
+          "id": "te-a2-08",
+          "title": "Unexpected problems",
+          "goal": "Lost item, wrong route, delay and misunderstanding.",
+          "functions": ["problem", "repair", "narrate"],
+          "domains": ["emergency", "travel"],
+          "languageFocus": ["repair strategies"]
+        }
+      ]
+    },
+    {
+      "level": "B1",
+      "visibleAs": "course progression milestone",
+      "units": [
+        {
+          "id": "te-b1-01",
+          "title": "Connected storytelling",
+          "goal": "Tell a coherent personal story with sequence, cause and result.",
+          "functions": ["narrate", "sequence", "cause"],
+          "domains": ["life-events"],
+          "languageFocus": ["connectors", "reported speech intro"]
+        },
+        {
+          "id": "te-b1-02",
+          "title": "Opinions with reasons",
+          "goal": "Explain and support an opinion on familiar topics.",
+          "functions": ["opinion", "reason", "contrast"],
+          "domains": ["society", "work", "media"],
+          "languageFocus": ["although/but/because equivalents"]
+        },
+        {
+          "id": "te-b1-03",
+          "title": "Workplace conversation",
+          "goal": "Participate in meetings, task updates and routine professional interaction.",
+          "functions": ["update", "clarify", "agree", "disagree"],
+          "domains": ["work"],
+          "languageFocus": ["polite-professional register"]
+        },
+        {
+          "id": "te-b1-04",
+          "title": "Travel complications",
+          "goal": "Handle cancellations, changes, complaints and alternatives.",
+          "functions": ["negotiate", "complain", "alternative"],
+          "domains": ["travel"],
+          "languageFocus": ["conditional basics"]
+        },
+        {
+          "id": "te-b1-05",
+          "title": "Relationships and emotions",
+          "goal": "Talk naturally about emotions, friendship and interpersonal problems.",
+          "functions": ["emotion", "advice", "support"],
+          "domains": ["relationships"],
+          "languageFocus": ["modality/advice"]
+        },
+        {
+          "id": "te-b1-06",
+          "title": "Media and entertainment",
+          "goal": "Discuss films, music, news and recommendations.",
+          "functions": ["summarise", "recommend", "react"],
+          "domains": ["media"],
+          "languageFocus": ["evaluation language"]
+        },
+        {
+          "id": "te-b1-07",
+          "title": "Explain how things work",
+          "goal": "Give instructions and explain processes.",
+          "functions": ["explain-process", "sequence", "clarify"],
+          "domains": ["technology", "daily-life"],
+          "languageFocus": ["procedural discourse"]
+        },
+        {
+          "id": "te-b1-08",
+          "title": "Unprepared conversation",
+          "goal": "Maintain conversation when topic shifts unexpectedly.",
+          "functions": ["topic-shift", "repair", "follow-up"],
+          "domains": ["mixed"],
+          "languageFocus": ["discourse markers"]
+        }
+      ]
+    },
+    {
+      "level": "B2",
+      "visibleAs": "course progression milestone",
+      "units": [
+        {
+          "id": "te-b2-01",
+          "title": "Abstract discussion",
+          "goal": "Discuss education, technology, environment and social change.",
+          "functions": ["argue", "qualify", "compare"],
+          "domains": ["abstract-topics"],
+          "languageFocus": ["complex clauses"]
+        },
+        {
+          "id": "te-b2-02",
+          "title": "Debate without scripts",
+          "goal": "State, defend, soften and revise a position.",
+          "functions": ["argument", "counterargument", "concede"],
+          "domains": ["opinions"],
+          "languageFocus": ["hedging", "concession"]
+        },
+        {
+          "id": "te-b2-03",
+          "title": "Professional depth",
+          "goal": "Present a problem, options, trade-offs and recommendation.",
+          "functions": ["present", "analyse", "recommend"],
+          "domains": ["professional"],
+          "languageFocus": ["structured discourse"]
+        },
+        {
+          "id": "te-b2-04",
+          "title": "Native-speed everyday speech",
+          "goal": "Follow fast connected conversational Telugu with normal repair.",
+          "functions": ["listen-native", "infer", "repair"],
+          "domains": ["mixed"],
+          "languageFocus": ["connected speech awareness"]
+        },
+        {
+          "id": "te-b2-05",
+          "title": "Humour and implication intro",
+          "goal": "Recognise common teasing, indirectness and implied stance.",
+          "functions": ["infer", "humour", "pragmatics"],
+          "domains": ["social"],
+          "languageFocus": ["pragmatic meaning"]
+        },
+        {
+          "id": "te-b2-06",
+          "title": "Formal vs casual",
+          "goal": "Switch appropriately between casual, polite and professional forms.",
+          "functions": ["register-shift", "politeness"],
+          "domains": ["mixed"],
+          "languageFocus": ["register alternatives"]
+        },
+        {
+          "id": "te-b2-07",
+          "title": "Long-form narrative",
+          "goal": "Understand and produce extended stories and explanations.",
+          "functions": ["narrate", "summarise", "detail"],
+          "domains": ["mixed"],
+          "languageFocus": ["cohesion"]
+        },
+        {
+          "id": "te-b2-08",
+          "title": "Unfamiliar scenarios",
+          "goal": "Transfer known language to situations not directly rehearsed.",
+          "functions": ["transfer", "infer", "negotiate"],
+          "domains": ["mixed"],
+          "languageFocus": ["adaptive language"]
+        }
+      ]
+    },
+    {
+      "level": "C1",
+      "visibleAs": "course progression milestone",
+      "units": [
+        {
+          "id": "te-c1-01",
+          "title": "Nuanced argument",
+          "goal": "Express fine distinctions, reservations and layered reasoning.",
+          "functions": ["argue", "qualify", "reframe"],
+          "domains": ["abstract"],
+          "languageFocus": ["advanced discourse"]
+        },
+        {
+          "id": "te-c1-02",
+          "title": "Professional and academic speech",
+          "goal": "Follow and contribute to specialised discussion in familiar domains.",
+          "functions": ["present", "synthesise", "question"],
+          "domains": ["professional", "academic"],
+          "languageFocus": ["formal spoken register"]
+        },
+        {
+          "id": "te-c1-03",
+          "title": "Idiomatic conversation",
+          "goal": "Understand and appropriately use common idiomatic/colloquial expressions.",
+          "functions": ["idiom", "stance", "pragmatics"],
+          "domains": ["social"],
+          "languageFocus": ["idiomatic usage"]
+        },
+        {
+          "id": "te-c1-04",
+          "title": "Complex listening",
+          "goal": "Follow long unscripted speech, interviews and discussions.",
+          "functions": ["infer", "summarise", "track-speakers"],
+          "domains": ["mixed"],
+          "languageFocus": ["implicit links"]
+        },
+        {
+          "id": "te-c1-05",
+          "title": "Mediation",
+          "goal": "Explain, summarise and reformulate complex information for another person.",
+          "functions": ["mediate", "summarise", "simplify"],
+          "domains": ["mixed"],
+          "languageFocus": ["reformulation"]
+        },
+        {
+          "id": "te-c1-06",
+          "title": "Style and register control",
+          "goal": "Shift language according to relationship, purpose and setting.",
+          "functions": ["register-shift", "tone"],
+          "domains": ["mixed"],
+          "languageFocus": ["sociolinguistic control"]
+        }
+      ]
+    },
+    {
+      "level": "C2",
+      "visibleAs": "course progression milestone",
+      "units": [
+        {
+          "id": "te-c2-01",
+          "title": "Unrestricted spontaneous interaction",
+          "goal": "Sustain precise, fluent speech across unfamiliar and demanding topics.",
+          "functions": ["spontaneous", "precision", "repair"],
+          "domains": ["mixed"],
+          "languageFocus": ["full productive control"]
+        },
+        {
+          "id": "te-c2-02",
+          "title": "Fine shades of meaning",
+          "goal": "Reformulate to express subtle distinctions and avoid ambiguity.",
+          "functions": ["reformulate", "nuance", "precision"],
+          "domains": ["abstract"],
+          "languageFocus": ["semantic precision"]
+        },
+        {
+          "id": "te-c2-03",
+          "title": "Implicit meaning and allusion",
+          "goal": "Infer unstated links, humour, irony and culturally grounded allusion from context.",
+          "functions": ["infer", "humour", "allusion"],
+          "domains": ["culture"],
+          "languageFocus": ["pragmatics"]
+        },
+        {
+          "id": "te-c2-04",
+          "title": "Complex synthesis",
+          "goal": "Integrate and orally summarise multiple long sources and viewpoints.",
+          "functions": ["synthesise", "mediate", "evaluate"],
+          "domains": ["academic", "professional"],
+          "languageFocus": ["high-level cohesion"]
+        },
+        {
+          "id": "te-c2-05",
+          "title": "Regional and colloquial comprehension",
+          "goal": "Adapt to substantial variation in natural speech after reasonable acclimatisation.",
+          "functions": ["regional-comprehension", "infer"],
+          "domains": ["variation"],
+          "languageFocus": ["regional/social variation"]
+        },
+        {
+          "id": "te-c2-06",
+          "title": "C2 unseen performance",
+          "goal": "Demonstrate ability on material and situations never rehearsed in the course.",
+          "functions": ["unseen-assessment", "transfer", "spontaneous"],
+          "domains": ["mixed"],
+          "languageFocus": ["all"]
+        }
+      ]
+    }
+  ],
+  "lexicalConcepts": [
+    {
+      "id": "te.lex.i",
+      "level": "A0",
+      "telugu": "నేను",
+      "spokenTelugu": "నేను",
+      "romanization": "nenu",
+      "meaning": {
+        "en": "I"
+      },
+      "partOfSpeech": "pronoun",
+      "topic": "identity",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.you-casual",
+      "level": "A0",
+      "telugu": "నువ్వు",
+      "spokenTelugu": "నువ్వు",
+      "romanization": "nuvvu",
+      "meaning": {
+        "en": "you (casual singular)"
+      },
+      "partOfSpeech": "pronoun",
+      "topic": "identity",
+      "register": "casual",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.you-polite",
+      "level": "A0",
+      "telugu": "మీరు",
+      "spokenTelugu": "మీరు",
+      "romanization": "meeru",
+      "meaning": {
+        "en": "you (polite / plural)"
+      },
+      "partOfSpeech": "pronoun",
+      "topic": "identity",
+      "register": "polite",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.we-inclusive",
+      "level": "A0",
+      "telugu": "మనం",
+      "spokenTelugu": "మనం",
+      "romanization": "manam",
+      "meaning": {
+        "en": "we (including you)"
+      },
+      "partOfSpeech": "pronoun",
+      "topic": "identity",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.we-exclusive",
+      "level": "A0",
+      "telugu": "మేము",
+      "spokenTelugu": "మేము",
+      "romanization": "memu",
+      "meaning": {
+        "en": "we (not including you)"
+      },
+      "partOfSpeech": "pronoun",
+      "topic": "identity",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.he",
+      "level": "A0",
+      "telugu": "అతను",
+      "spokenTelugu": "అతను",
+      "romanization": "atanu",
+      "meaning": {
+        "en": "he"
+      },
+      "partOfSpeech": "pronoun",
+      "topic": "people",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "ఆయన",
+          "meaning": "he (respectful)",
+          "register": "polite"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.she",
+      "level": "A0",
+      "telugu": "ఆమె",
+      "spokenTelugu": "ఆమె",
+      "romanization": "aame",
+      "meaning": {
+        "en": "she"
+      },
+      "partOfSpeech": "pronoun",
+      "topic": "people",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "ఆవిడ",
+          "meaning": "she (respectful)",
+          "register": "polite"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.they",
+      "level": "A0",
+      "telugu": "వాళ్లు",
+      "spokenTelugu": "వాళ్లు",
+      "romanization": "vaallu",
+      "meaning": {
+        "en": "they"
+      },
+      "partOfSpeech": "pronoun",
+      "topic": "people",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "వారు",
+          "meaning": "they / those people (polite/formal)",
+          "register": "polite"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.this",
+      "level": "A0",
+      "telugu": "ఇది",
+      "spokenTelugu": "ఇది",
+      "romanization": "idi",
+      "meaning": {
+        "en": "this / this thing"
+      },
+      "partOfSpeech": "pronoun",
+      "topic": "objects",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.that",
+      "level": "A0",
+      "telugu": "అది",
+      "spokenTelugu": "అది",
+      "romanization": "adi",
+      "meaning": {
+        "en": "that / that thing"
+      },
+      "partOfSpeech": "pronoun",
+      "topic": "objects",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.my",
+      "level": "A0",
+      "telugu": "నా",
+      "spokenTelugu": "నా",
+      "romanization": "naa",
+      "meaning": {
+        "en": "my"
+      },
+      "partOfSpeech": "determiner",
+      "topic": "identity",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.your-casual",
+      "level": "A0",
+      "telugu": "నీ",
+      "spokenTelugu": "నీ",
+      "romanization": "nee",
+      "meaning": {
+        "en": "your (casual)"
+      },
+      "partOfSpeech": "determiner",
+      "topic": "identity",
+      "register": "casual",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.your-polite",
+      "level": "A0",
+      "telugu": "మీ",
+      "spokenTelugu": "మీ",
+      "romanization": "mee",
+      "meaning": {
+        "en": "your (polite/plural)"
+      },
+      "partOfSpeech": "determiner",
+      "topic": "identity",
+      "register": "polite",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.our-exclusive",
+      "level": "A0",
+      "telugu": "మా",
+      "spokenTelugu": "మా",
+      "romanization": "maa",
+      "meaning": {
+        "en": "our (not including you)"
+      },
+      "partOfSpeech": "determiner",
+      "topic": "identity",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.our-inclusive",
+      "level": "A0",
+      "telugu": "మన",
+      "spokenTelugu": "మన",
+      "romanization": "mana",
+      "meaning": {
+        "en": "our (including you)"
+      },
+      "partOfSpeech": "determiner",
+      "topic": "identity",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.yes",
+      "level": "A0",
+      "telugu": "అవును",
+      "spokenTelugu": "అవును",
+      "romanization": "avunu",
+      "meaning": {
+        "en": "yes"
+      },
+      "partOfSpeech": "response",
+      "topic": "basics",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.no",
+      "level": "A0",
+      "telugu": "కాదు",
+      "spokenTelugu": "కాదు",
+      "romanization": "kaadu",
+      "meaning": {
+        "en": "no / is not"
+      },
+      "partOfSpeech": "response",
+      "topic": "basics",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.okay",
+      "level": "A0",
+      "telugu": "సరే",
+      "spokenTelugu": "సరే",
+      "romanization": "sare",
+      "meaning": {
+        "en": "okay / alright"
+      },
+      "partOfSpeech": "response",
+      "topic": "basics",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.dont-want",
+      "level": "A0",
+      "telugu": "వద్దు",
+      "spokenTelugu": "వద్దు",
+      "romanization": "vaddu",
+      "meaning": {
+        "en": "don't want / no need"
+      },
+      "partOfSpeech": "response",
+      "topic": "needs",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.want-need",
+      "level": "A0",
+      "telugu": "కావాలి",
+      "spokenTelugu": "కావాలి",
+      "romanization": "kaavaali",
+      "meaning": {
+        "en": "want / need"
+      },
+      "partOfSpeech": "verb",
+      "topic": "needs",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.enough",
+      "level": "A0",
+      "telugu": "చాలు",
+      "spokenTelugu": "చాలు",
+      "romanization": "chaalu",
+      "meaning": {
+        "en": "enough / that's enough"
+      },
+      "partOfSpeech": "response",
+      "topic": "needs",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.what-spoken",
+      "level": "A0",
+      "telugu": "ఏం",
+      "spokenTelugu": "ఏం",
+      "romanization": "em",
+      "meaning": {
+        "en": "what"
+      },
+      "partOfSpeech": "question",
+      "topic": "questions",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "ఏమి",
+          "meaning": "what",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.what-is",
+      "level": "A0",
+      "telugu": "ఏంటి?",
+      "spokenTelugu": "ఏంటి?",
+      "romanization": "enti?",
+      "meaning": {
+        "en": "what is it? / what?"
+      },
+      "partOfSpeech": "question",
+      "topic": "questions",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "ఏమిటి?",
+          "meaning": "what is it?",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.who",
+      "level": "A0",
+      "telugu": "ఎవరు?",
+      "spokenTelugu": "ఎవరు?",
+      "romanization": "evaru?",
+      "meaning": {
+        "en": "who?"
+      },
+      "partOfSpeech": "question",
+      "topic": "questions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.where",
+      "level": "A0",
+      "telugu": "ఎక్కడ?",
+      "spokenTelugu": "ఎక్కడ?",
+      "romanization": "ekkada?",
+      "meaning": {
+        "en": "where?"
+      },
+      "partOfSpeech": "question",
+      "topic": "questions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.when",
+      "level": "A0",
+      "telugu": "ఎప్పుడు?",
+      "spokenTelugu": "ఎప్పుడు?",
+      "romanization": "eppudu?",
+      "meaning": {
+        "en": "when?"
+      },
+      "partOfSpeech": "question",
+      "topic": "questions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.why",
+      "level": "A0",
+      "telugu": "ఎందుకు?",
+      "spokenTelugu": "ఎందుకు?",
+      "romanization": "enduku?",
+      "meaning": {
+        "en": "why?"
+      },
+      "partOfSpeech": "question",
+      "topic": "questions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.how",
+      "level": "A0",
+      "telugu": "ఎలా?",
+      "spokenTelugu": "ఎలా?",
+      "romanization": "elaa?",
+      "meaning": {
+        "en": "how?"
+      },
+      "partOfSpeech": "question",
+      "topic": "questions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.how-much",
+      "level": "A0",
+      "telugu": "ఎంత?",
+      "spokenTelugu": "ఎంత?",
+      "romanization": "entha?",
+      "meaning": {
+        "en": "how much? / how many?"
+      },
+      "partOfSpeech": "question",
+      "topic": "questions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.which",
+      "level": "A0",
+      "telugu": "ఏది?",
+      "spokenTelugu": "ఏది?",
+      "romanization": "edi?",
+      "meaning": {
+        "en": "which one?"
+      },
+      "partOfSpeech": "question",
+      "topic": "questions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.here",
+      "level": "A0",
+      "telugu": "ఇక్కడ",
+      "spokenTelugu": "ఇక్కడ",
+      "romanization": "ikkada",
+      "meaning": {
+        "en": "here"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "directions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.there",
+      "level": "A0",
+      "telugu": "అక్కడ",
+      "spokenTelugu": "అక్కడ",
+      "romanization": "akkada",
+      "meaning": {
+        "en": "there"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "directions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.now",
+      "level": "A0",
+      "telugu": "ఇప్పుడు",
+      "spokenTelugu": "ఇప్పుడు",
+      "romanization": "ippudu",
+      "meaning": {
+        "en": "now"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.today",
+      "level": "A0",
+      "telugu": "ఈరోజు",
+      "spokenTelugu": "ఈరోజు",
+      "romanization": "ee roju",
+      "meaning": {
+        "en": "today"
+      },
+      "partOfSpeech": "noun",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.tomorrow",
+      "level": "A0",
+      "telugu": "రేపు",
+      "spokenTelugu": "రేపు",
+      "romanization": "repu",
+      "meaning": {
+        "en": "tomorrow"
+      },
+      "partOfSpeech": "noun",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.yesterday",
+      "level": "A0",
+      "telugu": "నిన్న",
+      "spokenTelugu": "నిన్న",
+      "romanization": "ninna",
+      "meaning": {
+        "en": "yesterday"
+      },
+      "partOfSpeech": "noun",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.later",
+      "level": "A0",
+      "telugu": "తర్వాత",
+      "spokenTelugu": "తర్వాత",
+      "romanization": "tarvaata",
+      "meaning": {
+        "en": "later / after"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.before",
+      "level": "A0",
+      "telugu": "ముందు",
+      "spokenTelugu": "ముందు",
+      "romanization": "mundu",
+      "meaning": {
+        "en": "before / in front"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.name",
+      "level": "A0",
+      "telugu": "పేరు",
+      "spokenTelugu": "పేరు",
+      "romanization": "peru",
+      "meaning": {
+        "en": "name"
+      },
+      "partOfSpeech": "noun",
+      "topic": "identity",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.hello",
+      "level": "A0",
+      "telugu": "హలో",
+      "spokenTelugu": "హలో",
+      "romanization": "halo",
+      "meaning": {
+        "en": "hello"
+      },
+      "partOfSpeech": "interjection",
+      "topic": "greetings",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "హాయ్",
+          "meaning": "hi",
+          "register": "casual"
+        },
+        {
+          "form": "నమస్కారం",
+          "meaning": "greetings",
+          "register": "polite"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.thanks",
+      "level": "A0",
+      "telugu": "థాంక్స్",
+      "spokenTelugu": "థాంక్స్",
+      "romanization": "thanks",
+      "meaning": {
+        "en": "thanks"
+      },
+      "partOfSpeech": "interjection",
+      "topic": "greetings",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "ధన్యవాదాలు",
+          "meaning": "thank you",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.sorry",
+      "level": "A0",
+      "telugu": "సారీ",
+      "spokenTelugu": "సారీ",
+      "romanization": "saari",
+      "meaning": {
+        "en": "sorry"
+      },
+      "partOfSpeech": "interjection",
+      "topic": "repair",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "క్షమించండి",
+          "meaning": "excuse me / forgive me",
+          "register": "polite"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.please",
+      "level": "A0",
+      "telugu": "ప్లీజ్",
+      "spokenTelugu": "ప్లీజ్",
+      "romanization": "please",
+      "meaning": {
+        "en": "please"
+      },
+      "partOfSpeech": "interjection",
+      "topic": "politeness",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "దయచేసి",
+          "meaning": "please",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.help",
+      "level": "A0",
+      "telugu": "సహాయం",
+      "spokenTelugu": "సహాయం",
+      "romanization": "sahaayam",
+      "meaning": {
+        "en": "help"
+      },
+      "partOfSpeech": "noun",
+      "topic": "help",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.water",
+      "level": "A0",
+      "telugu": "నీళ్లు",
+      "spokenTelugu": "నీళ్లు",
+      "romanization": "neellu",
+      "meaning": {
+        "en": "water"
+      },
+      "partOfSpeech": "noun",
+      "topic": "food-drink",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "నీళ్ళు",
+          "meaning": "water",
+          "register": "spoken_variant"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.food",
+      "level": "A0",
+      "telugu": "తిండి",
+      "spokenTelugu": "తిండి",
+      "romanization": "tindi",
+      "meaning": {
+        "en": "food"
+      },
+      "partOfSpeech": "noun",
+      "topic": "food-drink",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "భోజనం",
+          "meaning": "meal / food",
+          "register": "neutral-formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.rice-food",
+      "level": "A0",
+      "telugu": "అన్నం",
+      "spokenTelugu": "అన్నం",
+      "romanization": "annam",
+      "meaning": {
+        "en": "cooked rice / meal"
+      },
+      "partOfSpeech": "noun",
+      "topic": "food-drink",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.tea",
+      "level": "A0",
+      "telugu": "టీ",
+      "spokenTelugu": "టీ",
+      "romanization": "tee",
+      "meaning": {
+        "en": "tea"
+      },
+      "partOfSpeech": "noun",
+      "topic": "food-drink",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.coffee",
+      "level": "A0",
+      "telugu": "కాఫీ",
+      "spokenTelugu": "కాఫీ",
+      "romanization": "kaafee",
+      "meaning": {
+        "en": "coffee"
+      },
+      "partOfSpeech": "noun",
+      "topic": "food-drink",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.milk",
+      "level": "A0",
+      "telugu": "పాలు",
+      "spokenTelugu": "పాలు",
+      "romanization": "paalu",
+      "meaning": {
+        "en": "milk"
+      },
+      "partOfSpeech": "noun",
+      "topic": "food-drink",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.house",
+      "level": "A0",
+      "telugu": "ఇల్లు",
+      "spokenTelugu": "ఇల్లు",
+      "romanization": "illu",
+      "meaning": {
+        "en": "house / home"
+      },
+      "partOfSpeech": "noun",
+      "topic": "home",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.bathroom",
+      "level": "A0",
+      "telugu": "బాత్రూమ్",
+      "spokenTelugu": "బాత్రూమ్",
+      "romanization": "baathroom",
+      "meaning": {
+        "en": "bathroom"
+      },
+      "partOfSpeech": "noun",
+      "topic": "places",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.phone",
+      "level": "A0",
+      "telugu": "ఫోన్",
+      "spokenTelugu": "ఫోన్",
+      "romanization": "phone",
+      "meaning": {
+        "en": "phone"
+      },
+      "partOfSpeech": "noun",
+      "topic": "communication",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.money",
+      "level": "A0",
+      "telugu": "డబ్బు",
+      "spokenTelugu": "డబ్బు",
+      "romanization": "dabbu",
+      "meaning": {
+        "en": "money"
+      },
+      "partOfSpeech": "noun",
+      "topic": "shopping",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.bus",
+      "level": "A0",
+      "telugu": "బస్",
+      "spokenTelugu": "బస్",
+      "romanization": "bus",
+      "meaning": {
+        "en": "bus"
+      },
+      "partOfSpeech": "noun",
+      "topic": "travel",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "బస్సు",
+          "meaning": "bus",
+          "register": "neutral"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.train",
+      "level": "A0",
+      "telugu": "రైలు",
+      "spokenTelugu": "రైలు",
+      "romanization": "railu",
+      "meaning": {
+        "en": "train"
+      },
+      "partOfSpeech": "noun",
+      "topic": "travel",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.auto",
+      "level": "A0",
+      "telugu": "ఆటో",
+      "spokenTelugu": "ఆటో",
+      "romanization": "auto",
+      "meaning": {
+        "en": "auto-rickshaw"
+      },
+      "partOfSpeech": "noun",
+      "topic": "travel",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.car",
+      "level": "A0",
+      "telugu": "కారు",
+      "spokenTelugu": "కారు",
+      "romanization": "kaaru",
+      "meaning": {
+        "en": "car"
+      },
+      "partOfSpeech": "noun",
+      "topic": "travel",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.ticket",
+      "level": "A0",
+      "telugu": "టికెట్",
+      "spokenTelugu": "టికెట్",
+      "romanization": "ticket",
+      "meaning": {
+        "en": "ticket"
+      },
+      "partOfSpeech": "noun",
+      "topic": "travel",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.station",
+      "level": "A0",
+      "telugu": "స్టేషన్",
+      "spokenTelugu": "స్టేషన్",
+      "romanization": "station",
+      "meaning": {
+        "en": "station"
+      },
+      "partOfSpeech": "noun",
+      "topic": "travel",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.doctor",
+      "level": "A0",
+      "telugu": "డాక్టర్",
+      "spokenTelugu": "డాక్టర్",
+      "romanization": "doctor",
+      "meaning": {
+        "en": "doctor"
+      },
+      "partOfSpeech": "noun",
+      "topic": "health",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "వైద్యుడు",
+          "meaning": "doctor / physician",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.hospital",
+      "level": "A0",
+      "telugu": "ఆసుపత్రి",
+      "spokenTelugu": "ఆసుపత్రి",
+      "romanization": "aasupatri",
+      "meaning": {
+        "en": "hospital"
+      },
+      "partOfSpeech": "noun",
+      "topic": "health",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.medicine",
+      "level": "A0",
+      "telugu": "మందు",
+      "spokenTelugu": "మందు",
+      "romanization": "mandu",
+      "meaning": {
+        "en": "medicine"
+      },
+      "partOfSpeech": "noun",
+      "topic": "health",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.police",
+      "level": "A0",
+      "telugu": "పోలీస్",
+      "spokenTelugu": "పోలీస్",
+      "romanization": "police",
+      "meaning": {
+        "en": "police"
+      },
+      "partOfSpeech": "noun",
+      "topic": "emergency",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.mother",
+      "level": "A0",
+      "telugu": "అమ్మ",
+      "spokenTelugu": "అమ్మ",
+      "romanization": "amma",
+      "meaning": {
+        "en": "mother / mom"
+      },
+      "partOfSpeech": "noun",
+      "topic": "family",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "తల్లి",
+          "meaning": "mother",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.father",
+      "level": "A0",
+      "telugu": "నాన్న",
+      "spokenTelugu": "నాన్న",
+      "romanization": "naanna",
+      "meaning": {
+        "en": "father / dad"
+      },
+      "partOfSpeech": "noun",
+      "topic": "family",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "తండ్రి",
+          "meaning": "father",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.older-brother",
+      "level": "A0",
+      "telugu": "అన్న",
+      "spokenTelugu": "అన్న",
+      "romanization": "anna",
+      "meaning": {
+        "en": "older brother"
+      },
+      "partOfSpeech": "noun",
+      "topic": "family",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.older-sister",
+      "level": "A0",
+      "telugu": "అక్క",
+      "spokenTelugu": "అక్క",
+      "romanization": "akka",
+      "meaning": {
+        "en": "older sister"
+      },
+      "partOfSpeech": "noun",
+      "topic": "family",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.younger-brother",
+      "level": "A0",
+      "telugu": "తమ్ముడు",
+      "spokenTelugu": "తమ్ముడు",
+      "romanization": "tammudu",
+      "meaning": {
+        "en": "younger brother"
+      },
+      "partOfSpeech": "noun",
+      "topic": "family",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.younger-sister",
+      "level": "A0",
+      "telugu": "చెల్లి",
+      "spokenTelugu": "చెల్లి",
+      "romanization": "chelli",
+      "meaning": {
+        "en": "younger sister"
+      },
+      "partOfSpeech": "noun",
+      "topic": "family",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "చెల్లెలు",
+          "meaning": "younger sister",
+          "register": "neutral"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.friend",
+      "level": "A0",
+      "telugu": "ఫ్రెండ్",
+      "spokenTelugu": "ఫ్రెండ్",
+      "romanization": "friend",
+      "meaning": {
+        "en": "friend"
+      },
+      "partOfSpeech": "noun",
+      "topic": "social",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "స్నేహితుడు",
+          "meaning": "male friend",
+          "register": "formal"
+        },
+        {
+          "form": "స్నేహితురాలు",
+          "meaning": "female friend",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.work",
+      "level": "A0",
+      "telugu": "పని",
+      "spokenTelugu": "పని",
+      "romanization": "pani",
+      "meaning": {
+        "en": "work"
+      },
+      "partOfSpeech": "noun",
+      "topic": "work",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.office",
+      "level": "A0",
+      "telugu": "ఆఫీస్",
+      "spokenTelugu": "ఆఫీస్",
+      "romanization": "office",
+      "meaning": {
+        "en": "office"
+      },
+      "partOfSpeech": "noun",
+      "topic": "work",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "కార్యాలయం",
+          "meaning": "office",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.school",
+      "level": "A0",
+      "telugu": "స్కూల్",
+      "spokenTelugu": "స్కూల్",
+      "romanization": "school",
+      "meaning": {
+        "en": "school"
+      },
+      "partOfSpeech": "noun",
+      "topic": "study",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "పాఠశాల",
+          "meaning": "school",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.college",
+      "level": "A0",
+      "telugu": "కాలేజ్",
+      "spokenTelugu": "కాలేజ్",
+      "romanization": "college",
+      "meaning": {
+        "en": "college"
+      },
+      "partOfSpeech": "noun",
+      "topic": "study",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.teacher",
+      "level": "A0",
+      "telugu": "టీచర్",
+      "spokenTelugu": "టీచర్",
+      "romanization": "teacher",
+      "meaning": {
+        "en": "teacher"
+      },
+      "partOfSpeech": "noun",
+      "topic": "study",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "ఉపాధ్యాయుడు",
+          "meaning": "teacher",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.good",
+      "level": "A0",
+      "telugu": "మంచి",
+      "spokenTelugu": "మంచి",
+      "romanization": "manchi",
+      "meaning": {
+        "en": "good"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "description",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.bad",
+      "level": "A0",
+      "telugu": "చెడు",
+      "spokenTelugu": "చెడు",
+      "romanization": "chedu",
+      "meaning": {
+        "en": "bad"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "description",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.big",
+      "level": "A0",
+      "telugu": "పెద్ద",
+      "spokenTelugu": "పెద్ద",
+      "romanization": "pedda",
+      "meaning": {
+        "en": "big"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "description",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.small",
+      "level": "A0",
+      "telugu": "చిన్న",
+      "spokenTelugu": "చిన్న",
+      "romanization": "chinna",
+      "meaning": {
+        "en": "small"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "description",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.new",
+      "level": "A0",
+      "telugu": "కొత్త",
+      "spokenTelugu": "కొత్త",
+      "romanization": "kotta",
+      "meaning": {
+        "en": "new"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "description",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.old",
+      "level": "A0",
+      "telugu": "పాత",
+      "spokenTelugu": "పాత",
+      "romanization": "paata",
+      "meaning": {
+        "en": "old"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "description",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.more",
+      "level": "A0",
+      "telugu": "ఎక్కువ",
+      "spokenTelugu": "ఎక్కువ",
+      "romanization": "ekkuva",
+      "meaning": {
+        "en": "more / too much"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "quantity",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.less",
+      "level": "A0",
+      "telugu": "తక్కువ",
+      "spokenTelugu": "తక్కువ",
+      "romanization": "takkuva",
+      "meaning": {
+        "en": "less"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "quantity",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.near",
+      "level": "A0",
+      "telugu": "దగ్గర",
+      "spokenTelugu": "దగ్గర",
+      "romanization": "daggara",
+      "meaning": {
+        "en": "near"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "directions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.far",
+      "level": "A0",
+      "telugu": "దూరం",
+      "spokenTelugu": "దూరం",
+      "romanization": "dooram",
+      "meaning": {
+        "en": "far / distance"
+      },
+      "partOfSpeech": "noun",
+      "topic": "directions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.left",
+      "level": "A0",
+      "telugu": "ఎడమ",
+      "spokenTelugu": "ఎడమ",
+      "romanization": "edama",
+      "meaning": {
+        "en": "left"
+      },
+      "partOfSpeech": "noun",
+      "topic": "directions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.right",
+      "level": "A0",
+      "telugu": "కుడి",
+      "spokenTelugu": "కుడి",
+      "romanization": "kudi",
+      "meaning": {
+        "en": "right"
+      },
+      "partOfSpeech": "noun",
+      "topic": "directions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.straight",
+      "level": "A0",
+      "telugu": "నేరుగా",
+      "spokenTelugu": "నేరుగా",
+      "romanization": "nerugaa",
+      "meaning": {
+        "en": "straight / directly"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "directions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.inside",
+      "level": "A0",
+      "telugu": "లోపల",
+      "spokenTelugu": "లోపల",
+      "romanization": "lopala",
+      "meaning": {
+        "en": "inside"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "directions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.outside",
+      "level": "A0",
+      "telugu": "బయట",
+      "spokenTelugu": "బయట",
+      "romanization": "bayata",
+      "meaning": {
+        "en": "outside"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "directions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.one",
+      "level": "A0",
+      "telugu": "ఒకటి",
+      "spokenTelugu": "ఒకటి",
+      "romanization": "okati",
+      "meaning": {
+        "en": "one"
+      },
+      "partOfSpeech": "number",
+      "topic": "numbers",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.two",
+      "level": "A0",
+      "telugu": "రెండు",
+      "spokenTelugu": "రెండు",
+      "romanization": "rendu",
+      "meaning": {
+        "en": "two"
+      },
+      "partOfSpeech": "number",
+      "topic": "numbers",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.three",
+      "level": "A0",
+      "telugu": "మూడు",
+      "spokenTelugu": "మూడు",
+      "romanization": "moodu",
+      "meaning": {
+        "en": "three"
+      },
+      "partOfSpeech": "number",
+      "topic": "numbers",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.four",
+      "level": "A0",
+      "telugu": "నాలుగు",
+      "spokenTelugu": "నాలుగు",
+      "romanization": "naalugu",
+      "meaning": {
+        "en": "four"
+      },
+      "partOfSpeech": "number",
+      "topic": "numbers",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.five",
+      "level": "A0",
+      "telugu": "ఐదు",
+      "spokenTelugu": "ఐదు",
+      "romanization": "aidu",
+      "meaning": {
+        "en": "five"
+      },
+      "partOfSpeech": "number",
+      "topic": "numbers",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.six",
+      "level": "A0",
+      "telugu": "ఆరు",
+      "spokenTelugu": "ఆరు",
+      "romanization": "aaru",
+      "meaning": {
+        "en": "six"
+      },
+      "partOfSpeech": "number",
+      "topic": "numbers",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.seven",
+      "level": "A0",
+      "telugu": "ఏడు",
+      "spokenTelugu": "ఏడు",
+      "romanization": "edu",
+      "meaning": {
+        "en": "seven"
+      },
+      "partOfSpeech": "number",
+      "topic": "numbers",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.eight",
+      "level": "A0",
+      "telugu": "ఎనిమిది",
+      "spokenTelugu": "ఎనిమిది",
+      "romanization": "enimidi",
+      "meaning": {
+        "en": "eight"
+      },
+      "partOfSpeech": "number",
+      "topic": "numbers",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.nine",
+      "level": "A0",
+      "telugu": "తొమ్మిది",
+      "spokenTelugu": "తొమ్మిది",
+      "romanization": "tommidi",
+      "meaning": {
+        "en": "nine"
+      },
+      "partOfSpeech": "number",
+      "topic": "numbers",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.ten",
+      "level": "A0",
+      "telugu": "పది",
+      "spokenTelugu": "పది",
+      "romanization": "padi",
+      "meaning": {
+        "en": "ten"
+      },
+      "partOfSpeech": "number",
+      "topic": "numbers",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.go",
+      "level": "A1",
+      "telugu": "వెళ్లు",
+      "spokenTelugu": "వెళ్లు",
+      "romanization": "vellu",
+      "meaning": {
+        "en": "go"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "వెళ్లండి",
+          "meaning": "go (polite)",
+          "register": "polite"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.come",
+      "level": "A1",
+      "telugu": "రా",
+      "spokenTelugu": "రా",
+      "romanization": "raa",
+      "meaning": {
+        "en": "come (casual)"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "రండి",
+          "meaning": "come (polite)",
+          "register": "polite"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.eat",
+      "level": "A1",
+      "telugu": "తిను",
+      "spokenTelugu": "తిను",
+      "romanization": "tinu",
+      "meaning": {
+        "en": "eat"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.drink",
+      "level": "A1",
+      "telugu": "తాగు",
+      "spokenTelugu": "తాగు",
+      "romanization": "taagu",
+      "meaning": {
+        "en": "drink"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.do",
+      "level": "A1",
+      "telugu": "చేయి",
+      "spokenTelugu": "చేయి",
+      "romanization": "cheyi",
+      "meaning": {
+        "en": "do"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "చేయండి",
+          "meaning": "do (polite)",
+          "register": "polite"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.say-tell",
+      "level": "A1",
+      "telugu": "చెప్పు",
+      "spokenTelugu": "చెప్పు",
+      "romanization": "cheppu",
+      "meaning": {
+        "en": "say / tell"
+      },
+      "partOfSpeech": "verb",
+      "topic": "communication",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "చెప్పండి",
+          "meaning": "say / tell (polite)",
+          "register": "polite"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.ask",
+      "level": "A1",
+      "telugu": "అడుగు",
+      "spokenTelugu": "అడుగు",
+      "romanization": "adugu",
+      "meaning": {
+        "en": "ask"
+      },
+      "partOfSpeech": "verb",
+      "topic": "communication",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.give",
+      "level": "A1",
+      "telugu": "ఇవ్వు",
+      "spokenTelugu": "ఇవ్వు",
+      "romanization": "ivvu",
+      "meaning": {
+        "en": "give"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.take",
+      "level": "A1",
+      "telugu": "తీసుకో",
+      "spokenTelugu": "తీసుకో",
+      "romanization": "teesuko",
+      "meaning": {
+        "en": "take"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.see",
+      "level": "A1",
+      "telugu": "చూడు",
+      "spokenTelugu": "చూడు",
+      "romanization": "choodu",
+      "meaning": {
+        "en": "see / look"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "చూడండి",
+          "meaning": "look / see (polite)",
+          "register": "polite"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.listen",
+      "level": "A1",
+      "telugu": "విను",
+      "spokenTelugu": "విను",
+      "romanization": "vinu",
+      "meaning": {
+        "en": "listen"
+      },
+      "partOfSpeech": "verb",
+      "topic": "communication",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.speak",
+      "level": "A1",
+      "telugu": "మాట్లాడు",
+      "spokenTelugu": "మాట్లాడు",
+      "romanization": "maatlaadu",
+      "meaning": {
+        "en": "speak / talk"
+      },
+      "partOfSpeech": "verb",
+      "topic": "communication",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.read",
+      "level": "A1",
+      "telugu": "చదువు",
+      "spokenTelugu": "చదువు",
+      "romanization": "chaduvu",
+      "meaning": {
+        "en": "read / study"
+      },
+      "partOfSpeech": "verb",
+      "topic": "study",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.write",
+      "level": "A1",
+      "telugu": "రాయి",
+      "spokenTelugu": "రాయి",
+      "romanization": "raayi",
+      "meaning": {
+        "en": "write"
+      },
+      "partOfSpeech": "verb",
+      "topic": "study",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.sleep",
+      "level": "A1",
+      "telugu": "నిద్రపో",
+      "spokenTelugu": "నిద్రపో",
+      "romanization": "nidrapo",
+      "meaning": {
+        "en": "sleep / go to sleep"
+      },
+      "partOfSpeech": "verb",
+      "topic": "routine",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.wake",
+      "level": "A1",
+      "telugu": "లేచు",
+      "spokenTelugu": "లేచు",
+      "romanization": "lechu",
+      "meaning": {
+        "en": "get up / wake up"
+      },
+      "partOfSpeech": "verb",
+      "topic": "routine",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.sit",
+      "level": "A1",
+      "telugu": "కూర్చో",
+      "spokenTelugu": "కూర్చో",
+      "romanization": "koorcho",
+      "meaning": {
+        "en": "sit"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "కూర్చోండి",
+          "meaning": "sit (polite)",
+          "register": "polite"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.stand",
+      "level": "A1",
+      "telugu": "నిలబడు",
+      "spokenTelugu": "నిలబడు",
+      "romanization": "nilabadu",
+      "meaning": {
+        "en": "stand"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.stop",
+      "level": "A1",
+      "telugu": "ఆగు",
+      "spokenTelugu": "ఆగు",
+      "romanization": "aagu",
+      "meaning": {
+        "en": "stop / wait"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.buy",
+      "level": "A1",
+      "telugu": "కొను",
+      "spokenTelugu": "కొను",
+      "romanization": "konu",
+      "meaning": {
+        "en": "buy"
+      },
+      "partOfSpeech": "verb",
+      "topic": "shopping",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.sell",
+      "level": "A1",
+      "telugu": "అమ్ము",
+      "spokenTelugu": "అమ్ము",
+      "romanization": "ammu",
+      "meaning": {
+        "en": "sell"
+      },
+      "partOfSpeech": "verb",
+      "topic": "shopping",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.bring",
+      "level": "A1",
+      "telugu": "తీసుకురా",
+      "spokenTelugu": "తీసుకురా",
+      "romanization": "teesukuraa",
+      "meaning": {
+        "en": "bring (casual)"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "తీసుకురండి",
+          "meaning": "bring (polite)",
+          "register": "polite"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.put",
+      "level": "A1",
+      "telugu": "పెట్టు",
+      "spokenTelugu": "పెట్టు",
+      "romanization": "pettu",
+      "meaning": {
+        "en": "put / place"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.open",
+      "level": "A1",
+      "telugu": "తెరువు",
+      "spokenTelugu": "తెరువు",
+      "romanization": "teruvu",
+      "meaning": {
+        "en": "open"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.close",
+      "level": "A1",
+      "telugu": "మూసు",
+      "spokenTelugu": "మూసు",
+      "romanization": "moosu",
+      "meaning": {
+        "en": "close"
+      },
+      "partOfSpeech": "verb",
+      "topic": "actions",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.understand",
+      "level": "A1",
+      "telugu": "అర్థం అవుతుంది",
+      "spokenTelugu": "అర్థం అవుతుంది",
+      "romanization": "artham avutundi",
+      "meaning": {
+        "en": "understand / makes sense"
+      },
+      "partOfSpeech": "verb",
+      "topic": "communication",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.know",
+      "level": "A1",
+      "telugu": "తెలుసు",
+      "spokenTelugu": "తెలుసు",
+      "romanization": "telusu",
+      "meaning": {
+        "en": "know"
+      },
+      "partOfSpeech": "verb",
+      "topic": "communication",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.like",
+      "level": "A1",
+      "telugu": "ఇష్టం",
+      "spokenTelugu": "ఇష్టం",
+      "romanization": "ishtam",
+      "meaning": {
+        "en": "like / liking"
+      },
+      "partOfSpeech": "noun",
+      "topic": "preference",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.like-it",
+      "level": "A1",
+      "telugu": "నచ్చింది",
+      "spokenTelugu": "నచ్చింది",
+      "romanization": "nachchindi",
+      "meaning": {
+        "en": "I like it / it pleased me"
+      },
+      "partOfSpeech": "expression",
+      "topic": "preference",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.day",
+      "level": "A1",
+      "telugu": "రోజు",
+      "spokenTelugu": "రోజు",
+      "romanization": "roju",
+      "meaning": {
+        "en": "day"
+      },
+      "partOfSpeech": "noun",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.morning",
+      "level": "A1",
+      "telugu": "ఉదయం",
+      "spokenTelugu": "ఉదయం",
+      "romanization": "udayam",
+      "meaning": {
+        "en": "morning"
+      },
+      "partOfSpeech": "noun",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.evening",
+      "level": "A1",
+      "telugu": "సాయంత్రం",
+      "spokenTelugu": "సాయంత్రం",
+      "romanization": "saayantram",
+      "meaning": {
+        "en": "evening"
+      },
+      "partOfSpeech": "noun",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.night",
+      "level": "A1",
+      "telugu": "రాత్రి",
+      "spokenTelugu": "రాత్రి",
+      "romanization": "raatri",
+      "meaning": {
+        "en": "night"
+      },
+      "partOfSpeech": "noun",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.hour",
+      "level": "A1",
+      "telugu": "గంట",
+      "spokenTelugu": "గంట",
+      "romanization": "ganta",
+      "meaning": {
+        "en": "hour / o'clock"
+      },
+      "partOfSpeech": "noun",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.minute",
+      "level": "A1",
+      "telugu": "నిమిషం",
+      "spokenTelugu": "నిమిషం",
+      "romanization": "nimisham",
+      "meaning": {
+        "en": "minute"
+      },
+      "partOfSpeech": "noun",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.week",
+      "level": "A1",
+      "telugu": "వారం",
+      "spokenTelugu": "వారం",
+      "romanization": "vaaram",
+      "meaning": {
+        "en": "week"
+      },
+      "partOfSpeech": "noun",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.month",
+      "level": "A1",
+      "telugu": "నెల",
+      "spokenTelugu": "నెల",
+      "romanization": "nela",
+      "meaning": {
+        "en": "month"
+      },
+      "partOfSpeech": "noun",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.year",
+      "level": "A1",
+      "telugu": "సంవత్సరం",
+      "spokenTelugu": "సంవత్సరం",
+      "romanization": "samvatsaram",
+      "meaning": {
+        "en": "year"
+      },
+      "partOfSpeech": "noun",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.price",
+      "level": "A1",
+      "telugu": "ధర",
+      "spokenTelugu": "ధర",
+      "romanization": "dhara",
+      "meaning": {
+        "en": "price"
+      },
+      "partOfSpeech": "noun",
+      "topic": "shopping",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.cheap",
+      "level": "A1",
+      "telugu": "చవక",
+      "spokenTelugu": "చవక",
+      "romanization": "chavaka",
+      "meaning": {
+        "en": "cheap"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "shopping",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.expensive",
+      "level": "A1",
+      "telugu": "ఖరీదు",
+      "spokenTelugu": "ఖరీదు",
+      "romanization": "khareedu",
+      "meaning": {
+        "en": "expensive / cost"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "shopping",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.shop",
+      "level": "A1",
+      "telugu": "షాప్",
+      "spokenTelugu": "షాప్",
+      "romanization": "shop",
+      "meaning": {
+        "en": "shop"
+      },
+      "partOfSpeech": "noun",
+      "topic": "shopping",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "దుకాణం",
+          "meaning": "shop/store",
+          "register": "neutral-formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.room",
+      "level": "A1",
+      "telugu": "గది",
+      "spokenTelugu": "గది",
+      "romanization": "gadi",
+      "meaning": {
+        "en": "room"
+      },
+      "partOfSpeech": "noun",
+      "topic": "home",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.door",
+      "level": "A1",
+      "telugu": "తలుపు",
+      "spokenTelugu": "తలుపు",
+      "romanization": "talupu",
+      "meaning": {
+        "en": "door"
+      },
+      "partOfSpeech": "noun",
+      "topic": "home",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.bed",
+      "level": "A1",
+      "telugu": "మంచం",
+      "spokenTelugu": "మంచం",
+      "romanization": "mancham",
+      "meaning": {
+        "en": "bed"
+      },
+      "partOfSpeech": "noun",
+      "topic": "home",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.kitchen",
+      "level": "A1",
+      "telugu": "కిచెన్",
+      "spokenTelugu": "కిచెన్",
+      "romanization": "kitchen",
+      "meaning": {
+        "en": "kitchen"
+      },
+      "partOfSpeech": "noun",
+      "topic": "home",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "వంటగది",
+          "meaning": "kitchen",
+          "register": "neutral"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.road",
+      "level": "A1",
+      "telugu": "రోడ్",
+      "spokenTelugu": "రోడ్",
+      "romanization": "road",
+      "meaning": {
+        "en": "road"
+      },
+      "partOfSpeech": "noun",
+      "topic": "places",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "రహదారి",
+          "meaning": "road",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.place",
+      "level": "A1",
+      "telugu": "చోటు",
+      "spokenTelugu": "చోటు",
+      "romanization": "chotu",
+      "meaning": {
+        "en": "place"
+      },
+      "partOfSpeech": "noun",
+      "topic": "places",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "స్థలం",
+          "meaning": "place",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.city",
+      "level": "A1",
+      "telugu": "సిటీ",
+      "spokenTelugu": "సిటీ",
+      "romanization": "city",
+      "meaning": {
+        "en": "city"
+      },
+      "partOfSpeech": "noun",
+      "topic": "places",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "నగరం",
+          "meaning": "city",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.village",
+      "level": "A1",
+      "telugu": "ఊరు",
+      "spokenTelugu": "ఊరు",
+      "romanization": "ooru",
+      "meaning": {
+        "en": "village / hometown / town"
+      },
+      "partOfSpeech": "noun",
+      "topic": "places",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "గ్రామం",
+          "meaning": "village",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.pain",
+      "level": "A1",
+      "telugu": "నొప్పి",
+      "spokenTelugu": "నొప్పి",
+      "romanization": "noppi",
+      "meaning": {
+        "en": "pain"
+      },
+      "partOfSpeech": "noun",
+      "topic": "health",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.fever",
+      "level": "A1",
+      "telugu": "జ్వరం",
+      "spokenTelugu": "జ్వరం",
+      "romanization": "jvaram",
+      "meaning": {
+        "en": "fever"
+      },
+      "partOfSpeech": "noun",
+      "topic": "health",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.head",
+      "level": "A1",
+      "telugu": "తల",
+      "spokenTelugu": "తల",
+      "romanization": "tala",
+      "meaning": {
+        "en": "head"
+      },
+      "partOfSpeech": "noun",
+      "topic": "body",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.eye",
+      "level": "A1",
+      "telugu": "కన్ను",
+      "spokenTelugu": "కన్ను",
+      "romanization": "kannu",
+      "meaning": {
+        "en": "eye"
+      },
+      "partOfSpeech": "noun",
+      "topic": "body",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.hand",
+      "level": "A1",
+      "telugu": "చెయ్యి",
+      "spokenTelugu": "చెయ్యి",
+      "romanization": "cheyyi",
+      "meaning": {
+        "en": "hand / arm"
+      },
+      "partOfSpeech": "noun",
+      "topic": "body",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "చేయి",
+          "meaning": "hand / arm",
+          "register": "neutral"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.leg",
+      "level": "A1",
+      "telugu": "కాలు",
+      "spokenTelugu": "కాలు",
+      "romanization": "kaalu",
+      "meaning": {
+        "en": "leg"
+      },
+      "partOfSpeech": "noun",
+      "topic": "body",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.stomach",
+      "level": "A1",
+      "telugu": "కడుపు",
+      "spokenTelugu": "కడుపు",
+      "romanization": "kadupu",
+      "meaning": {
+        "en": "stomach / abdomen"
+      },
+      "partOfSpeech": "noun",
+      "topic": "body",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.happy",
+      "level": "A1",
+      "telugu": "సంతోషంగా",
+      "spokenTelugu": "సంతోషంగా",
+      "romanization": "santoshangaa",
+      "meaning": {
+        "en": "happy"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "feelings",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.sad",
+      "level": "A1",
+      "telugu": "బాధగా",
+      "spokenTelugu": "బాధగా",
+      "romanization": "baadhagaa",
+      "meaning": {
+        "en": "sad / feeling bad"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "feelings",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.angry",
+      "level": "A1",
+      "telugu": "కోపంగా",
+      "spokenTelugu": "కోపంగా",
+      "romanization": "kopangaa",
+      "meaning": {
+        "en": "angry"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "feelings",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.afraid",
+      "level": "A1",
+      "telugu": "భయంగా",
+      "spokenTelugu": "భయంగా",
+      "romanization": "bhayangaa",
+      "meaning": {
+        "en": "afraid"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "feelings",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.tired",
+      "level": "A1",
+      "telugu": "అలసిపోయాను",
+      "spokenTelugu": "అలసిపోయాను",
+      "romanization": "alasipoyaanu",
+      "meaning": {
+        "en": "I'm tired"
+      },
+      "partOfSpeech": "expression",
+      "topic": "feelings",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.busy",
+      "level": "A1",
+      "telugu": "బిజీగా",
+      "spokenTelugu": "బిజీగా",
+      "romanization": "busygaa",
+      "meaning": {
+        "en": "busy"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "work",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.free",
+      "level": "A1",
+      "telugu": "ఫ్రీగా",
+      "spokenTelugu": "ఫ్రీగా",
+      "romanization": "freegaa",
+      "meaning": {
+        "en": "free / available"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "work",
+      "register": "casual",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.because",
+      "level": "A2",
+      "telugu": "ఎందుకంటే",
+      "spokenTelugu": "ఎందుకంటే",
+      "romanization": "endukante",
+      "meaning": {
+        "en": "because"
+      },
+      "partOfSpeech": "connector",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.so-therefore",
+      "level": "A2",
+      "telugu": "అందుకే",
+      "spokenTelugu": "అందుకే",
+      "romanization": "anduke",
+      "meaning": {
+        "en": "that's why / therefore"
+      },
+      "partOfSpeech": "connector",
+      "topic": "reasoning",
+      "register": "spoken",
+      "variants": [
+        {
+          "form": "కాబట్టి",
+          "meaning": "therefore / so",
+          "register": "neutral-formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.but",
+      "level": "A2",
+      "telugu": "కానీ",
+      "spokenTelugu": "కానీ",
+      "romanization": "kaanee",
+      "meaning": {
+        "en": "but"
+      },
+      "partOfSpeech": "connector",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.or",
+      "level": "A2",
+      "telugu": "లేదా",
+      "spokenTelugu": "లేదా",
+      "romanization": "ledaa",
+      "meaning": {
+        "en": "or"
+      },
+      "partOfSpeech": "connector",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.also",
+      "level": "A2",
+      "telugu": "కూడా",
+      "spokenTelugu": "కూడా",
+      "romanization": "koodaa",
+      "meaning": {
+        "en": "also / too"
+      },
+      "partOfSpeech": "connector",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.still-yet",
+      "level": "A2",
+      "telugu": "ఇంకా",
+      "spokenTelugu": "ఇంకా",
+      "romanization": "inkaa",
+      "meaning": {
+        "en": "still / yet / more"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.already",
+      "level": "A2",
+      "telugu": "ఇప్పటికే",
+      "spokenTelugu": "ఇప్పటికే",
+      "romanization": "ippatike",
+      "meaning": {
+        "en": "already"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.again",
+      "level": "A2",
+      "telugu": "మళ్లీ",
+      "spokenTelugu": "మళ్లీ",
+      "romanization": "mallee",
+      "meaning": {
+        "en": "again"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "repair",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.always",
+      "level": "A2",
+      "telugu": "ఎప్పుడూ",
+      "spokenTelugu": "ఎప్పుడూ",
+      "romanization": "eppudoo",
+      "meaning": {
+        "en": "always"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "frequency",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.sometimes",
+      "level": "A2",
+      "telugu": "కొన్నిసార్లు",
+      "spokenTelugu": "కొన్నిసార్లు",
+      "romanization": "konnisaarlu",
+      "meaning": {
+        "en": "sometimes"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "frequency",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.often",
+      "level": "A2",
+      "telugu": "తరచుగా",
+      "spokenTelugu": "తరచుగా",
+      "romanization": "tarachugaa",
+      "meaning": {
+        "en": "often"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "frequency",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.never",
+      "level": "A2",
+      "telugu": "ఎప్పుడూ కాదు",
+      "spokenTelugu": "ఎప్పుడూ కాదు",
+      "romanization": "eppudoo kaadu",
+      "meaning": {
+        "en": "never"
+      },
+      "partOfSpeech": "expression",
+      "topic": "frequency",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.problem",
+      "level": "A2",
+      "telugu": "సమస్య",
+      "spokenTelugu": "సమస్య",
+      "romanization": "samasya",
+      "meaning": {
+        "en": "problem"
+      },
+      "partOfSpeech": "noun",
+      "topic": "problems",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.solution",
+      "level": "A2",
+      "telugu": "పరిష్కారం",
+      "spokenTelugu": "పరిష్కారం",
+      "romanization": "parishkaaram",
+      "meaning": {
+        "en": "solution"
+      },
+      "partOfSpeech": "noun",
+      "topic": "problems",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.reason",
+      "level": "A2",
+      "telugu": "కారణం",
+      "spokenTelugu": "కారణం",
+      "romanization": "kaaranam",
+      "meaning": {
+        "en": "reason"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.idea",
+      "level": "A2",
+      "telugu": "ఆలోచన",
+      "spokenTelugu": "ఆలోచన",
+      "romanization": "aalochana",
+      "meaning": {
+        "en": "idea / thought"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.question",
+      "level": "A2",
+      "telugu": "ప్రశ్న",
+      "spokenTelugu": "ప్రశ్న",
+      "romanization": "prashna",
+      "meaning": {
+        "en": "question"
+      },
+      "partOfSpeech": "noun",
+      "topic": "communication",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.answer",
+      "level": "A2",
+      "telugu": "సమాధానం",
+      "spokenTelugu": "సమాధానం",
+      "romanization": "samaadhaanam",
+      "meaning": {
+        "en": "answer"
+      },
+      "partOfSpeech": "noun",
+      "topic": "communication",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.message",
+      "level": "A2",
+      "telugu": "మెసేజ్",
+      "spokenTelugu": "మెసేజ్",
+      "romanization": "message",
+      "meaning": {
+        "en": "message"
+      },
+      "partOfSpeech": "noun",
+      "topic": "communication",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "సందేశం",
+          "meaning": "message",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.meeting",
+      "level": "A2",
+      "telugu": "మీటింగ్",
+      "spokenTelugu": "మీటింగ్",
+      "romanization": "meeting",
+      "meaning": {
+        "en": "meeting"
+      },
+      "partOfSpeech": "noun",
+      "topic": "work",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "సమావేశం",
+          "meaning": "meeting",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.salary",
+      "level": "A2",
+      "telugu": "జీతం",
+      "spokenTelugu": "జీతం",
+      "romanization": "jeetam",
+      "meaning": {
+        "en": "salary"
+      },
+      "partOfSpeech": "noun",
+      "topic": "work",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.holiday",
+      "level": "A2",
+      "telugu": "సెలవు",
+      "spokenTelugu": "సెలవు",
+      "romanization": "selavu",
+      "meaning": {
+        "en": "holiday / leave"
+      },
+      "partOfSpeech": "noun",
+      "topic": "time",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.weather",
+      "level": "A2",
+      "telugu": "వాతావరణం",
+      "spokenTelugu": "వాతావరణం",
+      "romanization": "vaataavaranam",
+      "meaning": {
+        "en": "weather"
+      },
+      "partOfSpeech": "noun",
+      "topic": "environment",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.rain",
+      "level": "A2",
+      "telugu": "వర్షం",
+      "spokenTelugu": "వర్షం",
+      "romanization": "varsham",
+      "meaning": {
+        "en": "rain"
+      },
+      "partOfSpeech": "noun",
+      "topic": "weather",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.hot",
+      "level": "A2",
+      "telugu": "వేడిగా",
+      "spokenTelugu": "వేడిగా",
+      "romanization": "vedigaa",
+      "meaning": {
+        "en": "hot"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "weather",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.cold",
+      "level": "A2",
+      "telugu": "చల్లగా",
+      "spokenTelugu": "చల్లగా",
+      "romanization": "challagaa",
+      "meaning": {
+        "en": "cold"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "weather",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.beautiful",
+      "level": "A2",
+      "telugu": "అందంగా",
+      "spokenTelugu": "అందంగా",
+      "romanization": "andangaa",
+      "meaning": {
+        "en": "beautiful / beautifully"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "description",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.easy",
+      "level": "A2",
+      "telugu": "సులువు",
+      "spokenTelugu": "సులువు",
+      "romanization": "suluvu",
+      "meaning": {
+        "en": "easy"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "description",
+      "register": "spoken",
+      "variants": [
+        {
+          "form": "సులభం",
+          "meaning": "easy",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.difficult",
+      "level": "A2",
+      "telugu": "కష్టం",
+      "spokenTelugu": "కష్టం",
+      "romanization": "kashtam",
+      "meaning": {
+        "en": "difficult / difficulty"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "description",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.important",
+      "level": "A2",
+      "telugu": "ముఖ్యం",
+      "spokenTelugu": "ముఖ్యం",
+      "romanization": "mukhyam",
+      "meaning": {
+        "en": "important"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.possible",
+      "level": "A2",
+      "telugu": "అవుతుంది",
+      "spokenTelugu": "అవుతుంది",
+      "romanization": "avutundi",
+      "meaning": {
+        "en": "it is possible / it can happen"
+      },
+      "partOfSpeech": "expression",
+      "topic": "reasoning",
+      "register": "spoken",
+      "variants": [
+        {
+          "form": "సాధ్యం",
+          "meaning": "possible",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.maybe",
+      "level": "A2",
+      "telugu": "బహుశా",
+      "spokenTelugu": "బహుశా",
+      "romanization": "bahushaa",
+      "meaning": {
+        "en": "maybe / perhaps"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.really",
+      "level": "A2",
+      "telugu": "నిజంగా",
+      "spokenTelugu": "నిజంగా",
+      "romanization": "nijangaa",
+      "meaning": {
+        "en": "really"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.different",
+      "level": "A2",
+      "telugu": "వేరే",
+      "spokenTelugu": "వేరే",
+      "romanization": "vere",
+      "meaning": {
+        "en": "different / another"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "description",
+      "register": "spoken",
+      "variants": [
+        {
+          "form": "భిన్నంగా",
+          "meaning": "differently",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.same",
+      "level": "A2",
+      "telugu": "అదే",
+      "spokenTelugu": "అదే",
+      "romanization": "ade",
+      "meaning": {
+        "en": "the same / that very one"
+      },
+      "partOfSpeech": "adjective",
+      "topic": "description",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.first",
+      "level": "A2",
+      "telugu": "మొదట",
+      "spokenTelugu": "మొదట",
+      "romanization": "modata",
+      "meaning": {
+        "en": "first / at first"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "sequence",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.next",
+      "level": "A2",
+      "telugu": "తర్వాత",
+      "spokenTelugu": "తర్వాత",
+      "romanization": "tarvaata",
+      "meaning": {
+        "en": "next / after that"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "sequence",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.finally",
+      "level": "A2",
+      "telugu": "చివరికి",
+      "spokenTelugu": "చివరికి",
+      "romanization": "chivariki",
+      "meaning": {
+        "en": "finally / in the end"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "sequence",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.opinion",
+      "level": "B1",
+      "telugu": "అభిప్రాయం",
+      "spokenTelugu": "అభిప్రాయం",
+      "romanization": "abhipraayam",
+      "meaning": {
+        "en": "opinion"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.experience",
+      "level": "B1",
+      "telugu": "అనుభవం",
+      "spokenTelugu": "అనుభవం",
+      "romanization": "anubhavam",
+      "meaning": {
+        "en": "experience"
+      },
+      "partOfSpeech": "noun",
+      "topic": "life",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.decision",
+      "level": "B1",
+      "telugu": "నిర్ణయం",
+      "spokenTelugu": "నిర్ణయం",
+      "romanization": "nirnayam",
+      "meaning": {
+        "en": "decision"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.change",
+      "level": "B1",
+      "telugu": "మార్పు",
+      "spokenTelugu": "మార్పు",
+      "romanization": "maarpu",
+      "meaning": {
+        "en": "change"
+      },
+      "partOfSpeech": "noun",
+      "topic": "abstract",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.development",
+      "level": "B1",
+      "telugu": "అభివృద్ధి",
+      "spokenTelugu": "అభివృద్ధి",
+      "romanization": "abhivruddhi",
+      "meaning": {
+        "en": "development / growth"
+      },
+      "partOfSpeech": "noun",
+      "topic": "abstract",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.society",
+      "level": "B1",
+      "telugu": "సమాజం",
+      "spokenTelugu": "సమాజం",
+      "romanization": "samaajam",
+      "meaning": {
+        "en": "society"
+      },
+      "partOfSpeech": "noun",
+      "topic": "abstract",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.education",
+      "level": "B1",
+      "telugu": "విద్య",
+      "spokenTelugu": "విద్య",
+      "romanization": "vidya",
+      "meaning": {
+        "en": "education"
+      },
+      "partOfSpeech": "noun",
+      "topic": "abstract",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.technology",
+      "level": "B1",
+      "telugu": "టెక్నాలజీ",
+      "spokenTelugu": "టెక్నాలజీ",
+      "romanization": "technology",
+      "meaning": {
+        "en": "technology"
+      },
+      "partOfSpeech": "noun",
+      "topic": "technology",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "సాంకేతికత",
+          "meaning": "technology / technical field",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.information",
+      "level": "B1",
+      "telugu": "సమాచారం",
+      "spokenTelugu": "సమాచారం",
+      "romanization": "samaachaaram",
+      "meaning": {
+        "en": "information"
+      },
+      "partOfSpeech": "noun",
+      "topic": "communication",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.news",
+      "level": "B1",
+      "telugu": "వార్తలు",
+      "spokenTelugu": "వార్తలు",
+      "romanization": "vaartalu",
+      "meaning": {
+        "en": "news"
+      },
+      "partOfSpeech": "noun",
+      "topic": "media",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.relationship",
+      "level": "B1",
+      "telugu": "సంబంధం",
+      "spokenTelugu": "సంబంధం",
+      "romanization": "sambandham",
+      "meaning": {
+        "en": "relationship / connection"
+      },
+      "partOfSpeech": "noun",
+      "topic": "relationships",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.trust",
+      "level": "B1",
+      "telugu": "నమ్మకం",
+      "spokenTelugu": "నమ్మకం",
+      "romanization": "nammakam",
+      "meaning": {
+        "en": "trust / belief"
+      },
+      "partOfSpeech": "noun",
+      "topic": "relationships",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.respect",
+      "level": "B1",
+      "telugu": "గౌరవం",
+      "spokenTelugu": "గౌరవం",
+      "romanization": "gauravam",
+      "meaning": {
+        "en": "respect"
+      },
+      "partOfSpeech": "noun",
+      "topic": "relationships",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.responsibility",
+      "level": "B1",
+      "telugu": "బాధ్యత",
+      "spokenTelugu": "బాధ్యత",
+      "romanization": "baadhyata",
+      "meaning": {
+        "en": "responsibility"
+      },
+      "partOfSpeech": "noun",
+      "topic": "work",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.opportunity",
+      "level": "B1",
+      "telugu": "అవకాశం",
+      "spokenTelugu": "అవకాశం",
+      "romanization": "avakaasham",
+      "meaning": {
+        "en": "opportunity / chance"
+      },
+      "partOfSpeech": "noun",
+      "topic": "work",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.choice",
+      "level": "B1",
+      "telugu": "ఎంపిక",
+      "spokenTelugu": "ఎంపిక",
+      "romanization": "empika",
+      "meaning": {
+        "en": "choice / selection"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.difference",
+      "level": "B1",
+      "telugu": "తేడా",
+      "spokenTelugu": "తేడా",
+      "romanization": "teda",
+      "meaning": {
+        "en": "difference"
+      },
+      "partOfSpeech": "noun",
+      "topic": "comparison",
+      "register": "spoken",
+      "variants": [
+        {
+          "form": "వ్యత్యాసం",
+          "meaning": "difference / distinction",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.example",
+      "level": "B1",
+      "telugu": "ఉదాహరణ",
+      "spokenTelugu": "ఉదాహరణ",
+      "romanization": "udaaharana",
+      "meaning": {
+        "en": "example"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.detail",
+      "level": "B1",
+      "telugu": "వివరం",
+      "spokenTelugu": "వివరం",
+      "romanization": "vivaram",
+      "meaning": {
+        "en": "detail"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.goal",
+      "level": "B1",
+      "telugu": "లక్ష్యం",
+      "spokenTelugu": "లక్ష్యం",
+      "romanization": "lakshyam",
+      "meaning": {
+        "en": "goal / target"
+      },
+      "partOfSpeech": "noun",
+      "topic": "planning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.plan",
+      "level": "B1",
+      "telugu": "ప్లాన్",
+      "spokenTelugu": "ప్లాన్",
+      "romanization": "plan",
+      "meaning": {
+        "en": "plan"
+      },
+      "partOfSpeech": "noun",
+      "topic": "planning",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "ప్రణాళిక",
+          "meaning": "plan",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.success",
+      "level": "B1",
+      "telugu": "విజయం",
+      "spokenTelugu": "విజయం",
+      "romanization": "vijayam",
+      "meaning": {
+        "en": "success / victory"
+      },
+      "partOfSpeech": "noun",
+      "topic": "abstract",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.failure",
+      "level": "B1",
+      "telugu": "విఫలం",
+      "spokenTelugu": "విఫలం",
+      "romanization": "viphalam",
+      "meaning": {
+        "en": "failure"
+      },
+      "partOfSpeech": "noun",
+      "topic": "abstract",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "ఓటమి",
+          "meaning": "defeat / loss",
+          "register": "neutral"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.effect",
+      "level": "B1",
+      "telugu": "ప్రభావం",
+      "spokenTelugu": "ప్రభావం",
+      "romanization": "prabhaavam",
+      "meaning": {
+        "en": "effect / influence"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.result",
+      "level": "B1",
+      "telugu": "ఫలితం",
+      "spokenTelugu": "ఫలితం",
+      "romanization": "phalitam",
+      "meaning": {
+        "en": "result"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.support",
+      "level": "B1",
+      "telugu": "మద్దతు",
+      "spokenTelugu": "మద్దతు",
+      "romanization": "maddatu",
+      "meaning": {
+        "en": "support"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.against",
+      "level": "B1",
+      "telugu": "వ్యతిరేకంగా",
+      "spokenTelugu": "వ్యతిరేకంగా",
+      "romanization": "vyatirekangaa",
+      "meaning": {
+        "en": "against / in opposition"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.agree",
+      "level": "B1",
+      "telugu": "ఒప్పుకుంటాను",
+      "spokenTelugu": "ఒప్పుకుంటాను",
+      "romanization": "oppukuntaanu",
+      "meaning": {
+        "en": "I agree / I accept"
+      },
+      "partOfSpeech": "expression",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.disagree",
+      "level": "B1",
+      "telugu": "ఒప్పుకోను",
+      "spokenTelugu": "ఒప్పుకోను",
+      "romanization": "oppukonu",
+      "meaning": {
+        "en": "I don't agree"
+      },
+      "partOfSpeech": "expression",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.seems",
+      "level": "B1",
+      "telugu": "అనిపిస్తోంది",
+      "spokenTelugu": "అనిపిస్తోంది",
+      "romanization": "anipistondi",
+      "meaning": {
+        "en": "it seems / I feel that"
+      },
+      "partOfSpeech": "expression",
+      "topic": "reasoning",
+      "register": "spoken",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.in-my-view",
+      "level": "B1",
+      "telugu": "నా అభిప్రాయం ప్రకారం",
+      "spokenTelugu": "నా అభిప్రాయం ప్రకారం",
+      "romanization": "naa abhipraayam prakaaram",
+      "meaning": {
+        "en": "in my opinion"
+      },
+      "partOfSpeech": "expression",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.actually",
+      "level": "B1",
+      "telugu": "నిజానికి",
+      "spokenTelugu": "నిజానికి",
+      "romanization": "nijaaniki",
+      "meaning": {
+        "en": "actually / in fact"
+      },
+      "partOfSpeech": "connector",
+      "topic": "discourse",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.anyway",
+      "level": "B1",
+      "telugu": "ఏదేమైనా",
+      "spokenTelugu": "ఏదేమైనా",
+      "romanization": "edemainaa",
+      "meaning": {
+        "en": "anyway / in any case"
+      },
+      "partOfSpeech": "connector",
+      "topic": "discourse",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.for-example",
+      "level": "B1",
+      "telugu": "ఉదాహరణకి",
+      "spokenTelugu": "ఉదాహరణకి",
+      "romanization": "udaaharanaki",
+      "meaning": {
+        "en": "for example"
+      },
+      "partOfSpeech": "connector",
+      "topic": "discourse",
+      "register": "spoken",
+      "variants": [
+        {
+          "form": "ఉదాహరణకు",
+          "meaning": "for example",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.on-the-other-hand",
+      "level": "B2",
+      "telugu": "మరోవైపు",
+      "spokenTelugu": "మరోవైపు",
+      "romanization": "marovaipu",
+      "meaning": {
+        "en": "on the other hand"
+      },
+      "partOfSpeech": "connector",
+      "topic": "discourse",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.however",
+      "level": "B2",
+      "telugu": "అయితే",
+      "spokenTelugu": "అయితే",
+      "romanization": "aithe",
+      "meaning": {
+        "en": "however / if so / then"
+      },
+      "partOfSpeech": "connector",
+      "topic": "discourse",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.even-though",
+      "level": "B2",
+      "telugu": "అయినా",
+      "spokenTelugu": "అయినా",
+      "romanization": "ayinaa",
+      "meaning": {
+        "en": "even so / although"
+      },
+      "partOfSpeech": "connector",
+      "topic": "discourse",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.especially",
+      "level": "B2",
+      "telugu": "ముఖ్యంగా",
+      "spokenTelugu": "ముఖ్యంగా",
+      "romanization": "mukhyangaa",
+      "meaning": {
+        "en": "especially / mainly"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "discourse",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.generally",
+      "level": "B2",
+      "telugu": "సాధారణంగా",
+      "spokenTelugu": "సాధారణంగా",
+      "romanization": "saadhaaranangaa",
+      "meaning": {
+        "en": "generally / usually"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "discourse",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.approximately",
+      "level": "B2",
+      "telugu": "దాదాపు",
+      "spokenTelugu": "దాదాపు",
+      "romanization": "daadaapu",
+      "meaning": {
+        "en": "approximately / almost"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.clearly",
+      "level": "B2",
+      "telugu": "స్పష్టంగా",
+      "spokenTelugu": "స్పష్టంగా",
+      "romanization": "spashtangaa",
+      "meaning": {
+        "en": "clearly"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.seriously",
+      "level": "B2",
+      "telugu": "సీరియస్‌గా",
+      "spokenTelugu": "సీరియస్‌గా",
+      "romanization": "seriousgaa",
+      "meaning": {
+        "en": "seriously"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "stance",
+      "register": "casual",
+      "variants": [
+        {
+          "form": "గంభీరంగా",
+          "meaning": "seriously / solemnly",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.context",
+      "level": "B2",
+      "telugu": "సందర్భం",
+      "spokenTelugu": "సందర్భం",
+      "romanization": "sandarbham",
+      "meaning": {
+        "en": "context / occasion"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.perspective",
+      "level": "B2",
+      "telugu": "దృష్టికోణం",
+      "spokenTelugu": "దృష్టికోణం",
+      "romanization": "drushtikonam",
+      "meaning": {
+        "en": "perspective / point of view"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.evidence",
+      "level": "B2",
+      "telugu": "ఆధారం",
+      "spokenTelugu": "ఆధారం",
+      "romanization": "aadhaaram",
+      "meaning": {
+        "en": "evidence / basis"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.argument",
+      "level": "B2",
+      "telugu": "వాదన",
+      "spokenTelugu": "వాదన",
+      "romanization": "vaadana",
+      "meaning": {
+        "en": "argument / contention"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.advantage",
+      "level": "B2",
+      "telugu": "ప్రయోజనం",
+      "spokenTelugu": "ప్రయోజనం",
+      "romanization": "prayojanam",
+      "meaning": {
+        "en": "advantage / benefit"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.disadvantage",
+      "level": "B2",
+      "telugu": "ప్రతికూలత",
+      "spokenTelugu": "ప్రతికూలత",
+      "romanization": "pratikoolata",
+      "meaning": {
+        "en": "disadvantage"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.condition",
+      "level": "B2",
+      "telugu": "పరిస్థితి",
+      "spokenTelugu": "పరిస్థితి",
+      "romanization": "paristhiti",
+      "meaning": {
+        "en": "condition / situation"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.alternative",
+      "level": "B2",
+      "telugu": "ప్రత్యామ్నాయం",
+      "spokenTelugu": "ప్రత్యామ్నాయం",
+      "romanization": "pratyaamnaayam",
+      "meaning": {
+        "en": "alternative"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.approach",
+      "level": "B2",
+      "telugu": "విధానం",
+      "spokenTelugu": "విధానం",
+      "romanization": "vidhaanam",
+      "meaning": {
+        "en": "method / approach"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.process",
+      "level": "B2",
+      "telugu": "ప్రక్రియ",
+      "spokenTelugu": "ప్రక్రియ",
+      "romanization": "prakriya",
+      "meaning": {
+        "en": "process"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.consequence",
+      "level": "B2",
+      "telugu": "పరిణామం",
+      "spokenTelugu": "పరిణామం",
+      "romanization": "parinaamam",
+      "meaning": {
+        "en": "consequence / outcome"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.priority",
+      "level": "B2",
+      "telugu": "ప్రాధాన్యం",
+      "spokenTelugu": "ప్రాధాన్యం",
+      "romanization": "praadhaanyam",
+      "meaning": {
+        "en": "priority / importance"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.value",
+      "level": "B2",
+      "telugu": "విలువ",
+      "spokenTelugu": "విలువ",
+      "romanization": "viluva",
+      "meaning": {
+        "en": "value"
+      },
+      "partOfSpeech": "noun",
+      "topic": "reasoning",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.freedom",
+      "level": "B2",
+      "telugu": "స్వేచ్ఛ",
+      "spokenTelugu": "స్వేచ్ఛ",
+      "romanization": "swechcha",
+      "meaning": {
+        "en": "freedom"
+      },
+      "partOfSpeech": "noun",
+      "topic": "abstract",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.rights",
+      "level": "B2",
+      "telugu": "హక్కులు",
+      "spokenTelugu": "హక్కులు",
+      "romanization": "hakkulu",
+      "meaning": {
+        "en": "rights"
+      },
+      "partOfSpeech": "noun",
+      "topic": "abstract",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.policy",
+      "level": "B2",
+      "telugu": "విధానం",
+      "spokenTelugu": "విధానం",
+      "romanization": "vidhaanam",
+      "meaning": {
+        "en": "policy / approach"
+      },
+      "partOfSpeech": "noun",
+      "topic": "professional",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.research",
+      "level": "B2",
+      "telugu": "పరిశోధన",
+      "spokenTelugu": "పరిశోధన",
+      "romanization": "parishodhana",
+      "meaning": {
+        "en": "research"
+      },
+      "partOfSpeech": "noun",
+      "topic": "academic",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.analysis",
+      "level": "B2",
+      "telugu": "విశ్లేషణ",
+      "spokenTelugu": "విశ్లేషణ",
+      "romanization": "vishleshana",
+      "meaning": {
+        "en": "analysis"
+      },
+      "partOfSpeech": "noun",
+      "topic": "academic",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.summary",
+      "level": "B2",
+      "telugu": "సారాంశం",
+      "spokenTelugu": "సారాంశం",
+      "romanization": "saaraamsham",
+      "meaning": {
+        "en": "summary"
+      },
+      "partOfSpeech": "noun",
+      "topic": "academic",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.nuance",
+      "level": "C1",
+      "telugu": "సూక్ష్మమైన తేడా",
+      "spokenTelugu": "సూక్ష్మమైన తేడా",
+      "romanization": "sookshmamaina teda",
+      "meaning": {
+        "en": "subtle difference / nuance"
+      },
+      "partOfSpeech": "phrase",
+      "topic": "advanced",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.implication",
+      "level": "C1",
+      "telugu": "అంతర్లీన అర్థం",
+      "spokenTelugu": "అంతర్లీన అర్థం",
+      "romanization": "antarleena artham",
+      "meaning": {
+        "en": "implicit meaning / implication"
+      },
+      "partOfSpeech": "phrase",
+      "topic": "advanced",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.assumption",
+      "level": "C1",
+      "telugu": "ఊహ",
+      "spokenTelugu": "ఊహ",
+      "romanization": "ooha",
+      "meaning": {
+        "en": "assumption / supposition"
+      },
+      "partOfSpeech": "noun",
+      "topic": "advanced",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.interpretation",
+      "level": "C1",
+      "telugu": "వ్యాఖ్యానం",
+      "spokenTelugu": "వ్యాఖ్యానం",
+      "romanization": "vyaakhyaanam",
+      "meaning": {
+        "en": "interpretation / explanation"
+      },
+      "partOfSpeech": "noun",
+      "topic": "advanced",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.contradiction",
+      "level": "C1",
+      "telugu": "విరుద్ధత",
+      "spokenTelugu": "విరుద్ధత",
+      "romanization": "viruddhata",
+      "meaning": {
+        "en": "contradiction"
+      },
+      "partOfSpeech": "noun",
+      "topic": "advanced",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.ambiguity",
+      "level": "C1",
+      "telugu": "అస్పష్టత",
+      "spokenTelugu": "అస్పష్టత",
+      "romanization": "aspashtata",
+      "meaning": {
+        "en": "ambiguity / lack of clarity"
+      },
+      "partOfSpeech": "noun",
+      "topic": "advanced",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.relevance",
+      "level": "C1",
+      "telugu": "సంబంధితత",
+      "spokenTelugu": "సంబంధితత",
+      "romanization": "sambandhitata",
+      "meaning": {
+        "en": "relevance"
+      },
+      "partOfSpeech": "noun",
+      "topic": "advanced",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.criticism",
+      "level": "C1",
+      "telugu": "విమర్శ",
+      "spokenTelugu": "విమర్శ",
+      "romanization": "vimarsha",
+      "meaning": {
+        "en": "criticism / critique"
+      },
+      "partOfSpeech": "noun",
+      "topic": "advanced",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.evaluation",
+      "level": "C1",
+      "telugu": "మూల్యాంకనం",
+      "spokenTelugu": "మూల్యాంకనం",
+      "romanization": "moolyaankanam",
+      "meaning": {
+        "en": "evaluation / assessment"
+      },
+      "partOfSpeech": "noun",
+      "topic": "advanced",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.conclusion",
+      "level": "C1",
+      "telugu": "ముగింపు",
+      "spokenTelugu": "ముగింపు",
+      "romanization": "mugimpu",
+      "meaning": {
+        "en": "conclusion / ending"
+      },
+      "partOfSpeech": "noun",
+      "topic": "advanced",
+      "register": "neutral",
+      "variants": [
+        {
+          "form": "నిష్కర్ష",
+          "meaning": "conclusion / inference",
+          "register": "formal"
+        }
+      ],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.precise",
+      "level": "C1",
+      "telugu": "ఖచ్చితంగా",
+      "spokenTelugu": "ఖచ్చితంగా",
+      "romanization": "khachchitangaa",
+      "meaning": {
+        "en": "precisely / certainly"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "advanced",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.roughly",
+      "level": "C1",
+      "telugu": "స్థూలంగా",
+      "spokenTelugu": "స్థూలంగా",
+      "romanization": "sthoolangaa",
+      "meaning": {
+        "en": "roughly / broadly"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "advanced",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.to-summarize",
+      "level": "C1",
+      "telugu": "సారాంశంగా చెప్పాలంటే",
+      "spokenTelugu": "సారాంశంగా చెప్పాలంటే",
+      "romanization": "saaraamshangaa cheppaalante",
+      "meaning": {
+        "en": "to summarize / in short"
+      },
+      "partOfSpeech": "phrase",
+      "topic": "discourse",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.in-other-words",
+      "level": "C1",
+      "telugu": "మరోలా చెప్పాలంటే",
+      "spokenTelugu": "మరోలా చెప్పాలంటే",
+      "romanization": "marolaa cheppaalante",
+      "meaning": {
+        "en": "in other words"
+      },
+      "partOfSpeech": "phrase",
+      "topic": "discourse",
+      "register": "spoken",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.as-far-as-i-know",
+      "level": "C1",
+      "telugu": "నాకు తెలిసినంతవరకు",
+      "spokenTelugu": "నాకు తెలిసినంతవరకు",
+      "romanization": "naaku telisinantavaraku",
+      "meaning": {
+        "en": "as far as I know"
+      },
+      "partOfSpeech": "phrase",
+      "topic": "stance",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.not-necessarily",
+      "level": "C1",
+      "telugu": "అవసరం లేదు",
+      "spokenTelugu": "అవసరం లేదు",
+      "romanization": "avasaram ledu",
+      "meaning": {
+        "en": "not necessary / not necessarily"
+      },
+      "partOfSpeech": "phrase",
+      "topic": "stance",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.depends",
+      "level": "C1",
+      "telugu": "దానిపై ఆధారపడి ఉంటుంది",
+      "spokenTelugu": "దానిపై ఆధారపడి ఉంటుంది",
+      "romanization": "daanipai aadhaarapadi untundi",
+      "meaning": {
+        "en": "it depends on that"
+      },
+      "partOfSpeech": "phrase",
+      "topic": "stance",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.to-be-fair",
+      "level": "C1",
+      "telugu": "నిజం చెప్పాలంటే",
+      "spokenTelugu": "నిజం చెప్పాలంటే",
+      "romanization": "nijam cheppaalante",
+      "meaning": {
+        "en": "to be honest / truthfully speaking"
+      },
+      "partOfSpeech": "phrase",
+      "topic": "stance",
+      "register": "spoken",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.from-that-angle",
+      "level": "C1",
+      "telugu": "ఆ కోణంలో చూస్తే",
+      "spokenTelugu": "ఆ కోణంలో చూస్తే",
+      "romanization": "aa konamlo chooste",
+      "meaning": {
+        "en": "seen from that angle"
+      },
+      "partOfSpeech": "phrase",
+      "topic": "stance",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.even-if",
+      "level": "C1",
+      "telugu": "అయినప్పటికీ",
+      "spokenTelugu": "అయినప్పటికీ",
+      "romanization": "ayinappatikee",
+      "meaning": {
+        "en": "nevertheless / even so"
+      },
+      "partOfSpeech": "connector",
+      "topic": "discourse",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.regardless",
+      "level": "C2",
+      "telugu": "ఏదేమైనా",
+      "spokenTelugu": "ఏదేమైనా",
+      "romanization": "edemainaa",
+      "meaning": {
+        "en": "regardless / anyway"
+      },
+      "partOfSpeech": "connector",
+      "topic": "discourse",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.underlying",
+      "level": "C2",
+      "telugu": "అంతర్లీనంగా",
+      "spokenTelugu": "అంతర్లీనంగా",
+      "romanization": "antarleenangaa",
+      "meaning": {
+        "en": "implicitly / underlyingly"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "advanced",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.subtle",
+      "level": "C2",
+      "telugu": "సూక్ష్మంగా",
+      "spokenTelugu": "సూక్ష్మంగా",
+      "romanization": "sookshmangaa",
+      "meaning": {
+        "en": "subtly"
+      },
+      "partOfSpeech": "adverb",
+      "topic": "advanced",
+      "register": "formal",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.reformulate",
+      "level": "C2",
+      "telugu": "మరో విధంగా చెప్పడం",
+      "spokenTelugu": "మరో విధంగా చెప్పడం",
+      "romanization": "maro vidhangaa cheppadam",
+      "meaning": {
+        "en": "to reformulate / say in another way"
+      },
+      "partOfSpeech": "phrase",
+      "topic": "advanced",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    },
+    {
+      "id": "te.lex.synthesize",
+      "level": "C2",
+      "telugu": "సమగ్రంగా కలిపి చెప్పడం",
+      "spokenTelugu": "సమగ్రంగా కలిపి చెప్పడం",
+      "romanization": "samagrangaa kalipi cheppadam",
+      "meaning": {
+        "en": "to combine and explain comprehensively"
+      },
+      "partOfSpeech": "phrase",
+      "topic": "advanced",
+      "register": "neutral",
+      "variants": [],
+      "reviewStatus": "model_reviewed",
+      "productionPriority": true
+    }
+  ],
+  "utterancePatterns": [
+    {
+      "id": "te.pattern.name-ask",
+      "level": "A0",
+      "function": "ask-name",
+      "teluguPattern": "మీ పేరు ఏంటి?",
+      "romanizationPattern": "mee peru enti?",
+      "meaningPattern": {
+        "en": "What's your name?"
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.name-say",
+      "level": "A0",
+      "function": "introduce-self",
+      "teluguPattern": "నా పేరు {NAME}.",
+      "romanizationPattern": "naa peru {NAME}.",
+      "meaningPattern": {
+        "en": "My name is {NAME}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.how-are-you-polite",
+      "level": "A0",
+      "function": "greet",
+      "teluguPattern": "మీరు ఎలా ఉన్నారు?",
+      "romanizationPattern": "meeru elaa unnaaru?",
+      "meaningPattern": {
+        "en": "How are you?"
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.fine",
+      "level": "A0",
+      "function": "greet",
+      "teluguPattern": "నేను బాగున్నాను.",
+      "romanizationPattern": "nenu baagunnaanu.",
+      "meaningPattern": {
+        "en": "I'm fine."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.want-x",
+      "level": "A0",
+      "function": "ask-for",
+      "teluguPattern": "నాకు {X} కావాలి.",
+      "romanizationPattern": "naaku {X} kaavaali.",
+      "meaningPattern": {
+        "en": "I want / need {X}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.dont-want-x",
+      "level": "A0",
+      "function": "refuse",
+      "teluguPattern": "నాకు {X} వద్దు.",
+      "romanizationPattern": "naaku {X} vaddu.",
+      "meaningPattern": {
+        "en": "I don't want {X}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.where-x",
+      "level": "A0",
+      "function": "directions",
+      "teluguPattern": "{X} ఎక్కడ ఉంది?",
+      "romanizationPattern": "{X} ekkada undi?",
+      "meaningPattern": {
+        "en": "Where is {X}?"
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.need-help",
+      "level": "A0",
+      "function": "help",
+      "teluguPattern": "నాకు సహాయం కావాలి.",
+      "romanizationPattern": "naaku sahaayam kaavaali.",
+      "meaningPattern": {
+        "en": "I need help."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.dont-understand",
+      "level": "A0",
+      "function": "repair",
+      "teluguPattern": "నాకు అర్థం కాలేదు.",
+      "romanizationPattern": "naaku artham kaaledu.",
+      "meaningPattern": {
+        "en": "I didn't understand."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.say-again",
+      "level": "A0",
+      "function": "repair",
+      "teluguPattern": "మళ్లీ చెప్పండి.",
+      "romanizationPattern": "mallee cheppandi.",
+      "meaningPattern": {
+        "en": "Please say it again."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.speak-slowly",
+      "level": "A0",
+      "function": "repair",
+      "teluguPattern": "నెమ్మదిగా మాట్లాడండి.",
+      "romanizationPattern": "nemmadigaa maatlaadandi.",
+      "meaningPattern": {
+        "en": "Please speak slowly."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.how-much",
+      "level": "A0",
+      "function": "price",
+      "teluguPattern": "ఇది ఎంత?",
+      "romanizationPattern": "idi entha?",
+      "meaningPattern": {
+        "en": "How much is this?"
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.go-destination",
+      "level": "A0",
+      "function": "transport",
+      "teluguPattern": "నాకు {PLACE}కి వెళ్లాలి.",
+      "romanizationPattern": "naaku {PLACE}ki vellaali.",
+      "meaningPattern": {
+        "en": "I need to go to {PLACE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.this-good",
+      "level": "A0",
+      "function": "evaluate",
+      "teluguPattern": "ఇది బాగుంది.",
+      "romanizationPattern": "idi baagundi.",
+      "meaningPattern": {
+        "en": "This is good / nice."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.this-not-good",
+      "level": "A0",
+      "function": "evaluate",
+      "teluguPattern": "ఇది బాగోలేదు.",
+      "romanizationPattern": "idi baagoledu.",
+      "meaningPattern": {
+        "en": "This isn't good."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.where-live",
+      "level": "A1",
+      "function": "identity",
+      "teluguPattern": "మీరు ఎక్కడ ఉంటారు?",
+      "romanizationPattern": "meeru ekkada untaaru?",
+      "meaningPattern": {
+        "en": "Where do you live?"
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.live-in",
+      "level": "A1",
+      "function": "identity",
+      "teluguPattern": "నేను {PLACE}లో ఉంటాను.",
+      "romanizationPattern": "nenu {PLACE}lo untaanu.",
+      "meaningPattern": {
+        "en": "I live in {PLACE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.work-in",
+      "level": "A1",
+      "function": "work",
+      "teluguPattern": "నేను {PLACE}లో పని చేస్తున్నాను.",
+      "romanizationPattern": "nenu {PLACE}lo pani chestunnaanu.",
+      "meaningPattern": {
+        "en": "I work at/in {PLACE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.study",
+      "level": "A1",
+      "function": "study",
+      "teluguPattern": "నేను {SUBJECT} చదువుతున్నాను.",
+      "romanizationPattern": "nenu {SUBJECT} chaduvutunnaanu.",
+      "meaningPattern": {
+        "en": "I'm studying {SUBJECT}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.like-x",
+      "level": "A1",
+      "function": "likes",
+      "teluguPattern": "నాకు {X} ఇష్టం.",
+      "romanizationPattern": "naaku {X} ishtam.",
+      "meaningPattern": {
+        "en": "I like {X}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.dont-like-x",
+      "level": "A1",
+      "function": "likes",
+      "teluguPattern": "నాకు {X} ఇష్టం లేదు.",
+      "romanizationPattern": "naaku {X} ishtam ledu.",
+      "meaningPattern": {
+        "en": "I don't like {X}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.need-doctor",
+      "level": "A1",
+      "function": "health",
+      "teluguPattern": "నాకు డాక్టర్ కావాలి.",
+      "romanizationPattern": "naaku doctor kaavaali.",
+      "meaningPattern": {
+        "en": "I need a doctor."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.pain-here",
+      "level": "A1",
+      "function": "health",
+      "teluguPattern": "ఇక్కడ నొప్పిగా ఉంది.",
+      "romanizationPattern": "ikkada noppigaa undi.",
+      "meaningPattern": {
+        "en": "It hurts here."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.have-fever",
+      "level": "A1",
+      "function": "health",
+      "teluguPattern": "నాకు జ్వరం ఉంది.",
+      "romanizationPattern": "naaku jvaram undi.",
+      "meaningPattern": {
+        "en": "I have a fever."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.time-question",
+      "level": "A1",
+      "function": "time",
+      "teluguPattern": "ఇప్పుడు టైమ్ ఎంత?",
+      "romanizationPattern": "ippudu time entha?",
+      "meaningPattern": {
+        "en": "What time is it now?"
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.when-leave",
+      "level": "A1",
+      "function": "time",
+      "teluguPattern": "ఎప్పుడు బయల్దేరాలి?",
+      "romanizationPattern": "eppudu bayalderaali?",
+      "meaningPattern": {
+        "en": "When should we leave?"
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.which-bus",
+      "level": "A1",
+      "function": "transport",
+      "teluguPattern": "{PLACE}కి ఏ బస్ వెళ్తుంది?",
+      "romanizationPattern": "{PLACE}ki ae bus veltundi?",
+      "meaningPattern": {
+        "en": "Which bus goes to {PLACE}?"
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.where-get-off",
+      "level": "A1",
+      "function": "transport",
+      "teluguPattern": "నేను ఎక్కడ దిగాలి?",
+      "romanizationPattern": "nenu ekkada digaali?",
+      "meaningPattern": {
+        "en": "Where should I get off?"
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.give-one",
+      "level": "A1",
+      "function": "shopping",
+      "teluguPattern": "ఒకటి ఇవ్వండి.",
+      "romanizationPattern": "okati ivvandi.",
+      "meaningPattern": {
+        "en": "Please give me one."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.too-much",
+      "level": "A1",
+      "function": "shopping",
+      "teluguPattern": "చాలా ఎక్కువ.",
+      "romanizationPattern": "chaalaa ekkuva.",
+      "meaningPattern": {
+        "en": "That's too much."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.less-spicy",
+      "level": "A1",
+      "function": "food",
+      "teluguPattern": "కారం తక్కువగా వేయండి.",
+      "romanizationPattern": "kaaram takkuvagaa veyandi.",
+      "meaningPattern": {
+        "en": "Please make it less spicy."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.bill-please",
+      "level": "A1",
+      "function": "food",
+      "teluguPattern": "బిల్ ఇవ్వండి.",
+      "romanizationPattern": "bill ivvandi.",
+      "meaningPattern": {
+        "en": "Please give me the bill."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.what-happened",
+      "level": "A2",
+      "function": "past",
+      "teluguPattern": "ఏమైంది?",
+      "romanizationPattern": "emaindi?",
+      "meaningPattern": {
+        "en": "What happened?"
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.lost-phone",
+      "level": "A2",
+      "function": "past",
+      "teluguPattern": "నా ఫోన్ పోయింది.",
+      "romanizationPattern": "naa phone poyindi.",
+      "meaningPattern": {
+        "en": "I lost my phone."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.went-yesterday",
+      "level": "A2",
+      "function": "past",
+      "teluguPattern": "నిన్న నేను {PLACE}కి వెళ్లాను.",
+      "romanizationPattern": "ninna nenu {PLACE}ki vellaanu.",
+      "meaningPattern": {
+        "en": "Yesterday I went to {PLACE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.will-go-tomorrow",
+      "level": "A2",
+      "function": "future",
+      "teluguPattern": "రేపు నేను {PLACE}కి వెళ్తాను.",
+      "romanizationPattern": "repu nenu {PLACE}ki veltaanu.",
+      "meaningPattern": {
+        "en": "Tomorrow I'll go to {PLACE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.because",
+      "level": "A2",
+      "function": "reason",
+      "teluguPattern": "{CLAUSE1}, ఎందుకంటే {CLAUSE2}.",
+      "romanizationPattern": "{CLAUSE1}, endukante {CLAUSE2}.",
+      "meaningPattern": {
+        "en": "{CLAUSE1}, because {CLAUSE2}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.thats-why",
+      "level": "A2",
+      "function": "reason",
+      "teluguPattern": "{CLAUSE1}. అందుకే {CLAUSE2}.",
+      "romanizationPattern": "{CLAUSE1}. anduke {CLAUSE2}.",
+      "meaningPattern": {
+        "en": "{CLAUSE1}. That's why {CLAUSE2}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.which-better",
+      "level": "A2",
+      "function": "compare",
+      "teluguPattern": "ఇవ్విట్లో ఏది బాగుంది?",
+      "romanizationPattern": "ivitlo edi baagundi?",
+      "meaningPattern": {
+        "en": "Which of these is better?"
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.need-repair",
+      "level": "A2",
+      "function": "service",
+      "teluguPattern": "ఇది పని చేయడం లేదు. రిపేర్ చేయగలరా?",
+      "romanizationPattern": "idi pani cheyadam ledu. repair cheyagalaraa?",
+      "meaningPattern": {
+        "en": "This isn't working. Can you repair it?"
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.call-later",
+      "level": "A2",
+      "function": "phone",
+      "teluguPattern": "నేను తర్వాత కాల్ చేస్తాను.",
+      "romanizationPattern": "nenu tarvaata call chestaanu.",
+      "meaningPattern": {
+        "en": "I'll call later."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.send-message",
+      "level": "A2",
+      "function": "phone",
+      "teluguPattern": "నాకు మెసేజ్ పంపండి.",
+      "romanizationPattern": "naaku message pampandi.",
+      "meaningPattern": {
+        "en": "Send me a message."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.not-sure",
+      "level": "A2",
+      "function": "stance",
+      "teluguPattern": "నాకు ఖచ్చితంగా తెలియదు.",
+      "romanizationPattern": "naaku khachchitangaa teliyadu.",
+      "meaningPattern": {
+        "en": "I'm not sure."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.maybe",
+      "level": "A2",
+      "function": "stance",
+      "teluguPattern": "బహుశా {CLAUSE}.",
+      "romanizationPattern": "bahushaa {CLAUSE}.",
+      "meaningPattern": {
+        "en": "Maybe {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.my-opinion",
+      "level": "B1",
+      "function": "opinion",
+      "teluguPattern": "నా అభిప్రాయం ప్రకారం, {CLAUSE}.",
+      "romanizationPattern": "naa abhipraayam prakaaram, {CLAUSE}.",
+      "meaningPattern": {
+        "en": "In my opinion, {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.i-think",
+      "level": "B1",
+      "function": "opinion",
+      "teluguPattern": "నాకు {CLAUSE} అనిపిస్తోంది.",
+      "romanizationPattern": "naaku {CLAUSE} anipistondi.",
+      "meaningPattern": {
+        "en": "I think / it seems to me that {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.agree",
+      "level": "B1",
+      "function": "agreement",
+      "teluguPattern": "నేను మీతో ఒప్పుకుంటాను.",
+      "romanizationPattern": "nenu meetho oppukuntaanu.",
+      "meaningPattern": {
+        "en": "I agree with you."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.disagree-polite",
+      "level": "B1",
+      "function": "disagreement",
+      "teluguPattern": "నేను పూర్తిగా ఒప్పుకోను.",
+      "romanizationPattern": "nenu poorthigaa oppukonu.",
+      "meaningPattern": {
+        "en": "I don't completely agree."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.for-example",
+      "level": "B1",
+      "function": "explain",
+      "teluguPattern": "ఉదాహరణకి, {EXAMPLE}.",
+      "romanizationPattern": "udaaharanaki, {EXAMPLE}.",
+      "meaningPattern": {
+        "en": "For example, {EXAMPLE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.first-then-finally",
+      "level": "B1",
+      "function": "narrate",
+      "teluguPattern": "మొదట {A}. తర్వాత {B}. చివరికి {C}.",
+      "romanizationPattern": "modata {A}. tarvaata {B}. chivariki {C}.",
+      "meaningPattern": {
+        "en": "First {A}. Then {B}. Finally {C}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.actually",
+      "level": "B1",
+      "function": "discourse",
+      "teluguPattern": "నిజానికి, {CLAUSE}.",
+      "romanizationPattern": "nijaaniki, {CLAUSE}.",
+      "meaningPattern": {
+        "en": "Actually, {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.depends",
+      "level": "B1",
+      "function": "stance",
+      "teluguPattern": "అది {X} మీద ఆధారపడి ఉంటుంది.",
+      "romanizationPattern": "adi {X} meeda aadhaarapadi untundi.",
+      "meaningPattern": {
+        "en": "It depends on {X}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.however",
+      "level": "B2",
+      "function": "contrast",
+      "teluguPattern": "అయితే, {CLAUSE}.",
+      "romanizationPattern": "aithe, {CLAUSE}.",
+      "meaningPattern": {
+        "en": "However, {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.even-so",
+      "level": "B2",
+      "function": "concede",
+      "teluguPattern": "అయినా, {CLAUSE}.",
+      "romanizationPattern": "ayinaa, {CLAUSE}.",
+      "meaningPattern": {
+        "en": "Even so / nevertheless, {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.other-hand",
+      "level": "B2",
+      "function": "contrast",
+      "teluguPattern": "మరోవైపు, {CLAUSE}.",
+      "romanizationPattern": "marovaipu, {CLAUSE}.",
+      "meaningPattern": {
+        "en": "On the other hand, {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.main-reason",
+      "level": "B2",
+      "function": "argument",
+      "teluguPattern": "దానికి ప్రధాన కారణం {REASON}.",
+      "romanizationPattern": "daaniki pradhaanamaina kaaranam {REASON}.",
+      "meaningPattern": {
+        "en": "The main reason for that is {REASON}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.advantage",
+      "level": "B2",
+      "function": "argument",
+      "teluguPattern": "దీని ప్రధాన ప్రయోజనం {X}.",
+      "romanizationPattern": "deeni pradhaana prayojanam {X}.",
+      "meaningPattern": {
+        "en": "The main advantage is {X}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.problem-is",
+      "level": "B2",
+      "function": "argument",
+      "teluguPattern": "ఇక్కడ సమస్య ఏంటంటే {CLAUSE}.",
+      "romanizationPattern": "ikkada samasya entante {CLAUSE}.",
+      "meaningPattern": {
+        "en": "The problem here is that {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.clarify-point",
+      "level": "B2",
+      "function": "repair",
+      "teluguPattern": "నేను చెప్పాలనుకుంటున్నది {CLAUSE}.",
+      "romanizationPattern": "nenu cheppaalanukuntunnadi {CLAUSE}.",
+      "meaningPattern": {
+        "en": "What I mean is {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.in-other-words",
+      "level": "C1",
+      "function": "reformulate",
+      "teluguPattern": "మరోలా చెప్పాలంటే, {CLAUSE}.",
+      "romanizationPattern": "marolaa cheppaalante, {CLAUSE}.",
+      "meaningPattern": {
+        "en": "In other words, {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.to-summarize",
+      "level": "C1",
+      "function": "summarise",
+      "teluguPattern": "సారాంశంగా చెప్పాలంటే, {CLAUSE}.",
+      "romanizationPattern": "saaraamshangaa cheppaalante, {CLAUSE}.",
+      "meaningPattern": {
+        "en": "To summarize, {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.as-far-as-i-know",
+      "level": "C1",
+      "function": "hedge",
+      "teluguPattern": "నాకు తెలిసినంతవరకు, {CLAUSE}.",
+      "romanizationPattern": "naaku telisinantavaraku, {CLAUSE}.",
+      "meaningPattern": {
+        "en": "As far as I know, {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.from-angle",
+      "level": "C1",
+      "function": "perspective",
+      "teluguPattern": "ఆ కోణంలో చూస్తే, {CLAUSE}.",
+      "romanizationPattern": "aa konamlo chooste, {CLAUSE}.",
+      "meaningPattern": {
+        "en": "Seen from that perspective, {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.precise-reformulation",
+      "level": "C2",
+      "function": "precision",
+      "teluguPattern": "ఇంకా ఖచ్చితంగా చెప్పాలంటే, {CLAUSE}.",
+      "romanizationPattern": "inkaa khachchitangaa cheppaalante, {CLAUSE}.",
+      "meaningPattern": {
+        "en": "To put it more precisely, {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    },
+    {
+      "id": "te.pattern.synthesis-frame",
+      "level": "C2",
+      "function": "synthesis",
+      "teluguPattern": "ఈ రెండు విషయాలను కలిపి చూస్తే, {CLAUSE}.",
+      "romanizationPattern": "ee rendu vishayaalanu kalipi chooste, {CLAUSE}.",
+      "meaningPattern": {
+        "en": "Considering these two points together, {CLAUSE}."
+      },
+      "reviewStatus": "model_reviewed",
+      "requiresAllFilledSlotsExplained": true
+    }
+  ],
+  "registerPairs": [
+    {
+      "everyday": "హలో",
+      "formal": "నమస్కారం",
+      "meaning": {
+        "en": "hello / greetings"
+      }
+    },
+    {
+      "everyday": "థాంక్స్",
+      "formal": "ధన్యవాదాలు",
+      "meaning": {
+        "en": "thanks / thank you"
+      }
+    },
+    {
+      "everyday": "సారీ",
+      "formal": "క్షమించండి",
+      "meaning": {
+        "en": "sorry / excuse me"
+      }
+    },
+    {
+      "everyday": "డాక్టర్",
+      "formal": "వైద్యుడు",
+      "meaning": {
+        "en": "doctor"
+      }
+    },
+    {
+      "everyday": "టీచర్",
+      "formal": "ఉపాధ్యాయుడు",
+      "meaning": {
+        "en": "teacher"
+      }
+    },
+    {
+      "everyday": "ఆఫీస్",
+      "formal": "కార్యాలయం",
+      "meaning": {
+        "en": "office"
+      }
+    },
+    {
+      "everyday": "మీటింగ్",
+      "formal": "సమావేశం",
+      "meaning": {
+        "en": "meeting"
+      }
+    },
+    {
+      "everyday": "మెసేజ్",
+      "formal": "సందేశం",
+      "meaning": {
+        "en": "message"
+      }
+    },
+    {
+      "everyday": "ఫ్రెండ్",
+      "formal": "స్నేహితుడు / స్నేహితురాలు",
+      "meaning": {
+        "en": "friend"
+      }
+    },
+    {
+      "everyday": "డాన్స్",
+      "formal": "నృత్యం",
+      "meaning": {
+        "en": "dance"
+      }
+    }
+  ],
+  "repairLanguage": [
+    {
+      "te": "నాకు అర్థం కాలేదు.",
+      "romanization": "naaku artham kaaledu.",
+      "en": "I didn't understand."
+    },
+    {
+      "te": "మళ్లీ చెప్పండి.",
+      "romanization": "mallee cheppandi.",
+      "en": "Please say it again."
+    },
+    {
+      "te": "నెమ్మదిగా మాట్లాడండి.",
+      "romanization": "nemmadigaa maatlaadandi.",
+      "en": "Please speak slowly."
+    },
+    {
+      "te": "అంటే ఏంటి?",
+      "romanization": "ante enti?",
+      "en": "What does that mean?"
+    },
+    {
+      "te": "ఇది ఎలా చెప్పాలి?",
+      "romanization": "idi elaa cheppaali?",
+      "en": "How do I say this?"
+    },
+    {
+      "te": "నేను సరిగ్గా చెప్పానా?",
+      "romanization": "nenu sariggaa cheppaanaa?",
+      "en": "Did I say it correctly?"
+    }
+  ],
+  "assessmentPolicy": {
+    "principle": "Course completion does not equal proficiency.",
+    "levels": {
+      "A0-A2": "Primarily guided but must include delayed recall and unseen recombination.",
+      "B1-B2": "Increasingly unseen listening, multi-turn speaking, narration, explanation and transfer.",
+      "C1-C2": "Predominantly unseen extended material, spontaneous production, register/pragmatics, inference, synthesis and reformulation."
+    },
+    "c2ExitCapabilities": [
+      "follow long natural-speed speech with minimal support",
+      "handle unfamiliar conversational situations spontaneously",
+      "express fine distinctions and reformulate precisely",
+      "understand common idiomatic and colloquial language in context",
+      "adapt register to relationship and setting",
+      "infer unstated links, humour and implication from context",
+      "synthesise several sources orally",
+      "sustain extended coherent speaking without scripted prompts"
+    ]
+  },
+  "readingPolicy": {
+    "priority": "secondary during the spoken-first phase",
+    "rule": "Telugu script is always present, but script decoding must not block early speaking progress. Romanization remains available. A dedicated literacy expansion may later deepen reading/writing without changing concept IDs."
+  },
+  "contentValidation": {
+    "mustPass": [
+      "every lexical concept has stable id, Telugu, romanization and English meaning",
+      "every production item has an explained first exposure",
+      "every A0-A2 sentence/pattern has glossable component concepts",
+      "no duplicate stable IDs",
+      "formal variants are not silently substituted for everyday spoken production forms",
+      "no fixed daily new-word cap",
+      "SRS includes 1,2,3,5,7,14 day milestones and continues indefinitely"
+    ],
+    "nativeReviewGate": "Before declaring the corpus linguistically final, a qualified native Telugu reviewer should approve pronunciation, spoken naturalness, register, regional neutrality and all C1/C2 idiomatic/pragmatic content."
+  },
+  "referenceSources": [
+    {
+      "name": "Council of Europe CEFR descriptors",
+      "url": "https://www.coe.int/en/web/common-european-framework-reference-languages/cefr-descriptors",
+      "use": "A1-C2 capability framing; not vocabulary-count requirements"
+    },
+    {
+      "name": "Central Institute of Indian Languages — Telugu course/resource catalog",
+      "url": "https://www.ciil.org/srlc",
+      "use": "Telugu linguistic/course reference and phonetic-course provenance"
+    },
+    {
+      "name": "Universal Dependencies Telugu-MTG",
+      "url": "https://github.com/UniversalDependencies/UD_Telugu-MTG",
+      "license": "CC BY-SA 4.0",
+      "use": "Modern Telugu grammatical examples and morphosyntactic reference"
+    },
+    {
+      "name": "LangX Telugu frequency list",
+      "url": "https://langx.io/tools/most-common-words/telugu",
+      "license": "CC BY-SA 4.0 according to source page",
+      "use": "Spoken/subtitle-frequency candidate lexicon only; meanings/register must be reviewed before teaching"
+    },
+    {
+      "name": "Wiktionary Telugu 10K frequency list",
+      "url": "https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Telugu/Wikipedia_2017_10K",
+      "license": "CC BY-SA",
+      "use": "Advanced receptive-frequency coverage candidate; not automatically approved spoken teaching content"
+    }
+  ],
+  "engineeringCoverageTargets": {
+    "disclaimer": "These are internal corpus-planning targets, NOT official CEFR vocabulary requirements and NOT sufficient for proficiency.",
+    "lexicalBreadthTargets": {
+      "A0": {
+        "productiveApprox": "150-300"
+      },
+      "A1": {
+        "productiveApproxCumulative": "800-1200"
+      },
+      "A2": {
+        "productiveApproxCumulative": "1800-2500"
+      },
+      "B1": {
+        "productiveApproxCumulative": "3000-4500"
+      },
+      "B2": {
+        "productiveApproxCumulative": "5000-7000"
+      },
+      "C1": {
+        "productiveAndReceptiveBreadth": "8000-12000+"
+      },
+      "C2": {
+        "receptiveBreadth": "broad/open-ended; do not gate C2 by a word count"
+      }
+    },
+    "requiredAdvancedCorpusFamilies": [
+      "native-speed conversations",
+      "interviews and discussions",
+      "narratives",
+      "professional speech",
+      "argumentation",
+      "idioms and colloquialisms",
+      "register variation",
+      "regional-comprehension exposure",
+      "humour and implication",
+      "mediation and synthesis",
+      "unseen assessments"
+    ]
+  },
+  "summary": {
+    "levelCount": 7,
+    "unitCount": 50,
+    "lexicalConceptCount": 289,
+    "utterancePatternCount": 65,
+    "registerPairCount": 10,
+    "repairPhraseCount": 6
+  }
+}

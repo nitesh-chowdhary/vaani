@@ -1,0 +1,14 @@
+@import 'tailwindcss';
+@import './learning.css';
+@layer base {
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+  }
+}
+
+:root {
+  color-scheme: dark;
+  background: var(--v-bg);
+  color: var(--v-ink);
+}
